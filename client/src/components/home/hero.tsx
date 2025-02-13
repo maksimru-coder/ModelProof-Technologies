@@ -64,20 +64,12 @@ const NetworkGrid = () => {
   );
 };
 
-const AmbientGlow = () => (
-  <div className="absolute inset-0">
-    <div className="absolute inset-0 bg-gradient-to-b from-primary/40 via-transparent to-primary/20" />
-    <div className="absolute inset-0 bg-gradient-to-r from-primary/30 via-transparent to-primary/30" />
-  </div>
-);
-
 export function Hero() {
   return (
     <div className="relative min-h-[80vh] flex items-center overflow-hidden">
       <div className="absolute inset-0 primary-gradient opacity-90" />
       <NetworkGrid />
       <ParticleAnimation />
-      <AmbientGlow />
       <div className="container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
