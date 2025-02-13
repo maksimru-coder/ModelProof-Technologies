@@ -7,6 +7,7 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
+import { Logo } from "./logo";
 
 export function Header() {
   const [location] = useLocation();
@@ -33,24 +34,26 @@ export function Header() {
           <NavigationMenuList>
             {links.map((link) => (
               <NavigationMenuItem key={link.href}>
-                <Link href={link.href}>
-                  <NavigationMenuLink
-                    className={`px-4 py-2 cursor-pointer ${
-                      location === link.href
-                        ? "text-primary font-medium"
-                        : "text-muted-foreground"
-                    }`}
-                  >
-                    {link.label}
-                  </NavigationMenuLink>
-                </Link>
+                <NavigationMenuLink
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href = link.href;
+                  }}
+                  className={`px-4 py-2 cursor-pointer ${
+                    location === link.href
+                      ? "text-primary font-medium"
+                      : "text-muted-foreground"
+                  }`}
+                >
+                  {link.label}
+                </NavigationMenuLink>
               </NavigationMenuItem>
             ))}
           </NavigationMenuList>
         </NavigationMenu>
         <div className="ml-auto flex items-center space-x-4">
           <Link href="/contact">
-            <Button>Contact Us</Button>
+            <Button className="cursor-pointer">Contact Us</Button>
           </Link>
         </div>
       </div>
