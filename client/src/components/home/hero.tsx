@@ -5,20 +5,25 @@ import { Link } from "wouter";
 const ParticleAnimation = () => {
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {[...Array(20)].map((_, i) => (
+      {[...Array(30)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-2 h-2 bg-white/10 rounded-full"
+          className="absolute w-3 h-3 bg-white/20 rounded-full shadow-glow"
+          style={{
+            boxShadow: '0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.2)'
+          }}
           initial={{
             x: Math.random() * 100 + "%",
             y: Math.random() * 100 + "%",
+            scale: 0.5,
           }}
           animate={{
             x: [Math.random() * 100 + "%", Math.random() * 100 + "%"],
             y: [Math.random() * 100 + "%", Math.random() * 100 + "%"],
+            scale: [0.5, 1, 0.5],
           }}
           transition={{
-            duration: Math.random() * 15 + 20, // Slower, more subtle movement
+            duration: Math.random() * 20 + 15,
             repeat: Infinity,
             ease: "linear",
           }}
@@ -30,23 +35,23 @@ const ParticleAnimation = () => {
 
 const NetworkLines = () => {
   return (
-    <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.1 }}>
+    <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.15 }}>
       <defs>
         <pattern
           id="grid"
-          width="40"
-          height="40"
+          width="30"
+          height="30"
           patternUnits="userSpaceOnUse"
         >
           <path
-            d="M 40 0 L 0 0 0 40"
+            d="M 30 0 L 0 0 0 30"
             fill="none"
             stroke="currentColor"
-            strokeWidth="0.5"
+            strokeWidth="1"
           />
         </pattern>
         <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="white" stopOpacity="0.2" />
+          <stop offset="0%" stopColor="white" stopOpacity="0.3" />
           <stop offset="100%" stopColor="white" stopOpacity="0" />
         </linearGradient>
       </defs>
@@ -62,6 +67,9 @@ export function Hero() {
       <div className="absolute inset-0 primary-gradient" />
       <NetworkLines />
       <ParticleAnimation />
+      <div className="absolute inset-0" style={{
+        background: 'radial-gradient(circle at 50% 50%, rgba(165, 215, 232, 0.1) 0%, transparent 50%)'
+      }} />
       <div className="container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
