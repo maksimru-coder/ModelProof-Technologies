@@ -28,11 +28,39 @@ const ParticleAnimation = () => {
   );
 };
 
+const NetworkLines = () => {
+  return (
+    <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.1 }}>
+      <defs>
+        <pattern
+          id="grid"
+          width="40"
+          height="40"
+          patternUnits="userSpaceOnUse"
+        >
+          <path
+            d="M 40 0 L 0 0 0 40"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.5"
+          />
+        </pattern>
+        <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="white" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="white" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+      <rect width="100%" height="100%" fill="url(#fade)" />
+    </svg>
+  );
+};
+
 export function Hero() {
   return (
     <div className="relative min-h-[80vh] flex items-center overflow-hidden">
       <div className="absolute inset-0 primary-gradient" />
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')] opacity-10" />
+      <NetworkLines />
       <ParticleAnimation />
       <div className="container relative z-10">
         <motion.div
