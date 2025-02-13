@@ -8,9 +8,9 @@ const ParticleAnimation = () => {
       {[...Array(30)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-3 h-3 bg-white/20 rounded-full shadow-glow"
+          className="absolute w-4 h-4 bg-white/30 rounded-full shadow-glow"
           style={{
-            boxShadow: '0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.2)'
+            boxShadow: '0 0 15px rgba(255,255,255,0.4), 0 0 30px rgba(255,255,255,0.2)'
           }}
           initial={{
             x: Math.random() * 100 + "%",
@@ -20,7 +20,7 @@ const ParticleAnimation = () => {
           animate={{
             x: [Math.random() * 100 + "%", Math.random() * 100 + "%"],
             y: [Math.random() * 100 + "%", Math.random() * 100 + "%"],
-            scale: [0.5, 1, 0.5],
+            scale: [0.5, 1.2, 0.5],
           }}
           transition={{
             duration: Math.random() * 20 + 15,
@@ -33,43 +33,53 @@ const ParticleAnimation = () => {
   );
 };
 
-const NetworkLines = () => {
+const NetworkGrid = () => {
   return (
-    <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.15 }}>
-      <defs>
-        <pattern
-          id="grid"
-          width="30"
-          height="30"
-          patternUnits="userSpaceOnUse"
-        >
-          <path
-            d="M 30 0 L 0 0 0 30"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-          />
-        </pattern>
-        <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="white" stopOpacity="0.3" />
-          <stop offset="100%" stopColor="white" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#grid)" />
-      <rect width="100%" height="100%" fill="url(#fade)" />
-    </svg>
+    <div className="absolute inset-0">
+      <svg className="w-full h-full" style={{ opacity: 0.2 }}>
+        <defs>
+          <pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path 
+              d="M 20 0 L 0 0 0 20" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="0.5"
+              className="animate-pulse"
+            />
+          </pattern>
+          <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+            <rect width="100" height="100" fill="url(#smallGrid)" />
+            <path 
+              d="M 100 0 L 0 0 0 100" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="1"
+              className="animate-pulse"
+            />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+    </div>
   );
 };
+
+const RadialGlow = () => (
+  <div 
+    className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20"
+    style={{
+      background: 'radial-gradient(circle at 50% 50%, rgba(165, 215, 232, 0.2) 0%, transparent 70%)'
+    }} 
+  />
+);
 
 export function Hero() {
   return (
     <div className="relative min-h-[80vh] flex items-center overflow-hidden">
-      <div className="absolute inset-0 primary-gradient" />
-      <NetworkLines />
+      <div className="absolute inset-0 primary-gradient opacity-90" />
+      <NetworkGrid />
       <ParticleAnimation />
-      <div className="absolute inset-0" style={{
-        background: 'radial-gradient(circle at 50% 50%, rgba(165, 215, 232, 0.1) 0%, transparent 50%)'
-      }} />
+      <RadialGlow />
       <div className="container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

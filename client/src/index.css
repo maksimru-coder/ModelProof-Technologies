@@ -61,25 +61,13 @@
   }
 
   .shadow-glow {
-    box-shadow: 0 0 10px rgba(255,255,255,0.3),
-                0 0 20px rgba(255,255,255,0.2);
-  }
-
-  .hero-background {
-    background-image: 
-      linear-gradient(135deg, rgba(11, 36, 71, 0.03) 0%, rgba(87, 108, 188, 0.03) 100%),
-      linear-gradient(to right, rgba(11, 36, 71, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(11, 36, 71, 0.05) 1px, transparent 1px);
-    background-size: 100% 100%, 20px 20px, 20px 20px;
-    animation: slide 20s linear infinite;
+    box-shadow: 0 0 20px rgba(255,255,255,0.4),
+                0 0 40px rgba(255,255,255,0.2),
+                0 0 60px rgba(255,255,255,0.1);
   }
 
   .primary-gradient {
     background: linear-gradient(135deg, #0B2447 0%, #19376D 100%);
-  }
-
-  * {
-    transition: all 0.2s ease-in-out;
   }
 
   .hover-animation {
@@ -88,10 +76,6 @@
 
   .hover-animation:hover {
     transform: translateY(-2px);
-  }
-
-  .secondary-gradient {
-    background: linear-gradient(135deg, #19376D 0%, #576CBC 100%);
   }
 
   @keyframes float {
@@ -114,10 +98,10 @@
 
   @keyframes slide {
     from {
-      background-position: 0 0, 0 0, 0 0;
+      background-position: 0 0;
     }
     to {
-      background-position: 0 0, 20px 20px, 20px 20px;
+      background-position: -400px 0;
     }
   }
 }
