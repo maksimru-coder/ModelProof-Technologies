@@ -60,8 +60,7 @@ export function Footer() {
         </div>
         <div className="mt-8 border-t pt-8">
           <p className="text-center text-sm text-muted-foreground">
-            © {new Date().getFullYear()} ModelProof Technologies LLC. All rights
-            reserved.
+            <span className="text-sm font-light">© {new Date().getFullYear()} ModelProof Technologies LLC. All rights reserved.</span>
           </p>
         </div>
       </div>

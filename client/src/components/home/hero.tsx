@@ -67,7 +67,7 @@ export function Hero() {
             <Link href="/services">
               <Button
                 size="lg"
-                className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 hover:translate-y-[-2px] transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="px-6 py-3 font-semibold bg-white text-[#0B2447] hover:bg-[#A5D7E8] rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg"
               >
                 View Our Services
               </Button>
@@ -75,7 +75,7 @@ export function Hero() {
             <Link href="/methodology">
               <Button
                 size="lg"
-                className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary hover:translate-y-[-2px] transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="px-6 py-3 font-semibold bg-transparent border-2 border-white text-white hover:bg-white/10 rounded-lg transform transition-all hover:-translate-y-0.5"
               >
                 Learn Our Methodology
               </Button>

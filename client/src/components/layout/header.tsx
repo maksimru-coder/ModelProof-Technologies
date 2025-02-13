@@ -26,7 +26,7 @@ export function Header() {
             whileHover={{ scale: 1.05 }}
             className="mr-6 flex items-center space-x-2 cursor-pointer"
           >
-            <span className="text-xl font-bold text-primary">ModelProof</span>
+            <Logo />
           </motion.div>
         </Link>
         <NavigationMenu className="hidden md:flex">

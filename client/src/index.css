@@ -73,6 +73,18 @@
     background: linear-gradient(135deg, #0B2447 0%, #19376D 100%);
   }
 
+  * {
+    transition: all 0.2s ease-in-out;
+  }
+
+  .hover-animation {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .hover-animation:hover {
+    transform: translateY(-2px);
+  }
+
   .secondary-gradient {
     background: linear-gradient(135deg, #19376D 0%, #576CBC 100%);
   }
