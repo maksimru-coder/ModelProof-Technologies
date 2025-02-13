@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import {
@@ -115,7 +114,8 @@ export function ServicesOverview() {
                     ))}
                   </ul>
                   <Link href="/services" className="mt-auto">
-                    <Button 
+                    <Button
+                      onClick={() => window.scrollTo(0, 0)}
                       className="w-full bg-primary/10 hover:bg-primary/20 text-primary hover:text-primary transition-all duration-300"
                     >
                       Learn More

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { ComparisonMatrix } from "@/components/services/comparison-matrix";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
@@ -11,6 +12,10 @@ import {
 } from "@/components/ui/card";
 
 export default function Services() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="container py-16">
       <motion.div
