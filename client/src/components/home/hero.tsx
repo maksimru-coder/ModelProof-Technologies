@@ -76,9 +76,8 @@ export function Hero() {
             </Link>
             <Link href="/methodology">
               <Button
-                variant="outline"
                 size="lg"
-                className="w-full sm:w-auto border-white text-white hover:bg-white/10 hover:translate-y-[-2px] transition-all duration-200"
+                className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 hover:translate-y-[-2px] transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Learn Our Methodology
               </Button>
