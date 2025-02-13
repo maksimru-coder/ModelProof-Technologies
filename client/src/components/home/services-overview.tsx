@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import {
@@ -59,6 +60,17 @@ const services = [
   },
 ];
 
+const IconWrapper = ({ children }: { children: React.ReactNode }) => (
+  <motion.div
+    initial={{ scale: 1 }}
+    whileHover={{ scale: 1.1 }}
+    transition={{ duration: 0.2 }}
+    className="text-primary"
+  >
+    {children}
+  </motion.div>
+);
+
 export function ServicesOverview() {
   return (
     <section className="py-24 bg-muted/50">
@@ -76,25 +88,37 @@ export function ServicesOverview() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
+              className="h-full"
             >
-              <Card className="h-full flex flex-col">
-                <CardHeader>
-                  <service.icon className="h-10 w-10 text-primary mb-4" />
-                  <CardTitle>{service.title}</CardTitle>
-                  <CardDescription>{service.description}</CardDescription>
+              <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:border-primary/50">
+                <CardHeader className="space-y-4">
+                  <IconWrapper>
+                    <service.icon className="h-12 w-12" />
+                  </IconWrapper>
+                  <CardTitle className="text-xl">{service.title}</CardTitle>
+                  <CardDescription className="text-sm min-h-[60px]">
+                    {service.description}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow flex flex-col">
-                  <ul className="mt-4 space-y-2 flex-grow">
+                  <ul className="mt-4 space-y-3 flex-grow mb-6">
                     {service.benefits.map((benefit) => (
-                      <li key={benefit} className="flex items-center text-sm text-muted-foreground">
-                        <div className="h-1.5 w-1.5 rounded-full bg-primary mr-2" />
-                        {benefit}
-                      </li>
+                      <motion.li
+                        key={benefit}
+                        className="flex items-start text-sm text-muted-foreground"
+                        whileHover={{ x: 4 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className="h-2 w-2 rounded-full bg-primary mt-1.5 mr-3 flex-shrink-0" />
+                        <span>{benefit}</span>
+                      </motion.li>
                     ))}
                   </ul>
-                  <Link href="/contact" className="mt-6">
-                    <Button className="w-full primary-gradient hover:translate-y-[-2px] transition-transform">
-                      Contact Us
+                  <Link href="/services" className="mt-auto">
+                    <Button 
+                      className="w-full bg-primary/10 hover:bg-primary/20 text-primary hover:text-primary transition-all duration-300"
+                    >
+                      Learn More
                     </Button>
                   </Link>
                 </CardContent>
