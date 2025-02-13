@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { ChevronRight } from "lucide-react";
 
 const ParticleAnimation = () => {
   return (
@@ -71,14 +70,12 @@ export function Hero() {
                 className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 hover:translate-y-[-2px] transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 View Our Services
-                <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
             <Link href="/methodology">
               <Button
                 size="lg"
-                variant="outline"
-                className="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-primary hover:translate-y-[-2px] transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="w-full sm:w-auto bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary hover:translate-y-[-2px] transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Learn Our Methodology
               </Button>
