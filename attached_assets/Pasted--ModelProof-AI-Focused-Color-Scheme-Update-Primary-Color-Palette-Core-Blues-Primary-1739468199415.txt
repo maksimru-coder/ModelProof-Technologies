@@ -1,0 +1,140 @@
+# ModelProof AI-Focused Color Scheme Update
+
+## Primary Color Palette
+
+### Core Blues
+- Primary Blue: #0B2447 (Deep Space Blue)
+  - Use for: Main headers, primary buttons, key UI elements
+- Secondary Blue: #19376D (Royal Blue)
+  - Use for: Secondary elements, highlights, active states
+
+### AI Accent Colors
+- Tech Purple: #576CBC (Muted Purple)
+  - Use for: Accent elements, icons, secondary buttons
+- Light Blue: #A5D7E8 (Soft Sky Blue)
+  - Use for: Backgrounds, subtle highlights, progress bars
+
+## Gradient Combinations
+
+### Primary Gradient
+```css
+.primary-gradient {
+  background: linear-gradient(135deg, #0B2447 0%, #19376D 100%);
+}
+```
+Use for: Hero section background, CTA buttons, important cards
+
+### Secondary Gradient
+```css
+.secondary-gradient {
+  background: linear-gradient(135deg, #19376D 0%, #576CBC 100%);
+}
+```
+Use for: Secondary elements, hover states, decorative elements
+
+### Accent Gradient
+```css
+.accent-gradient {
+  background: linear-gradient(135deg, #576CBC 0%, #A5D7E8 100%);
+}
+```
+Use for: Subtle backgrounds, cards, non-critical elements
+
+## Supporting Colors
+
+### Neutrals
+- Dark: #1E293B (Slate)
+  - Use for: Body text, important content
+- Mid: #64748B (Steel)
+  - Use for: Secondary text, icons
+- Light: #F1F5F9 (Ice)
+  - Use for: Backgrounds, dividers
+
+### Feedback Colors
+- Success: #0D9488 (Teal)
+- Warning: #FB923C (Orange)
+- Error: #DC2626 (Red)
+
+## Implementation Guidelines
+
+### Text Colors
+```css
+body {
+  color: #1E293B;
+}
+
+h1, h2, h3 {
+  background: linear-gradient(135deg, #0B2447 0%, #19376D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.secondary-text {
+  color: #64748B;
+}
+```
+
+### Button Styles
+```css
+.primary-button {
+  background: linear-gradient(135deg, #0B2447 0%, #19376D 100%);
+  color: white;
+  transition: transform 0.2s ease;
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(11, 36, 71, 0.2);
+}
+
+.secondary-button {
+  background: linear-gradient(135deg, #19376D 0%, #576CBC 100%);
+  color: white;
+}
+```
+
+### Card Styles
+```css
+.card {
+  background: white;
+  border: 1px solid rgba(165, 215, 232, 0.2);
+  box-shadow: 0 4px 6px -1px rgba(11, 36, 71, 0.1);
+}
+
+.card:hover {
+  border-color: rgba(87, 108, 188, 0.4);
+  box-shadow: 0 8px 12px -2px rgba(11, 36, 71, 0.15);
+}
+```
+
+### Section Backgrounds
+```css
+.hero-section {
+  background: linear-gradient(135deg, #0B2447 0%, #19376D 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(165, 215, 232, 0.1) 0%, transparent 50%);
+}
+```
+
+## Usage Instructions
+
+1. Apply the primary gradient to main CTAs and important sections
+2. Use solid colors for text and smaller elements
+3. Implement gradients for hover states and transitions
+4. Keep backgrounds subtle with light blues and whites
+5. Use purple accents sparingly for emphasis
+6. Maintain high contrast for accessibility
+7. Apply shadows and borders using the blue palette
+8. Use feedback colors only for status indicators
+
+Remember to test all color combinations for accessibility and maintain a WCAG AA compliance level for text contrast.

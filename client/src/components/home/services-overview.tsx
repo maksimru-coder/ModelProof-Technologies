@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 import {
   Card,
   CardContent,
@@ -7,33 +8,54 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Shield, LineChart, Network, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const services = [
   {
     title: "Essential Assessment",
     description:
-      "Foundational overview of your AI system's quality and readiness.",
+      "Comprehensive evaluation of your AI system's foundation, establishing quality baselines and identifying key optimization opportunities.",
     icon: Shield,
-    price: "$10,000 - $15,000",
+    benefits: [
+      "Thorough system architecture analysis",
+      "Quality baseline establishment",
+      "Risk evaluation framework",
+      "Initial compliance assessment"
+    ]
   },
   {
     title: "Professional Validation",
     description:
-      "In-depth testing and analysis of your AI system's performance.",
+      "Advanced validation suite delivering in-depth analysis of your AI system's performance, reliability, and compliance measures.",
     icon: LineChart,
-    price: "$20,000 - $30,000",
+    benefits: [
+      "Comprehensive performance testing",
+      "Detailed quality metrics",
+      "Custom validation frameworks",
+      "Compliance documentation"
+    ]
   },
   {
     title: "Enterprise Solution",
-    description: "Custom, end-to-end AI validation for complex projects.",
+    description: "End-to-end strategic partnership for complex AI implementations requiring continuous quality assurance and optimization.",
     icon: Network,
-    price: "$50,000 - $100,000+",
+    benefits: [
+      "Custom testing frameworks",
+      "Continuous monitoring",
+      "Strategic optimization",
+      "Full compliance management"
+    ]
   },
   {
     title: "Retainer Services",
-    description: "Ongoing, proactive AI quality assurance and validation.",
+    description: "Ongoing strategic partnership ensuring continuous quality improvement and validation of your AI systems.",
     icon: Clock,
-    price: "$5,000 - $15,000/month",
+    benefits: [
+      "Regular quality assessments",
+      "Proactive optimization",
+      "Continuous compliance monitoring",
+      "Priority support access"
+    ]
   },
 ];
 
@@ -55,16 +77,26 @@ export function ServicesOverview() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="h-full">
+              <Card className="h-full flex flex-col">
                 <CardHeader>
                   <service.icon className="h-10 w-10 text-primary mb-4" />
                   <CardTitle>{service.title}</CardTitle>
                   <CardDescription>{service.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-lg font-semibold text-primary">
-                    {service.price}
-                  </p>
+                <CardContent className="flex-grow flex flex-col">
+                  <ul className="mt-4 space-y-2 flex-grow">
+                    {service.benefits.map((benefit) => (
+                      <li key={benefit} className="flex items-center text-sm text-muted-foreground">
+                        <div className="h-1.5 w-1.5 rounded-full bg-primary mr-2" />
+                        {benefit}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href="/contact" className="mt-6">
+                    <Button className="w-full primary-gradient hover:translate-y-[-2px] transition-transform">
+                      Contact Us
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </motion.div>

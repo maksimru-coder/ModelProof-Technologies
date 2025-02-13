@@ -13,24 +13,24 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 215 25% 17%;
+    --foreground: 217 33% 17%;
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 17%;
+    --card-foreground: 217 33% 17%;
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 17%;
-    --primary: 215 56% 23%;
+    --popover-foreground: 217 33% 17%;
+    --primary: 217 72% 16%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 182 59% 19%;
+    --secondary: 219 62% 26%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 220 14% 96%;
+    --muted: 219 33% 97%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 220 13% 91%;
-    --accent-foreground: 215 25% 17%;
+    --accent: 219 49% 54%;
+    --accent-foreground: 219 72% 16%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 215 56% 23%;
+    --ring: 217 72% 16%;
     --radius: 0.5rem;
   }
 
@@ -61,18 +61,28 @@
   }
 
   .hero-background {
-    background-image: linear-gradient(to right, rgba(26, 54, 93, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(26, 54, 93, 0.05) 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-image: 
+      linear-gradient(135deg, rgba(11, 36, 71, 0.03) 0%, rgba(87, 108, 188, 0.03) 100%),
+      linear-gradient(to right, rgba(11, 36, 71, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(11, 36, 71, 0.05) 1px, transparent 1px);
+    background-size: 100% 100%, 20px 20px, 20px 20px;
     animation: slide 20s linear infinite;
+  }
+
+  .primary-gradient {
+    background: linear-gradient(135deg, #0B2447 0%, #19376D 100%);
+  }
+
+  .secondary-gradient {
+    background: linear-gradient(135deg, #19376D 0%, #576CBC 100%);
   }
 
   @keyframes slide {
     from {
-      background-position: 0 0;
+      background-position: 0 0, 0 0, 0 0;
     }
     to {
-      background-position: 20px 20px;
+      background-position: 0 0, 20px 20px, 20px 20px;
     }
   }
 }
