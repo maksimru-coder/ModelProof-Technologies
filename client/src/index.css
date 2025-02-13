@@ -77,6 +77,24 @@
     background: linear-gradient(135deg, #19376D 0%, #576CBC 100%);
   }
 
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
   @keyframes slide {
     from {
       background-position: 0 0, 0 0, 0 0;
