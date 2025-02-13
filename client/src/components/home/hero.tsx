@@ -19,7 +19,7 @@ const ParticleAnimation = () => {
             y: [Math.random() * 100 + "%", Math.random() * 100 + "%"],
           }}
           transition={{
-            duration: Math.random() * 10 + 10,
+            duration: Math.random() * 15 + 20, // Slower, more subtle movement
             repeat: Infinity,
             ease: "linear",
           }}
@@ -77,7 +77,8 @@ export function Hero() {
             <Link href="/methodology">
               <Button
                 size="lg"
-                className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 hover:translate-y-[-2px] transition-all duration-200 shadow-lg hover:shadow-xl"
+                variant="outline"
+                className="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-primary hover:translate-y-[-2px] transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Learn Our Methodology
               </Button>
