@@ -1,0 +1,286 @@
+ModelProof Website Visual and Content Specification
+Logo Design
+Primary Logo
+
+Design Style: Modern, technical, trustworthy
+Main Element: Stylized "MP" monogram
+Colors:
+
+Primary: Deep Blue (#0B3D91)
+Secondary: Teal accent (#008080)
+
+
+Typography:
+
+Company Name: "ModelProof" in Montserrat Bold
+Tagline: "AI Quality Assurance" in Inter Light
+
+
+Variations:
+
+Horizontal (default)
+Stacked (for square spaces)
+Icon only (for favicon and small displays)
+
+
+Minimum Size: 32px height for legibility
+Clear Space: Equal to 'M' height around all sides
+
+Logo Usage
+
+Header: Horizontal version, 40px height
+Mobile: Icon only version when space is limited
+Footer: Stacked version with tagline
+Favicon: Simplified MP icon
+Social Media: Square format with icon-only version
+
+Website Typography
+Headlines
+
+Primary Font: Montserrat
+Sizes:
+
+H1: 48px/60px (mobile: 36px/44px)
+H2: 36px/44px (mobile: 28px/36px)
+H3: 24px/32px (mobile: 20px/28px)
+H4: 20px/28px (mobile: 18px/24px)
+
+
+
+Body Text
+
+Primary Font: Inter
+Sizes:
+
+Body: 16px/24px
+Small: 14px/20px
+Caption: 12px/16px
+
+
+
+Key Page Content
+Homepage
+Hero Section
+
+Headline: "Ensuring AI You Can Trust Through Expert Validation"
+Subheadline: "Your partner in AI quality assurance, helping organizations build reliable, ethical, and compliant AI systems"
+CTA Button: "Get Your AI Validated"
+Background: Abstract visualization of neural network connections in blue and teal
+Visual Elements: Floating geometric shapes representing data points and connections
+
+Value Proposition Section
+
+Headline: "Why Choose ModelProof?"
+Key Points:
+
+"20+ Years QA Expertise"
+"AI-Specific Focus"
+"Proprietary Framework"
+"End-to-End Validation"
+
+
+Each point accompanied by custom icon in teal
+
+Services Overview
+
+Headline: "Our Services"
+Service Cards:
+
+Essential Assessment
+
+Icon: Checkmark in circle
+Price: "Starting at $10,000"
+Duration: "2-3 weeks"
+
+
+Professional Validation
+
+Icon: Shield with checkmark
+Price: "Starting at $20,000"
+Duration: "4-6 weeks"
+
+
+Enterprise Solution
+
+Icon: Building with gear
+Price: "Starting at $50,000"
+Duration: "8-12 weeks"
+
+
+Retainer Services
+
+Icon: Continuous circle arrows
+Price: "From $5,000/month"
+Duration: "Ongoing"
+
+
+
+
+
+Framework Section
+
+Headline: "The ModelProof Framework™"
+Interactive Diagram showing:
+
+Assessment Phase (Blue)
+Validation Phase (Teal)
+Optimization Phase (Gold)
+Monitoring Phase (Green)
+
+
+Each phase expands to show details on hover
+
+Image Requirements
+Hero Section
+
+Style: Abstract tech visualization
+Colors: Blues, teals, with gold accents
+Motion: Subtle particle animation
+Format: SVG or WebM video
+Size: Full width, responsive height
+
+About Section
+
+Team Photos:
+
+Style: Professional headshots
+Background: Light grey or white
+Dress Code: Business professional
+Size: 300x300px minimum, square format
+
+
+
+Service Icons
+
+Style: Line icons with solid fill
+Colors: Teal (#008080) with blue accents
+Size: 64x64px
+Format: SVG
+
+Framework Diagram
+
+Style: Interactive infographic
+Colors: Brand color palette
+Animation: Smooth transitions between phases
+Format: SVG with CSS animations
+
+Quality Score Visualization
+
+Style: Circular progress indicators
+Colors:
+
+Technical Quality: Blue
+Business Impact: Teal
+Risk & Safety: Gold
+Operational Excellence: Green
+
+
+Animation: Progress bar fills on scroll
+
+Case Study Images
+
+Style: Screenshots and diagrams
+Resolution: Minimum 1920x1080px
+Format: WebP with JPEG fallback
+Optimization: Compressed for web
+
+UI Elements
+Buttons
+
+Primary: Solid blue with white text
+Secondary: White with blue border
+Hover: Slight scale animation
+Active: Darker shade
+Disabled: Grey with reduced opacity
+
+Cards
+
+Background: White
+Shadow: Subtle elevation
+Border: 1px solid light grey
+Hover: Slight lift effect
+Corner Radius: 8px
+
+Forms
+
+Input Fields: White background, blue focus
+Labels: Above fields, Inter Medium
+Error States: Red text and borders
+Success States: Green checkmark
+Loading States: Blue pulse animation
+
+Navigation
+
+Background: White, semi-transparent
+Active State: Blue underline
+Hover: Teal text color
+Mobile: Full screen overlay menu
+Dropdown: White background with shadow
+
+Imagery Guidelines
+Photography Style
+
+Type: Corporate tech environment
+Tone: Professional but approachable
+Color: Natural with slight blue tint
+Subjects:
+
+Team members working
+Technology environments
+Data visualization
+Client interactions
+
+
+
+Icon Style
+
+Line Weight: 2px
+Corner Radius: 2px
+Fill: Solid or gradient
+Animation: Subtle hover effects
+Size: Multiple of 8px
+
+Illustration Style
+
+Type: Technical and modern
+Style: Geometric with organic elements
+Colors: Brand palette
+Animation: Subtle movements
+Complexity: Simple but detailed
+
+Motion Design
+Micro-interactions
+
+Button Hovers: 0.2s scale
+Card Hovers: 0.3s lift
+Menu Transitions: 0.4s slide
+Page Transitions: 0.5s fade
+
+Loading States
+
+Spinner: Circular animation
+Progress Bars: Linear fill
+Skeleton Screens: Pulse animation
+Color: Brand blue to teal gradient
+
+Scroll Animations
+
+Fade In: 0.6s ease
+Slide Up: 0.4s ease-out
+Scale: 0.3s ease-in-out
+Stagger: 0.1s delay between elements
+
+Accessibility Requirements
+Color Contrast
+
+Text: WCAG AA compliance
+Interactive Elements: WCAG AAA
+Focus States: High visibility
+Error States: Clear distinction
+
+Text Alternatives
+
+Images: Descriptive alt text
+Icons: ARIA labels
+Animations: Reduced motion option
+Videos: Captions required

@@ -1,13 +1,62 @@
+@import '@fontsource/montserrat/400.css';
+@import '@fontsource/montserrat/500.css';
+@import '@fontsource/montserrat/600.css';
+@import '@fontsource/montserrat/700.css';
+@import '@fontsource/inter/300.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 217 91% 31%;
+    --card: 0 0% 100%;
+    --card-foreground: 217 91% 31%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 217 91% 31%;
+    --primary: 217 91% 31%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 180 100% 25%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 180 100% 25%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 217 91% 31%;
+    --radius: 0.5rem;
+  }
+
   * {
     @apply border-border;
   }
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-montserrat font-bold;
+  }
+
+  p {
+    @apply font-inter;
+  }
+}
+
+@layer utilities {
+  .font-montserrat {
+    font-family: 'Montserrat', system-ui, sans-serif;
+  }
+
+  .font-inter {
+    font-family: 'Inter', system-ui, sans-serif;
   }
 }

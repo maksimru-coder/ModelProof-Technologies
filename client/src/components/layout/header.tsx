@@ -22,14 +22,12 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <Link href="/">
-          <a className="mr-6 flex items-center space-x-2">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="text-xl font-bold text-primary"
-            >
-              ModelProof
-            </motion.div>
-          </a>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="mr-6 flex items-center space-x-2 cursor-pointer"
+          >
+            <span className="text-xl font-bold text-primary">ModelProof</span>
+          </motion.div>
         </Link>
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
@@ -37,7 +35,7 @@ export function Header() {
               <NavigationMenuItem key={link.href}>
                 <Link href={link.href}>
                   <NavigationMenuLink
-                    className={`px-4 py-2 ${
+                    className={`px-4 py-2 cursor-pointer ${
                       location === link.href
                         ? "text-primary font-medium"
                         : "text-muted-foreground"
