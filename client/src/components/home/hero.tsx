@@ -64,13 +64,11 @@ const NetworkGrid = () => {
   );
 };
 
-const RadialGlow = () => (
-  <div 
-    className="absolute inset-0 bg-gradient-to-r from-primary/20 via-transparent to-primary/20"
-    style={{
-      background: 'radial-gradient(circle at 50% 50%, rgba(165, 215, 232, 0.2) 0%, transparent 70%)'
-    }} 
-  />
+const AmbientGlow = () => (
+  <div className="absolute inset-0">
+    <div className="absolute inset-0 bg-gradient-to-b from-primary/40 via-transparent to-primary/20" />
+    <div className="absolute inset-0 bg-gradient-to-r from-primary/30 via-transparent to-primary/30" />
+  </div>
 );
 
 export function Hero() {
@@ -79,7 +77,7 @@ export function Hero() {
       <div className="absolute inset-0 primary-gradient opacity-90" />
       <NetworkGrid />
       <ParticleAnimation />
-      <RadialGlow />
+      <AmbientGlow />
       <div className="container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
