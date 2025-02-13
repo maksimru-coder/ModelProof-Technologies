@@ -75,7 +75,7 @@ export function Hero() {
             <Link href="/methodology">
               <Button
                 size="lg"
-                className="px-6 py-3 font-semibold bg-transparent border-2 border-white text-white hover:bg-white/10 rounded-lg transform transition-all hover:-translate-y-0.5"
+                className="px-6 py-3 font-semibold bg-white text-[#0B2447] hover:bg-[#A5D7E8] rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg"
               >
                 Learn Our Methodology
               </Button>
