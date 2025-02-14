@@ -11,28 +11,40 @@ export function Footer() {
             <ul className="space-y-4">
               <li>
                 <Link href="/services/essential-assessment">
-                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                  >
                     Essential Assessment
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/services/professional-validation">
-                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                  >
                     Professional Validation
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/services/enterprise-solution">
-                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                  >
                     Enterprise Solution
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/services/retainer-services">
-                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                  >
                     Retainer Services
                   </span>
                 </Link>

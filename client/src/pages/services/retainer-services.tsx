@@ -6,6 +6,8 @@ import {
   Target,
   Shield
 } from "lucide-react";
+import { Link } from "wouter";
+import { Button } from "@/components/ui/button";
 
 export default function RetainerServices() {
   return (
@@ -76,7 +78,7 @@ export default function RetainerServices() {
             </div>
           </section>
 
-          <section>
+          <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6">Ideal For</h2>
             <div className="flex items-start gap-4">
               <div className="mt-1">
@@ -89,6 +91,17 @@ export default function RetainerServices() {
               </ul>
             </div>
           </section>
+
+          <div className="mt-12 text-center">
+            <Link href="/contact">
+              <Button 
+                size="lg"
+                className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+              >
+                Get Started
+              </Button>
+            </Link>
+          </div>
         </div>
       </motion.div>
     </div>

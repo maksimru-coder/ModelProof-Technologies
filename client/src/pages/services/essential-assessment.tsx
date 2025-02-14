@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { ClipboardCheck, Shield, FileSearch, Scale } from "lucide-react";
+import { Link } from "wouter";
+import { Button } from "@/components/ui/button";
 
 export default function EssentialAssessment() {
   return (
@@ -87,6 +89,17 @@ export default function EssentialAssessment() {
               </ul>
             </div>
           </section>
+
+          <div className="mt-12 text-center">
+            <Link href="/contact">
+              <Button 
+                size="lg"
+                className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+              >
+                Get Started
+              </Button>
+            </Link>
+          </div>
         </div>
       </motion.div>
     </div>
