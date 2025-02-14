@@ -4,7 +4,7 @@ export function Footer() {
   return (
     <footer className="border-t">
       <div className="container py-8 md:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Services Section */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Services</h3>
@@ -27,6 +27,23 @@ export function Footer() {
               <li>
                 <a href="/services#retainer" className="text-muted-foreground hover:text-primary cursor-pointer">
                   Retainer Services
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Section */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Contact</h3>
+            <ul className="space-y-2">
+              <li className="text-muted-foreground">San Francisco Bay Area</li>
+              <li className="text-muted-foreground">California, United States</li>
+              <li>
+                <a 
+                  href="mailto:contact@modelproof.ai" 
+                  className="text-muted-foreground hover:text-primary"
+                >
+                  contact@modelproof.ai
                 </a>
               </li>
             </ul>

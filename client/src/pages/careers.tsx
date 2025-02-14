@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Mail } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -29,6 +28,11 @@ export default function Careers() {
   const { toast } = useToast();
   const form = useForm<CareerFormValues>({
     resolver: zodResolver(careerFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
   });
 
   const onSubmit = (data: CareerFormValues) => {
@@ -116,7 +120,7 @@ export default function Careers() {
               <FormField
                 control={form.control}
                 name="resume"
-                render={({ field: { onChange, ...field } }) => (
+                render={({ field: { value, onChange, ...field } }) => (
                   <FormItem>
                     <FormLabel>Resume</FormLabel>
                     <FormControl>
