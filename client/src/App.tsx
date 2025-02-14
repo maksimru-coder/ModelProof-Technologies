@@ -14,6 +14,9 @@ import EssentialAssessment from "@/pages/services/essential-assessment";
 import ProfessionalValidation from "@/pages/services/professional-validation";
 import EnterpriseSolution from "@/pages/services/enterprise-solution";
 import RetainerServices from "@/pages/services/retainer-services";
+import Privacy from "@/pages/privacy";
+import Terms from "@/pages/terms";
+import Careers from "@/pages/careers";
 
 function Router() {
   return (
@@ -30,6 +33,9 @@ function Router() {
           <Route path="/methodology" component={Methodology} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
+          <Route path="/privacy" component={Privacy} />
+          <Route path="/terms" component={Terms} />
+          <Route path="/careers" component={Careers} />
           <Route component={NotFound} />
         </Switch>
       </main>
