@@ -122,6 +122,44 @@ export default function Services() {
             </Link>
           </CardContent>
         </Card>
+        <Card id="retainer">
+          <CardHeader>
+            <CardTitle>Retainer Services</CardTitle>
+            <CardDescription>
+              Focus on innovation, not quality concerns
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-6">
+              Our Retainer Services provide proactive AI monitoring, continuous improvement, and rapid issue resolution. We ensure your AI systems consistently deliver exceptional results, allowing you to concentrate on what matters most: driving your business forward.
+            </p>
+            <ul className="space-y-3 mb-6">
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Proactive AI Health Monitoring: Continuous surveillance of your AI systems in production</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Regular Performance Reporting & Insights: In-depth reports on key metrics and trends</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Rapid Response & Issue Resolution: Prioritized support and swift incident resolution</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Continuous Improvement & Optimization: Proactive recommendations based on ongoing analysis</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Dedicated AI Quality Partner: Access to an expert who understands your business needs</span>
+              </li>
+            </ul>
+            <Link href="/contact">
+              <Button className="w-full">Get Started</Button>
+            </Link>
+          </CardContent>
+        </Card>
       </div>
 
       <div className="mb-16">
