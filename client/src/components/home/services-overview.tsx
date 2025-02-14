@@ -13,26 +13,26 @@ import { Button } from "@/components/ui/button";
 const services = [
   {
     title: "Essential Assessment",
-    description: "Quickly understand your AI's strengths and weaknesses.",
-    subtext: "We identify risks and opportunities, setting you up for AI success.",
+    headline: "Foundation for AI Excellence",
+    description: "Comprehensive analysis of your AI system's architecture, quality, and compliance readiness to establish a clear path forward.",
     icon: Search,
   },
   {
     title: "Professional Validation",
-    description: "Deploy AI with confidence.",
-    subtext: "Our rigorous testing ensures performance, reliability, and compliance.",
+    headline: "Ensure AI Reliability",
+    description: "In-depth validation of your AI system's performance, accuracy, and compliance through our proven testing framework.",
     icon: Shield,
   },
   {
     title: "Enterprise Solution",
-    description: "Scale your AI initiatives securely.",
-    subtext: "We provide continuous quality assurance and expert support.",
+    headline: "End-to-End AI Quality",
+    description: "Complete AI validation suite for complex implementations, featuring custom frameworks and continuous monitoring.",
     icon: Network,
   },
   {
     title: "Retainer Services",
-    description: "Focus on innovation, not quality concerns.",
-    subtext: "We proactively monitor and optimize your AI systems.",
+    headline: "Ongoing Excellence",
+    description: "Continuous quality assurance and optimization to ensure your AI systems maintain peak performance and compliance.",
     icon: Clock,
   }
 ];
@@ -42,9 +42,11 @@ const IconWrapper = ({ children }: { children: React.ReactNode }) => (
     initial={{ scale: 1 }}
     whileHover={{ scale: 1.1 }}
     transition={{ duration: 0.2 }}
-    className="text-primary/90 bg-primary/5 p-4 rounded-lg shadow-sm"
+    className="relative"
   >
-    {children}
+    <div className="w-16 h-16 flex items-center justify-center">
+      {children}
+    </div>
   </motion.div>
 );
 
@@ -70,15 +72,20 @@ export function ServicesOverview() {
               <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:border-primary/50">
                 <CardHeader className="space-y-6">
                   <IconWrapper>
-                    <service.icon className="h-12 w-12 stroke-[1.5]" />
+                    <service.icon 
+                      className="h-12 w-12 stroke-[1.5] text-primary" 
+                      style={{
+                        filter: "drop-shadow(0 0 8px rgba(11, 36, 71, 0.2))"
+                      }}
+                    />
                   </IconWrapper>
-                  <CardTitle className="text-xl">{service.title}</CardTitle>
+                  <div>
+                    <CardTitle className="text-xl mb-2">{service.title}</CardTitle>
+                    <p className="text-lg font-medium text-primary/80">{service.headline}</p>
+                  </div>
                   <CardDescription className="text-sm">
-                    <p className="font-medium text-foreground/90 mb-3">
-                      {service.description}
-                    </p>
                     <p className="text-muted-foreground">
-                      {service.subtext}
+                      {service.description}
                     </p>
                   </CardDescription>
                 </CardHeader>
