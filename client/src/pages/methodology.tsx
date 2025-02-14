@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { QualityScore } from "@/components/framework/quality-score";
+import { ArrowRight, Target, Shield, Settings, Activity } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -7,75 +8,170 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+
+const PhaseCard = ({ phase, title, description, icon: Icon, isLast = false }) => (
+  <div className="relative">
+    <Card className="relative z-10 hover:shadow-lg transition-shadow duration-200">
+      <CardHeader>
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-lg bg-primary/10">
+            <Icon className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <div className="text-sm font-medium text-muted-foreground">Phase {phase}</div>
+            <CardTitle className="text-xl">{title}</CardTitle>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground">{description}</p>
+      </CardContent>
+    </Card>
+    {!isLast && (
+      <div className="absolute top-1/2 -right-8 transform -translate-y-1/2 z-0 hidden md:block">
+        <ArrowRight className="h-6 w-6 text-primary/30" />
+      </div>
+    )}
+  </div>
+);
+
+const ScoreLevel = ({ level, range, description, score }) => (
+  <div className="flex items-center gap-4 p-4 rounded-lg hover:bg-accent transition-colors">
+    <Progress value={score} className="w-24 h-2" />
+    <div>
+      <div className="font-medium">{level}</div>
+      <div className="text-sm text-muted-foreground">{range}</div>
+      <div className="text-sm text-muted-foreground">{description}</div>
+    </div>
+  </div>
+);
 
 export default function Methodology() {
+  const phases = [
+    {
+      phase: 1,
+      title: "Assessment",
+      description: "Deep dive into your AI system's architecture, analyzing requirements, evaluating risks, and establishing quality baselines.",
+      icon: Target,
+    },
+    {
+      phase: 2,
+      title: "Validation",
+      description: "Rigorous testing of your AI system, including model performance, output quality verification, and bias detection.",
+      icon: Shield,
+    },
+    {
+      phase: 3,
+      title: "Optimization",
+      description: "Focus on enhancing performance, optimizing resources, and refining processes for maximum efficiency.",
+      icon: Settings,
+    },
+    {
+      phase: 4,
+      title: "Monitoring",
+      description: "Continuous quality tracking and performance monitoring to ensure long-term success.",
+      icon: Activity,
+    },
+  ];
+
+  const scoreLevels = [
+    {
+      level: "Exceptional",
+      range: "95-100",
+      description: "Outstanding performance across all dimensions",
+      score: 100,
+    },
+    {
+      level: "Excellent",
+      range: "85-94",
+      description: "Strong performance and high reliability",
+      score: 90,
+    },
+    {
+      level: "Good",
+      range: "70-84",
+      description: "Satisfactory performance with room for optimization",
+      score: 80,
+    },
+    {
+      level: "Needs Improvement",
+      range: "50-69",
+      description: "Notable areas requiring attention",
+      score: 60,
+    },
+    {
+      level: "Unsatisfactory",
+      range: "0-49",
+      description: "Significant deficiencies requiring immediate action",
+      score: 40,
+    },
+  ];
+
   return (
-    <div className="container py-16">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-3xl mx-auto text-center mb-16"
-      >
-        <h1 className="text-4xl font-bold mb-4">Our Methodology</h1>
-        <p className="text-lg text-muted-foreground">
-          The ModelProof Framework™ ensures comprehensive AI validation
-        </p>
-      </motion.div>
-
-      <div className="grid gap-8 mb-16">
-        <Card>
-          <CardHeader>
-            <CardTitle>Phase 1: Assessment</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              We begin with a deep dive into your AI system's architecture,
-              analyzing requirements, evaluating risks, and establishing quality
-              baselines.
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <div className="relative bg-primary text-white py-24">
+        <div className="absolute inset-0 opacity-10">
+          <svg className="w-full h-full">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
+        <div className="container relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-3xl mx-auto text-center"
+          >
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              The ModelProof Framework™
+            </h1>
+            <p className="text-xl text-white/80 leading-relaxed">
+              Our proprietary, structured approach to AI quality assurance ensures a rigorous 
+              and comprehensive validation process that delivers reliable and trustworthy AI systems.
             </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Phase 2: Validation</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              Rigorous testing of your AI system, including model performance,
-              output quality verification, and bias detection.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Phase 3: Optimization</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              Focus on enhancing performance, optimizing resources, and refining
-              processes for maximum efficiency.
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Phase 4: Monitoring</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              Continuous quality tracking and performance monitoring to ensure
-              long-term success.
-            </p>
-          </CardContent>
-        </Card>
+          </motion.div>
+        </div>
       </div>
 
-      <div className="mb-16">
-        <h2 className="text-2xl font-bold mb-8">ModelProof Quality Score™</h2>
-        <QualityScore />
+      {/* Framework Phases Section */}
+      <div className="container py-24">
+        <h2 className="text-3xl font-bold text-center mb-16">Our Framework Phases</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
+          {phases.map((phase, index) => (
+            <PhaseCard
+              key={phase.phase}
+              {...phase}
+              isLast={index === phases.length - 1}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Quality Score Section */}
+      <div className="container py-24 bg-accent/30">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-16">ModelProof Quality Score™</h2>
+          <QualityScore />
+        </div>
+      </div>
+
+      {/* Score Interpretation Scale */}
+      <div className="container py-24">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-16">Score Interpretation Scale</h2>
+          <div className="space-y-4">
+            {scoreLevels.map((level) => (
+              <ScoreLevel key={level.level} {...level} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
