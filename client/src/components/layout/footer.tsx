@@ -10,24 +10,32 @@ export function Footer() {
             <h3 className="text-xl font-semibold mb-6 text-foreground">Services</h3>
             <ul className="space-y-4">
               <li>
-                <a href="/services#essential" className="text-gray-500 hover:text-[#19376D] transition-colors">
-                  Essential Assessment
-                </a>
+                <Link href="/services/essential-assessment">
+                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                    Essential Assessment
+                  </span>
+                </Link>
               </li>
               <li>
-                <a href="/services#professional" className="text-gray-500 hover:text-[#19376D] transition-colors">
-                  Professional Validation
-                </a>
+                <Link href="/services/professional-validation">
+                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                    Professional Validation
+                  </span>
+                </Link>
               </li>
               <li>
-                <a href="/services#enterprise" className="text-gray-500 hover:text-[#19376D] transition-colors">
-                  Enterprise Solution
-                </a>
+                <Link href="/services/enterprise-solution">
+                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                    Enterprise Solution
+                  </span>
+                </Link>
               </li>
               <li>
-                <a href="/services#retainer" className="text-gray-500 hover:text-[#19376D] transition-colors">
-                  Retainer Services
-                </a>
+                <Link href="/services/retainer-services">
+                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                    Retainer Services
+                  </span>
+                </Link>
               </li>
             </ul>
           </div>

@@ -16,24 +16,28 @@ const services = [
     headline: "Foundation for AI Excellence",
     description: "Comprehensive analysis of your AI system's architecture, quality, and compliance readiness to establish a clear path forward.",
     icon: Search,
+    path: "/services/essential-assessment"
   },
   {
     title: "Professional Validation",
     headline: "Ensure AI Reliability",
     description: "In-depth validation of your AI system's performance, accuracy, and compliance through our proven testing framework.",
     icon: Shield,
+    path: "/services/professional-validation"
   },
   {
     title: "Enterprise Solution",
     headline: "End-to-End AI Quality",
     description: "Complete AI validation suite for complex implementations, featuring custom frameworks and continuous monitoring.",
     icon: Network,
+    path: "/services/enterprise-solution"
   },
   {
     title: "Retainer Services",
     headline: "Ongoing Excellence",
     description: "Continuous quality assurance and optimization to ensure your AI systems maintain peak performance and compliance.",
     icon: Clock,
+    path: "/services/retainer-services"
   }
 ];
 
@@ -90,7 +94,7 @@ export function ServicesOverview() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="mt-auto pt-6">
-                  <Link href="/services">
+                  <Link href={service.path}>
                     <Button
                       onClick={() => window.scrollTo(0, 0)}
                       className="w-full bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-lg transform transition-all duration-300 hover:-translate-y-0.5"
