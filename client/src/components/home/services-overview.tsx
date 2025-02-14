@@ -57,7 +57,7 @@ export function ServicesOverview() {
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold">Our Services</h2>
           <p className="mt-4 text-muted-foreground">
-            We offer comprehensive, tailored AI validation solutions to ensure the quality, reliability, and ethical compliance of your AI systems.
+            Elevating AI systems through expert validation, ensuring quality, reliability, and ethical excellence.
           </p>
         </div>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
