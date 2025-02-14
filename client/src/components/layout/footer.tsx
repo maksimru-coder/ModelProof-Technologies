@@ -4,38 +4,30 @@ export function Footer() {
   return (
     <footer className="border-t">
       <div className="container py-8 md:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Services Section */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/services#essential">
-                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
-                    Essential Assessment
-                  </span>
-                </Link>
+                <a href="/services#essential" className="text-muted-foreground hover:text-primary cursor-pointer">
+                  Essential Assessment
+                </a>
               </li>
               <li>
-                <Link href="/services#professional">
-                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
-                    Professional Validation
-                  </span>
-                </Link>
+                <a href="/services#professional" className="text-muted-foreground hover:text-primary cursor-pointer">
+                  Professional Validation
+                </a>
               </li>
               <li>
-                <Link href="/services#enterprise">
-                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
-                    Enterprise Solution
-                  </span>
-                </Link>
+                <a href="/services#enterprise" className="text-muted-foreground hover:text-primary cursor-pointer">
+                  Enterprise Solution
+                </a>
               </li>
               <li>
-                <Link href="/services#retainer">
-                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
-                    Retainer Services
-                  </span>
-                </Link>
+                <a href="/services#retainer" className="text-muted-foreground hover:text-primary cursor-pointer">
+                  Retainer Services
+                </a>
               </li>
             </ul>
           </div>
@@ -74,49 +66,25 @@ export function Footer() {
               </li>
             </ul>
           </div>
-
-          {/* Contact Information */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <ul className="space-y-2">
-              <li className="text-muted-foreground">
-                Email: <a href="mailto:contact@modelproof.ai" className="hover:text-primary">
-                  contact@modelproof.ai
-                </a>
-              </li>
-              <li className="text-muted-foreground">
-                Location: San Francisco Bay Area
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/privacy">
-                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
-                    Privacy Policy
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms">
-                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
-                    Terms of Service
-                  </span>
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
 
-        {/* Copyright Notice */}
-        <div className="mt-12 pt-8 border-t">
-          <p className="text-center text-sm text-muted-foreground">
+        {/* Copyright Notice with Privacy and Terms */}
+        <div className="mt-12 pt-8 border-t text-center">
+          <p className="text-sm text-muted-foreground mb-2">
             © {new Date().getFullYear()} ModelProof Technologies LLC. All rights reserved.
           </p>
+          <div className="text-xs space-x-4">
+            <Link href="/privacy">
+              <span className="text-muted-foreground hover:text-primary cursor-pointer">
+                Privacy Policy
+              </span>
+            </Link>
+            <Link href="/terms">
+              <span className="text-muted-foreground hover:text-primary cursor-pointer">
+                Terms of Service
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
