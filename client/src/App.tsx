@@ -10,6 +10,10 @@ import Methodology from "@/pages/methodology";
 import About from "@/pages/about";
 import Contact from "@/pages/contact";
 import NotFound from "@/pages/not-found";
+import EssentialAssessment from "@/pages/services/essential-assessment";
+import ProfessionalValidation from "@/pages/services/professional-validation";
+import EnterpriseSolution from "@/pages/services/enterprise-solution";
+import RetainerServices from "@/pages/services/retainer-services";
 
 function Router() {
   return (
@@ -19,6 +23,10 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/services" component={Services} />
+          <Route path="/services/essential-assessment" component={EssentialAssessment} />
+          <Route path="/services/professional-validation" component={ProfessionalValidation} />
+          <Route path="/services/enterprise-solution" component={EnterpriseSolution} />
+          <Route path="/services/retainer-services" component={RetainerServices} />
           <Route path="/methodology" component={Methodology} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />

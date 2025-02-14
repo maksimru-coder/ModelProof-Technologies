@@ -22,7 +22,6 @@ export function Header() {
   ];
 
   const links = [
-    { href: "/", label: "Home" },
     { href: "/methodology", label: "Methodology" },
     { href: "/about", label: "About" },
   ];
