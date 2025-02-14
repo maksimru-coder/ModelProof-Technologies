@@ -25,7 +25,7 @@ export default function Services() {
       >
         <h1 className="text-4xl font-bold mb-4">Our Services</h1>
         <p className="text-lg text-muted-foreground">
-          Comprehensive AI validation services tailored to your needs
+          Comprehensive AI validation services tailored to your organization's needs
         </p>
       </motion.div>
 
@@ -34,16 +34,29 @@ export default function Services() {
           <CardHeader>
             <CardTitle>Essential Assessment</CardTitle>
             <CardDescription>
-              Starting at $10,000 - Perfect for initial AI quality evaluation
+              Uncover the hidden potential of your AI
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="mb-4">
-              Get a foundational overview of your AI system's quality and
-              readiness with our Essential Assessment package.
+            <p className="mb-6">
+              Our Essential Assessment provides a rapid, comprehensive evaluation of your AI system's foundation. We establish clear quality baselines, pinpoint critical risks, and identify immediate opportunities for optimization – setting your AI initiatives up for success.
             </p>
+            <ul className="space-y-3 mb-6">
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">AI Architecture Deep Dive: Thorough analysis of your AI system's architecture, data flows, and dependencies</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Data Quality & Bias Evaluation: Rigorous assessment of your training data</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Performance Baseline Definition: Establishing key performance indicators (KPIs)</span>
+              </li>
+            </ul>
             <Link href="/contact">
-              <Button>Get Started</Button>
+              <Button className="w-full">Get Started</Button>
             </Link>
           </CardContent>
         </Card>
@@ -52,16 +65,29 @@ export default function Services() {
           <CardHeader>
             <CardTitle>Professional Validation</CardTitle>
             <CardDescription>
-              Starting at $20,000 - Comprehensive testing and validation
+              Deploy AI with confidence
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="mb-4">
-              In-depth testing and analysis of your AI system's performance,
-              reliability, and compliance.
+            <p className="mb-6">
+              Our Professional Validation service provides in-depth testing and analysis, ensuring your AI systems meet the highest standards of performance, reliability, and compliance. We minimize risks and maximize your AI's potential.
             </p>
+            <ul className="space-y-3 mb-6">
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Performance & Reliability Testing: Comprehensive testing under diverse conditions</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Bias Detection & Mitigation: Advanced techniques to identify and quantify bias</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Custom Test Suite Design: Tailored test cases for your unique AI system</span>
+              </li>
+            </ul>
             <Link href="/contact">
-              <Button>Get Started</Button>
+              <Button className="w-full">Get Started</Button>
             </Link>
           </CardContent>
         </Card>
@@ -70,16 +96,29 @@ export default function Services() {
           <CardHeader>
             <CardTitle>Enterprise Solution</CardTitle>
             <CardDescription>
-              Starting at $50,000 - Custom end-to-end validation
+              Scale your AI initiatives with confidence
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="mb-4">
-              Tailored solution for large-scale, complex AI projects requiring
-              continuous quality assurance.
+            <p className="mb-6">
+              Our Enterprise Solutions provide end-to-end strategic partnership for complex AI implementations. We deliver continuous quality assurance, strategic optimization, and full compliance management, empowering you to scale your AI deployments securely and effectively.
             </p>
+            <ul className="space-y-3 mb-6">
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Custom AI Testing Frameworks: Bespoke solutions aligned with your needs</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Automated Test Suite Development: Continuous monitoring and validation</span>
+              </li>
+              <li className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Real-time Performance Monitoring & Alerts: Proactive system tracking</span>
+              </li>
+            </ul>
             <Link href="/contact">
-              <Button>Get Started</Button>
+              <Button className="w-full">Get Started</Button>
             </Link>
           </CardContent>
         </Card>
