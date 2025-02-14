@@ -14,49 +14,55 @@ const services = [
   {
     title: "Essential Assessment",
     description:
-      "Comprehensive evaluation of your AI system's foundation, establishing quality baselines and identifying key optimization opportunities.",
+      "Uncover the hidden potential of your AI. Our Essential Assessment provides a rapid, comprehensive evaluation of your AI system's foundation. We establish clear quality baselines, pinpoint critical risks, and identify immediate opportunities for optimization – setting your AI initiatives up for success.",
     icon: Shield,
     benefits: [
-      "Thorough system architecture analysis",
-      "Quality baseline establishment",
-      "Risk evaluation framework",
-      "Initial compliance assessment"
+      "AI Architecture Deep Dive: Thorough analysis of your AI system's architecture, data flows, and dependencies to reveal potential bottlenecks and vulnerabilities.",
+      "Data Quality & Bias Evaluation: Rigorous assessment of your training data for accuracy, completeness, consistency, and bias, identifying areas for data refinement.",
+      "Performance Baseline Definition: Establishing key performance indicators (KPIs) and benchmarks for your AI system's accuracy, efficiency, and reliability.",
+      "Risk Landscape Mapping: Identifying and prioritizing potential risks to your AI system's performance, safety, and compliance, enabling a targeted mitigation strategy.",
+      "Actionable Optimization Roadmap: Delivering a clear, prioritized plan of action to enhance your AI system's quality, performance, and compliance."
     ]
   },
   {
     title: "Professional Validation",
     description:
-      "Advanced validation suite delivering in-depth analysis of your AI system's performance, reliability, and compliance measures.",
+      "Deploy AI with confidence. Our Professional Validation service provides in-depth testing and analysis, ensuring your AI systems meet the highest standards of performance, reliability, and compliance. We minimize risks and maximize your AI's potential.",
     icon: LineChart,
     benefits: [
-      "Comprehensive performance testing",
-      "Detailed quality metrics",
-      "Custom validation frameworks",
-      "Compliance documentation"
+      "Performance & Reliability Testing: Comprehensive testing to evaluate your AI system's accuracy, speed, and robustness under diverse conditions and workloads.",
+      "Bias Detection & Mitigation: Advanced techniques to identify and quantify bias in your AI models and data, along with practical mitigation strategies.",
+      "Compliance & Standards Verification: A detailed assessment of your AI system's adherence to relevant industry regulations, ethical guidelines, and best practices.",
+      "Custom Test Suite Design: Development of tailored test cases to address the unique characteristics and potential vulnerabilities of your AI system.",
+      "Detailed Reporting & Analysis: Providing comprehensive reports on testing results, performance analysis, and compliance findings, with clear recommendations for improvement."
     ]
   },
   {
     title: "Enterprise Solution",
-    description: "End-to-end strategic partnership for complex AI implementations requiring continuous quality assurance and optimization.",
+    description:
+      "Scale your AI initiatives with unwavering confidence. Our Enterprise Solutions provide end-to-end strategic partnership for complex AI implementations. We deliver continuous quality assurance, strategic optimization, and full compliance management, empowering you to scale your AI deployments securely and effectively.",
     icon: Network,
     benefits: [
-      "Custom testing frameworks",
-      "Continuous monitoring",
-      "Strategic optimization",
-      "Full compliance management"
+      "Custom AI Testing Frameworks: Design and implementation of bespoke AI testing frameworks aligned with your organization's specific needs, workflows, and risk appetite.",
+      "Automated Test Suite Development: Building and deploying automated test suites for continuous monitoring and validation of your AI systems, ensuring ongoing quality.",
+      "Seamless System Integration: Integration of AI testing processes into your existing development, deployment, and operational workflows for streamlined efficiency.",
+      "Real-time Performance Monitoring & Alerts: Setting up intelligent dashboards and alert systems to track key AI system metrics and proactively identify performance anomalies.",
+      "Dedicated Expert Support & Consultation: Ongoing expert guidance and support to ensure the long-term quality, reliability, and compliance of your enterprise AI deployments."
     ]
   },
   {
     title: "Retainer Services",
-    description: "Ongoing strategic partnership ensuring continuous quality improvement and validation of your AI systems.",
+    description:
+      "Focus on innovation, not quality concerns. Our Retainer Services provide proactive AI monitoring, continuous improvement, and rapid issue resolution. We ensure your AI systems consistently deliver exceptional results, allowing you to concentrate on what matters most: driving your business forward.",
     icon: Clock,
     benefits: [
-      "Regular quality assessments",
-      "Proactive optimization",
-      "Continuous compliance monitoring",
-      "Priority support access"
+      "Proactive AI Health Monitoring: Continuous surveillance of your AI systems in production to detect and resolve potential issues before they impact your operations.",
+      "Regular Performance Reporting & Insights: Providing regular, in-depth reports on key AI system metrics, performance trends, and actionable insights for optimization.",
+      "Rapid Response & Issue Resolution: Prioritized support and swift resolution of any AI system issues or incidents, minimizing downtime and maximizing business continuity.",
+      "Continuous Improvement & Optimization: Proactive recommendations for enhancing your AI systems' performance, reliability, and compliance based on ongoing analysis and best practices.",
+      "Dedicated AI Quality Partner: Access to a dedicated AI quality assurance expert who understands your business and AI systems, providing personalized support and strategic guidance."
     ]
-  },
+  }
 ];
 
 const IconWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -95,15 +101,15 @@ export function ServicesOverview() {
                     <service.icon className="h-12 w-12" />
                   </IconWrapper>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
-                  <CardDescription className="text-sm min-h-[60px]">
+                  <CardDescription className="text-sm">
                     {service.description}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex-grow flex flex-col">
                   <ul className="mt-4 space-y-3 flex-grow mb-6">
-                    {service.benefits.map((benefit) => (
+                    {service.benefits.map((benefit, index) => (
                       <motion.li
-                        key={benefit}
+                        key={index}
                         className="flex items-start text-sm text-muted-foreground"
                         whileHover={{ x: 4 }}
                         transition={{ duration: 0.2 }}
