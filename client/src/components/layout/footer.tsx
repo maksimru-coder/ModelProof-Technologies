@@ -4,63 +4,118 @@ export function Footer() {
   return (
     <footer className="border-t">
       <div className="container py-8 md:py-12">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Services Section */}
           <div>
-            <h3 className="text-lg font-semibold">Services</h3>
-            <ul className="mt-4 space-y-2">
+            <h3 className="text-lg font-semibold mb-4">Services</h3>
+            <ul className="space-y-2">
               <li>
                 <Link href="/services#essential">
-                  <a className="text-muted-foreground hover:text-primary">
+                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
                     Essential Assessment
-                  </a>
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/services#professional">
-                  <a className="text-muted-foreground hover:text-primary">
+                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
                     Professional Validation
-                  </a>
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/services#enterprise">
-                  <a className="text-muted-foreground hover:text-primary">
+                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
                     Enterprise Solution
-                  </a>
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/services#retainer">
+                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
+                    Retainer Services
+                  </span>
                 </Link>
               </li>
             </ul>
           </div>
+
+          {/* Company Section */}
           <div>
-            <h3 className="text-lg font-semibold">Company</h3>
-            <ul className="mt-4 space-y-2">
+            <h3 className="text-lg font-semibold mb-4">Company</h3>
+            <ul className="space-y-2">
               <li>
                 <Link href="/about">
-                  <a className="text-muted-foreground hover:text-primary">
+                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
                     About Us
-                  </a>
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/methodology">
-                  <a className="text-muted-foreground hover:text-primary">
+                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
                     Our Methodology
-                  </a>
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link href="/contact">
-                  <a className="text-muted-foreground hover:text-primary">
+                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
                     Contact
-                  </a>
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/careers">
+                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
+                    Careers
+                  </span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Information */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+            <ul className="space-y-2">
+              <li className="text-muted-foreground">
+                Email: <a href="mailto:contact@modelproof.ai" className="hover:text-primary">
+                  contact@modelproof.ai
+                </a>
+              </li>
+              <li className="text-muted-foreground">
+                Location: San Francisco Bay Area
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal Section */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Legal</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/privacy">
+                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
+                    Privacy Policy
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms">
+                  <span className="text-muted-foreground hover:text-primary cursor-pointer">
+                    Terms of Service
+                  </span>
                 </Link>
               </li>
             </ul>
           </div>
         </div>
-        <div className="mt-8 border-t pt-8">
+
+        {/* Copyright Notice */}
+        <div className="mt-12 pt-8 border-t">
           <p className="text-center text-sm text-muted-foreground">
-            <span className="text-sm font-light">© {new Date().getFullYear()} ModelProof Technologies LLC. All rights reserved.</span>
+            © {new Date().getFullYear()} ModelProof Technologies LLC. All rights reserved.
           </p>
         </div>
       </div>
