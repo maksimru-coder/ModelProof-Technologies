@@ -133,7 +133,7 @@ export default function Methodology() {
               The ModelProof Framework™
             </h1>
             <p className="text-xl text-white/80 leading-relaxed">
-              Our proprietary, structured approach to AI quality assurance ensures a rigorous 
+              Our proprietary, structured approach to AI quality assurance ensures a rigorous
               and comprehensive validation process that delivers reliable and trustworthy AI systems.
             </p>
           </motion.div>
@@ -157,7 +157,14 @@ export default function Methodology() {
       {/* Quality Score Section */}
       <div className="container py-24 bg-accent/30">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-16">ModelProof Quality Score™</h2>
+          <h2 className="text-3xl font-bold text-center mb-6">ModelProof Quality Score™</h2>
+          <p className="text-lg text-muted-foreground text-center max-w-4xl mx-auto mb-16">
+            The ModelProof Quality Score™ is a comprehensive metric used throughout all phases of our validation
+            to provide an overall rating of the quality of your AI system across four key dimensions
+            (Technical Quality, Business Impact, Risk & Safety, and Operational Excellence).
+            This score is reported throughout our engagement to provide a clear and transparent way
+            to measure AI system quality:
+          </p>
           <QualityScore />
         </div>
       </div>
