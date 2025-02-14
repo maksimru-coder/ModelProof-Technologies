@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { ComparisonMatrix } from "@/components/services/comparison-matrix";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { ArrowRight, Search, Shield, Network, Clock } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -10,6 +11,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+const ServiceIcon = ({ children }: { children: React.ReactNode }) => (
+  <div className="w-16 h-16 mb-6 flex items-center justify-center">
+    {children}
+  </div>
+);
 
 export default function Services() {
   useEffect(() => {
@@ -32,132 +39,217 @@ export default function Services() {
       <div className="grid gap-8 mb-16">
         <Card id="essential">
           <CardHeader>
-            <CardTitle>Essential Assessment</CardTitle>
-            <CardDescription>
+            <ServiceIcon>
+              <Search className="h-12 w-12 stroke-[1.5] text-primary" 
+                style={{
+                  filter: "drop-shadow(0 0 8px rgba(11, 36, 71, 0.2))"
+                }}
+              />
+            </ServiceIcon>
+            <CardTitle className="text-2xl mb-2">Essential Assessment</CardTitle>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">
               Uncover the hidden potential of your AI
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="mb-6">
+            <p className="mb-6 text-muted-foreground">
               Our Essential Assessment provides a rapid, comprehensive evaluation of your AI system's foundation. We establish clear quality baselines, pinpoint critical risks, and identify immediate opportunities for optimization – setting your AI initiatives up for success.
             </p>
-            <ul className="space-y-3 mb-6">
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">AI Architecture Deep Dive: Thorough analysis of your AI system's architecture, data flows, and dependencies</span>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">AI Architecture Deep Dive:</span> Thorough analysis of your AI system's architecture, data flows, and dependencies
+                </span>
               </li>
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Data Quality & Bias Evaluation: Rigorous assessment of your training data</span>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Data Quality & Bias Evaluation:</span> Rigorous assessment of your training data
+                </span>
               </li>
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Performance Baseline Definition: Establishing key performance indicators (KPIs)</span>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Performance Baseline Definition:</span> Establishing key performance indicators (KPIs)
+                </span>
               </li>
             </ul>
-            <Link href="/contact">
-              <Button className="w-full">Get Started</Button>
-            </Link>
+            <div className="flex justify-center">
+              <Link href="/contact">
+                <Button 
+                  className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+                >
+                  Get Started
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
 
         <Card id="professional">
           <CardHeader>
-            <CardTitle>Professional Validation</CardTitle>
-            <CardDescription>
+            <ServiceIcon>
+              <Shield className="h-12 w-12 stroke-[1.5] text-primary"
+                style={{
+                  filter: "drop-shadow(0 0 8px rgba(11, 36, 71, 0.2))"
+                }}
+              />
+            </ServiceIcon>
+            <CardTitle className="text-2xl mb-2">Professional Validation</CardTitle>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">
               Deploy AI with confidence
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="mb-6">
+            <p className="mb-6 text-muted-foreground">
               Our Professional Validation service provides in-depth testing and analysis, ensuring your AI systems meet the highest standards of performance, reliability, and compliance. We minimize risks and maximize your AI's potential.
             </p>
-            <ul className="space-y-3 mb-6">
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Performance & Reliability Testing: Comprehensive testing under diverse conditions</span>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Performance & Reliability Testing:</span> Comprehensive testing under diverse conditions
+                </span>
               </li>
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Bias Detection & Mitigation: Advanced techniques to identify and quantify bias</span>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Bias Detection & Mitigation:</span> Advanced techniques to identify and quantify bias
+                </span>
               </li>
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Custom Test Suite Design: Tailored test cases for your unique AI system</span>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Custom Test Suite Design:</span> Tailored test cases for your unique AI system
+                </span>
               </li>
             </ul>
-            <Link href="/contact">
-              <Button className="w-full">Get Started</Button>
-            </Link>
+            <div className="flex justify-center">
+              <Link href="/contact">
+                <Button 
+                  className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+                >
+                  Get Started
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
 
         <Card id="enterprise">
           <CardHeader>
-            <CardTitle>Enterprise Solution</CardTitle>
-            <CardDescription>
+            <ServiceIcon>
+              <Network className="h-12 w-12 stroke-[1.5] text-primary"
+                style={{
+                  filter: "drop-shadow(0 0 8px rgba(11, 36, 71, 0.2))"
+                }}
+              />
+            </ServiceIcon>
+            <CardTitle className="text-2xl mb-2">Enterprise Solution</CardTitle>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">
               Scale your AI initiatives with confidence
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="mb-6">
+            <p className="mb-6 text-muted-foreground">
               Our Enterprise Solutions provide end-to-end strategic partnership for complex AI implementations. We deliver continuous quality assurance, strategic optimization, and full compliance management, empowering you to scale your AI deployments securely and effectively.
             </p>
-            <ul className="space-y-3 mb-6">
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Custom AI Testing Frameworks: Bespoke solutions aligned with your needs</span>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Custom AI Testing Frameworks:</span> Bespoke solutions aligned with your needs
+                </span>
               </li>
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Automated Test Suite Development: Continuous monitoring and validation</span>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Automated Test Suite Development:</span> Continuous monitoring and validation
+                </span>
               </li>
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Real-time Performance Monitoring & Alerts: Proactive system tracking</span>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Real-time Performance Monitoring & Alerts:</span> Proactive system tracking
+                </span>
               </li>
             </ul>
-            <Link href="/contact">
-              <Button className="w-full">Get Started</Button>
-            </Link>
+            <div className="flex justify-center">
+              <Link href="/contact">
+                <Button 
+                  className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+                >
+                  Get Started
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
+
         <Card id="retainer">
           <CardHeader>
-            <CardTitle>Retainer Services</CardTitle>
-            <CardDescription>
+            <ServiceIcon>
+              <Clock className="h-12 w-12 stroke-[1.5] text-primary"
+                style={{
+                  filter: "drop-shadow(0 0 8px rgba(11, 36, 71, 0.2))"
+                }}
+              />
+            </ServiceIcon>
+            <CardTitle className="text-2xl mb-2">Retainer Services</CardTitle>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">
               Focus on innovation, not quality concerns
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="mb-6">
+            <p className="mb-6 text-muted-foreground">
               Our Retainer Services provide proactive AI monitoring, continuous improvement, and rapid issue resolution. We ensure your AI systems consistently deliver exceptional results, allowing you to concentrate on what matters most: driving your business forward.
             </p>
-            <ul className="space-y-3 mb-6">
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Proactive AI Health Monitoring: Continuous surveillance of your AI systems in production</span>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Proactive AI Health Monitoring:</span> Continuous surveillance of your AI systems in production
+                </span>
               </li>
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Regular Performance Reporting & Insights: In-depth reports on key metrics and trends</span>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Regular Performance Reporting & Insights:</span> In-depth reports on key metrics and trends
+                </span>
               </li>
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Rapid Response & Issue Resolution: Prioritized support and swift incident resolution</span>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Rapid Response & Issue Resolution:</span> Prioritized support and swift incident resolution
+                </span>
               </li>
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Continuous Improvement & Optimization: Proactive recommendations based on ongoing analysis</span>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Continuous Improvement & Optimization:</span> Proactive recommendations based on ongoing analysis
+                </span>
               </li>
-              <li className="flex items-start space-x-3">
-                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                <span className="text-muted-foreground">Dedicated AI Quality Partner: Access to an expert who understands your business needs</span>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Dedicated AI Quality Partner:</span> Access to an expert who understands your business needs
+                </span>
               </li>
             </ul>
-            <Link href="/contact">
-              <Button className="w-full">Get Started</Button>
-            </Link>
+            <div className="flex justify-center">
+              <Link href="/contact">
+                <Button 
+                  className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+                >
+                  Get Started
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
       </div>
