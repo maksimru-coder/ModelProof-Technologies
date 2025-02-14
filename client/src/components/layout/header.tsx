@@ -5,6 +5,8 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
@@ -12,9 +14,15 @@ import { Logo } from "./logo";
 export function Header() {
   const [location] = useLocation();
 
+  const serviceLinks = [
+    { href: "/services/essential-assessment", label: "Essential Assessment" },
+    { href: "/services/professional-validation", label: "Professional Validation" },
+    { href: "/services/enterprise-solution", label: "Enterprise Solution" },
+    { href: "/services/retainer-services", label: "Retainer Services" },
+  ];
+
   const links = [
     { href: "/", label: "Home" },
-    { href: "/services", label: "Services" },
     { href: "/methodology", label: "Methodology" },
     { href: "/about", label: "About" },
   ];
@@ -32,6 +40,34 @@ export function Header() {
         </Link>
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
+            {/* Services Dropdown */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[400px] gap-3 p-4">
+                  {serviceLinks.map((service) => (
+                    <li key={service.href}>
+                      <NavigationMenuLink
+                        asChild
+                        className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${
+                          location === service.href
+                            ? "bg-accent text-accent-foreground"
+                            : ""
+                        }`}
+                      >
+                        <Link href={service.href}>
+                          <div className="text-sm font-medium leading-none">
+                            {service.label}
+                          </div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            {/* Other Navigation Links */}
             {links.map((link) => (
               <NavigationMenuItem key={link.href}>
                 <NavigationMenuLink
