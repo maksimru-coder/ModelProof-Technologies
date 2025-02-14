@@ -42,7 +42,7 @@ const IconWrapper = ({ children }: { children: React.ReactNode }) => (
     initial={{ scale: 1 }}
     whileHover={{ scale: 1.1 }}
     transition={{ duration: 0.2 }}
-    className="text-primary"
+    className="text-primary/90 bg-primary/5 p-4 rounded-lg shadow-sm"
   >
     {children}
   </motion.div>
@@ -68,23 +68,25 @@ export function ServicesOverview() {
               className="h-full"
             >
               <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:border-primary/50">
-                <CardHeader className="space-y-4">
+                <CardHeader className="space-y-6">
                   <IconWrapper>
-                    <service.icon className="h-12 w-12" />
+                    <service.icon className="h-12 w-12 stroke-[1.5]" />
                   </IconWrapper>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
                   <CardDescription className="text-sm">
-                    {service.description}
-                    <p className="mt-2 text-muted-foreground">
+                    <p className="font-medium text-foreground/90 mb-3">
+                      {service.description}
+                    </p>
+                    <p className="text-muted-foreground">
                       {service.subtext}
                     </p>
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="mt-auto">
+                <CardContent className="mt-auto pt-6">
                   <Link href="/services">
                     <Button
                       onClick={() => window.scrollTo(0, 0)}
-                      className="w-full bg-primary/10 hover:bg-primary/20 text-primary hover:text-primary transition-all duration-300"
+                      className="w-full bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-lg transform transition-all duration-300 hover:-translate-y-0.5"
                     >
                       Learn More
                     </Button>
