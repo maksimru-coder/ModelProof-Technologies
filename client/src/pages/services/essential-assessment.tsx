@@ -92,8 +92,9 @@ export default function EssentialAssessment() {
 
           <div className="mt-12 text-center">
             <Link href="/contact">
-              <Button 
+              <Button
                 size="lg"
+                onClick={() => window.scrollTo(0, 0)}
                 className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
               >
                 Get Started

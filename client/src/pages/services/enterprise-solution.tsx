@@ -119,6 +119,7 @@ export default function EnterpriseSolution() {
             <Link href="/contact">
               <Button 
                 size="lg"
+                onClick={() => window.scrollTo(0, 0)}
                 className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
               >
                 Get Started
