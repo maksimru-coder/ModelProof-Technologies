@@ -14,36 +14,42 @@ const features = [
     essential: true,
     professional: true,
     enterprise: true,
+    retainer: true,
   },
   {
     name: "Quality Baseline Establishment",
     essential: true,
     professional: true,
     enterprise: true,
+    retainer: true,
   },
   {
     name: "Model Performance Testing",
     essential: true,
     professional: true,
     enterprise: true,
+    retainer: true,
   },
   {
     name: "Bias Detection",
     essential: true,
     professional: true,
     enterprise: true,
+    retainer: true,
   },
   {
     name: "Custom Testing Framework",
     essential: false,
     professional: true,
     enterprise: true,
+    retainer: true,
   },
   {
     name: "Continuous Monitoring",
     essential: false,
     professional: false,
     enterprise: true,
+    retainer: true,
   },
 ];
 
@@ -56,6 +62,7 @@ export function ComparisonMatrix() {
           <TableHead className="text-center">Essential</TableHead>
           <TableHead className="text-center">Professional</TableHead>
           <TableHead className="text-center">Enterprise</TableHead>
+          <TableHead className="text-center">Retainer</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -78,6 +85,13 @@ export function ComparisonMatrix() {
             </TableCell>
             <TableCell className="text-center">
               {feature.enterprise ? (
+                <Check className="h-4 w-4 mx-auto text-primary" />
+              ) : (
+                <Minus className="h-4 w-4 mx-auto text-muted-foreground" />
+              )}
+            </TableCell>
+            <TableCell className="text-center">
+              {feature.retainer ? (
                 <Check className="h-4 w-4 mx-auto text-primary" />
               ) : (
                 <Minus className="h-4 w-4 mx-auto text-muted-foreground" />
