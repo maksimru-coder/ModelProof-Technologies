@@ -2,41 +2,10 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 
-const ParticleAnimation = () => {
-  return (
-    <div className="absolute inset-0 overflow-hidden">
-      {[...Array(30)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-4 h-4 bg-white/30 rounded-full shadow-glow"
-          style={{
-            boxShadow: '0 0 15px rgba(255,255,255,0.4), 0 0 30px rgba(255,255,255,0.2)'
-          }}
-          initial={{
-            x: Math.random() * 100 + "%",
-            y: Math.random() * 100 + "%",
-            scale: 0.5,
-          }}
-          animate={{
-            x: [Math.random() * 100 + "%", Math.random() * 100 + "%"],
-            y: [Math.random() * 100 + "%", Math.random() * 100 + "%"],
-            scale: [0.5, 1.2, 0.5],
-          }}
-          transition={{
-            duration: Math.random() * 20 + 15,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
 const NetworkGrid = () => {
   return (
     <div className="absolute inset-0">
-      <svg className="w-full h-full" style={{ opacity: 0.2 }}>
+      <svg className="w-full h-full" style={{ opacity: 0.1 }}>
         <defs>
           <pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
             <path 
@@ -44,7 +13,7 @@ const NetworkGrid = () => {
               fill="none" 
               stroke="currentColor" 
               strokeWidth="0.5"
-              className="animate-pulse"
+              className="text-white"
             />
           </pattern>
           <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
@@ -54,7 +23,7 @@ const NetworkGrid = () => {
               fill="none" 
               stroke="currentColor" 
               strokeWidth="1"
-              className="animate-pulse"
+              className="text-white"
             />
           </pattern>
         </defs>
@@ -67,9 +36,8 @@ const NetworkGrid = () => {
 export function Hero() {
   return (
     <div className="relative min-h-[80vh] flex items-center overflow-hidden">
-      <div className="absolute inset-0 primary-gradient opacity-90" />
+      <div className="absolute inset-0 bg-primary" />
       <NetworkGrid />
-      <ParticleAnimation />
       <div className="container relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -78,7 +46,7 @@ export function Hero() {
           className="mx-auto max-w-4xl text-center"
         >
           <motion.h1
-            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 bg-gradient-to-r from-white via-white/90 to-white/80 bg-clip-text text-transparent"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 text-white"
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
@@ -103,7 +71,7 @@ export function Hero() {
             <Link href="/services">
               <Button
                 size="lg"
-                className="px-6 py-3 font-semibold bg-white text-[#0B2447] hover:bg-[#A5D7E8] rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg"
               >
                 View Our Services
               </Button>
@@ -111,7 +79,7 @@ export function Hero() {
             <Link href="/methodology">
               <Button
                 size="lg"
-                className="px-6 py-3 font-semibold bg-white text-[#0B2447] hover:bg-[#A5D7E8] rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg"
+                className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg"
               >
                 Learn Our Methodology
               </Button>
