@@ -41,7 +41,9 @@ export function Header() {
           <NavigationMenuList>
             {/* Services Dropdown */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+              <NavigationMenuTrigger>
+                <Link href="/services">Services</Link>
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4">
                   {serviceLinks.map((service) => (
