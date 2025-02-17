@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Shield, Users, Lightbulb, Target } from "lucide-react";
+import { Shield, Users, Lightbulb, Target, Building2, Compass, Landmark, Stethoscope, Monitor, CircuitBoard } from "lucide-react";
 
 const values = [
   {
@@ -35,6 +35,29 @@ const values = [
   },
 ];
 
+const industries = [
+  {
+    icon: Landmark,
+    title: "FinTech & Financial Services",
+    description: "Ensuring reliable and compliant AI solutions in finance",
+  },
+  {
+    icon: Stethoscope,
+    title: "Healthcare & Medical Applications",
+    description: "Validating critical healthcare AI systems",
+  },
+  {
+    icon: Monitor,
+    title: "Enterprise Software",
+    description: "Quality assurance for enterprise-grade AI solutions",
+  },
+  {
+    icon: CircuitBoard,
+    title: "AI Product Companies",
+    description: "Comprehensive validation for AI-first products",
+  },
+];
+
 export default function About() {
   return (
     <div className="container py-16">
@@ -50,9 +73,14 @@ export default function About() {
       </motion.div>
 
       <div className="grid gap-8 md:grid-cols-2 mb-16">
-        <Card>
-          <CardHeader>
-            <CardTitle>Who We Are</CardTitle>
+        <Card className="hover:shadow-lg transition-all duration-200">
+          <CardHeader className="flex flex-row items-center gap-4">
+            <div className="p-3 rounded-lg bg-primary/10">
+              <Building2 className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <CardTitle>Who We Are</CardTitle>
+            </div>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
@@ -64,9 +92,14 @@ export default function About() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Our Mission</CardTitle>
+        <Card className="hover:shadow-lg transition-all duration-200">
+          <CardHeader className="flex flex-row items-center gap-4">
+            <div className="p-3 rounded-lg bg-primary/10">
+              <Compass className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <CardTitle>Our Mission</CardTitle>
+            </div>
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
@@ -89,7 +122,7 @@ export default function About() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="h-full">
+              <Card className="h-full hover:shadow-lg transition-all duration-200">
                 <CardHeader>
                   <value.icon className="h-10 w-10 text-primary mb-4" />
                   <CardTitle>{value.title}</CardTitle>
@@ -103,8 +136,8 @@ export default function About() {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto">
-        <Card>
+      <div className="max-w-5xl mx-auto">
+        <Card className="hover:shadow-lg transition-all duration-200">
           <CardHeader>
             <CardTitle>Industries We Serve</CardTitle>
             <CardDescription>
@@ -112,24 +145,26 @@ export default function About() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <ul className="grid gap-4 md:grid-cols-2">
-              <li className="flex items-center space-x-2">
-                <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>FinTech & Financial Services</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Healthcare & Medical Applications</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Enterprise Software</span>
-              </li>
-              <li className="flex items-center space-x-2">
-                <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>AI Product Companies</span>
-              </li>
-            </ul>
+            <div className="grid gap-6 md:grid-cols-2">
+              {industries.map((industry) => (
+                <Card 
+                  key={industry.title}
+                  className="hover:shadow-lg transition-all duration-200 border-0 shadow-none hover:bg-accent/50"
+                >
+                  <CardHeader className="flex flex-row items-center gap-4">
+                    <div className="p-3 rounded-lg bg-primary/10">
+                      <industry.icon className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-lg">{industry.title}</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{industry.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
