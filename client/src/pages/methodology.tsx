@@ -18,9 +18,9 @@ const PhaseCard = ({ phase, title, description, icon: Icon, isLast = false }) =>
           <div className="p-3 rounded-lg bg-primary/10">
             <Icon className="h-6 w-6 text-primary" />
           </div>
-          <div>
+          <div className="min-w-0"> {/* Add min-w-0 to enable text wrapping */}
             <div className="text-sm font-medium text-muted-foreground">Phase {phase}</div>
-            <CardTitle className="text-xl">{title}</CardTitle>
+            <CardTitle className="text-xl break-words">{title}</CardTitle>
           </div>
         </div>
       </CardHeader>
@@ -143,7 +143,7 @@ export default function Methodology() {
       {/* Framework Phases Section */}
       <div className="container py-24">
         <h2 className="text-3xl font-bold text-center mb-16">Our Framework Phases</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16 lg:gap-20 max-w-7xl mx-auto px-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-16 max-w-7xl mx-auto px-6">
           {phases.map((phase, index) => (
             <PhaseCard
               key={phase.phase}
