@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { QualityScore } from "@/components/framework/quality-score";
-import { ArrowRight, Target, Shield, Settings, Activity } from "lucide-react";
+import { ArrowRight, Target, Shield, Settings, Activity, LineChart, TrendingUp, BarChart3, GitMerge } from "lucide-react";
+import { Link } from "wouter";
 import {
   Card,
   CardContent,
@@ -8,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
 const PhaseCard = ({ phase, title, description, icon: Icon, isLast = false }) => (
@@ -18,7 +20,7 @@ const PhaseCard = ({ phase, title, description, icon: Icon, isLast = false }) =>
           <div className="p-3 rounded-lg bg-primary/10">
             <Icon className="h-6 w-6 text-primary" />
           </div>
-          <div className="min-w-0"> {/* Add min-w-0 to enable text wrapping */}
+          <div className="min-w-0">
             <div className="text-sm font-medium text-muted-foreground">Phase {phase}</div>
             <CardTitle className="text-sm font-semibold whitespace-nowrap">{title}</CardTitle>
           </div>
@@ -43,6 +45,18 @@ const ScoreLevel = ({ level, range, description, score }) => (
       <div className="font-medium">{level}</div>
       <div className="text-sm text-muted-foreground">{range}</div>
       <div className="text-sm text-muted-foreground">{description}</div>
+    </div>
+  </div>
+);
+
+const ScoreUsageCard = ({ icon: Icon, title, description }) => (
+  <div className="flex items-start space-x-3 p-4">
+    <div className="mt-1">
+      <Icon className="h-5 w-5 text-primary" />
+    </div>
+    <div>
+      <h4 className="font-medium mb-1">{title}</h4>
+      <p className="text-sm text-muted-foreground">{description}</p>
     </div>
   </div>
 );
@@ -108,6 +122,29 @@ export default function Methodology() {
     },
   ];
 
+  const scoreUsages = [
+    {
+      icon: LineChart,
+      title: "Performance Measurement",
+      description: "Assess overall system performance",
+    },
+    {
+      icon: TrendingUp,
+      title: "Progress Tracking",
+      description: "Monitor improvements over time",
+    },
+    {
+      icon: BarChart3,
+      title: "Benchmarking",
+      description: "Compare against industry standards",
+    },
+    {
+      icon: GitMerge,
+      title: "Decision Making",
+      description: "Guide optimization efforts",
+    },
+  ];
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -142,6 +179,11 @@ export default function Methodology() {
 
       {/* Framework Phases Section */}
       <div className="container py-24">
+        <div className="text-center mb-12">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Our framework consists of four key phases, each designed to ensure comprehensive AI validation and quality assurance.
+          </p>
+        </div>
         <h2 className="text-3xl font-bold text-center mb-16">Our Framework Phases</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-16 max-w-7xl mx-auto px-6">
           {phases.map((phase, index) => (
@@ -172,6 +214,11 @@ export default function Methodology() {
       {/* Score Interpretation Scale */}
       <div className="container py-24">
         <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-lg text-muted-foreground">
+              Our scoring system provides clear benchmarks for AI system quality
+            </p>
+          </div>
           <h2 className="text-3xl font-bold text-center mb-16">Score Interpretation Scale</h2>
           <div className="space-y-4">
             {scoreLevels.map((level) => (
@@ -179,6 +226,33 @@ export default function Methodology() {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* How the Score is Used */}
+      <div className="container py-24 bg-accent/30">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-16">How the Score is Used</h2>
+          <div className="grid gap-6">
+            {scoreUsages.map((usage) => (
+              <ScoreUsageCard key={usage.title} {...usage} />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="container py-24 text-center">
+        <h2 className="text-2xl font-bold mb-6">Ready to ensure the quality of your AI system?</h2>
+        <Link href="/contact">
+          <Button
+            size="lg"
+            onClick={() => window.scrollTo(0, 0)}
+            className="transform hover:-translate-y-1 transition-all duration-200"
+          >
+            Contact us to learn more about our methodology
+            <ArrowRight className="ml-2" />
+          </Button>
+        </Link>
       </div>
     </div>
   );
