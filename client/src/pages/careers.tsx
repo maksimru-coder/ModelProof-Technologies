@@ -36,12 +36,9 @@ export default function Careers() {
   });
 
   const onSubmit = (data: CareerFormValues) => {
-    // In a real application, you would send this data to your backend
-    // Note: Email functionality needs to be configured with services like 
-    // SendGrid or AWS SES when the site goes live
     toast({
       title: "Application received",
-      description: "Thank you for your interest! Your application will be sent to our HR team once email services are configured.",
+      description: "Thank you for your interest! We'll review your application and get back to you soon.",
     });
     form.reset();
   };
