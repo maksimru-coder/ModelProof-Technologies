@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 export default function Contact() {
   return (
@@ -52,15 +52,6 @@ export default function Contact() {
                   <p className="font-medium">Email</p>
                   <p className="text-sm text-muted-foreground">
                     contact@modelproof.ai
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <Phone className="h-5 w-5 text-primary mt-1" />
-                <div>
-                  <p className="font-medium">Phone</p>
-                  <p className="text-sm text-muted-foreground">
-                    +1 (555) 123-4567
                   </p>
                 </div>
               </div>

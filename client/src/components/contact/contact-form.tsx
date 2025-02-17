@@ -11,6 +11,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -30,6 +31,8 @@ export function ContactForm() {
 
   const mutation = useMutation({
     mutationFn: async (data: any) => {
+      // Note: This endpoint needs to be configured on the server with an email service
+      // like SendGrid, AWS SES, or similar when the site goes live
       const res = await apiRequest("POST", "/api/contact", data);
       return res.json();
     },
@@ -55,6 +58,9 @@ export function ContactForm() {
         onSubmit={form.handleSubmit((data) => mutation.mutate(data))}
         className="space-y-6"
       >
+        <FormDescription className="text-sm text-muted-foreground mb-4">
+          Your message will be sent to contact@modelproof.ai once email services are configured.
+        </FormDescription>
         <FormField
           control={form.control}
           name="name"

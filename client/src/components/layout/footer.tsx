@@ -58,28 +58,40 @@ export function Footer() {
             <ul className="space-y-4">
               <li>
                 <Link href="/about">
-                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                  >
                     About Us
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/methodology">
-                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                  >
                     Our Methodology
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/contact">
-                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                  >
                     Contact
                   </span>
                 </Link>
               </li>
               <li>
                 <Link href="/careers">
-                  <span className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                  >
                     Careers
                   </span>
                 </Link>
@@ -95,12 +107,18 @@ export function Footer() {
           </p>
           <div className="space-x-6 text-xs">
             <Link href="/privacy">
-              <span className="text-gray-400 hover:text-[#19376D] transition-colors cursor-pointer">
+              <span 
+                onClick={() => window.scrollTo(0, 0)}
+                className="text-gray-400 hover:text-[#19376D] transition-colors cursor-pointer"
+              >
                 Privacy Policy
               </span>
             </Link>
             <Link href="/terms">
-              <span className="text-gray-400 hover:text-[#19376D] transition-colors cursor-pointer">
+              <span 
+                onClick={() => window.scrollTo(0, 0)}
+                className="text-gray-400 hover:text-[#19376D] transition-colors cursor-pointer"
+              >
                 Terms of Service
               </span>
             </Link>
