@@ -143,7 +143,7 @@ export default function Methodology() {
       {/* Framework Phases Section */}
       <div className="container py-24">
         <h2 className="text-3xl font-bold text-center mb-16">Our Framework Phases</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-4 lg:gap-6 max-w-7xl mx-auto px-4">
           {phases.map((phase, index) => (
             <PhaseCard
               key={phase.phase}

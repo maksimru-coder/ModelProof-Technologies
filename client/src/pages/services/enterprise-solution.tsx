@@ -25,8 +25,18 @@ export default function EnterpriseSolution() {
 
         <div className="prose prose-slate max-w-none">
           <p className="text-muted-foreground text-lg mb-8">
-            The Enterprise Solution provides a custom, end-to-end AI validation service for large-scale, complex AI projects. It uses all phases of the ModelProof Framework™: Phase 1: Assessment, Phase 2: Validation, Phase 3: Optimization, and Phase 4: Monitoring.
+            The Enterprise Solution provides a custom, end-to-end AI validation service for large-scale, complex AI projects.
           </p>
+
+          <div className="mb-8 p-4 bg-primary/5 rounded-lg">
+            <h3 className="font-semibold mb-2">Framework Phases Used:</h3>
+            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+              <li>Phase 1: Assessment</li>
+              <li>Phase 2: Validation</li>
+              <li>Phase 3: Optimization</li>
+              <li>Phase 4: Monitoring</li>
+            </ul>
+          </div>
 
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6">Custom Solutions</h2>

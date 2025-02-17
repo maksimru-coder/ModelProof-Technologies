@@ -18,8 +18,15 @@ export default function EssentialAssessment() {
 
         <div className="prose prose-slate max-w-none">
           <p className="text-muted-foreground text-lg mb-8">
-            The Essential Assessment provides a foundational overview of your AI system's quality and readiness. It utilizes the initial phases of the ModelProof Framework™: Phase 1: Assessment and Phase 2: Validation.
+            The Essential Assessment provides a foundational overview of your AI system's quality and readiness.
           </p>
+          <div className="mb-8 p-4 bg-primary/5 rounded-lg">
+            <h3 className="font-semibold mb-2">Framework Phases Used:</h3>
+            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+              <li>Phase 1: Assessment</li>
+              <li>Phase 2: Validation</li>
+            </ul>
+          </div>
 
           <section className="mb-12">
             <h2 className="text-2xl font-bold mb-6">Key Deliverables</h2>
