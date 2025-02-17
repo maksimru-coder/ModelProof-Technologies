@@ -79,6 +79,7 @@ export default function Services() {
               <Link href="/services/essential-assessment">
                 <Button 
                   className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+                  onClick={() => window.scrollTo(0, 0)}
                 >
                   Learn More
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -130,6 +131,7 @@ export default function Services() {
               <Link href="/services/professional-validation">
                 <Button 
                   className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+                  onClick={() => window.scrollTo(0, 0)}
                 >
                   Learn More
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -181,6 +183,7 @@ export default function Services() {
               <Link href="/services/enterprise-solution">
                 <Button 
                   className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+                  onClick={() => window.scrollTo(0, 0)}
                 >
                   Learn More
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -244,6 +247,7 @@ export default function Services() {
               <Link href="/services/retainer-services">
                 <Button 
                   className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+                  onClick={() => window.scrollTo(0, 0)}
                 >
                   Learn More
                   <ArrowRight className="ml-2 h-4 w-4" />
