@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Clock } from "lucide-react";
 
 export default function Contact() {
   return (
@@ -50,9 +50,12 @@ export default function Contact() {
                 <Mail className="h-5 w-5 text-primary mt-1" />
                 <div>
                   <p className="font-medium">Email</p>
-                  <p className="text-sm text-muted-foreground">
+                  <a 
+                    href="mailto:contact@modelproof.ai"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
                     contact@modelproof.ai
-                  </p>
+                  </a>
                 </div>
               </div>
               <div className="flex items-start space-x-4">
@@ -71,13 +74,19 @@ export default function Contact() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Business Hours</CardTitle>
+              <div className="flex items-center gap-2">
+                <Clock className="h-5 w-5 text-primary" />
+                <CardTitle>Business Hours</CardTitle>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Monday - Friday</span>
-                  <span>9:00 AM - 6:00 PM PST</span>
+                  <div className="text-right">
+                    <span>9:00 AM - 6:00 PM</span>
+                    <span className="text-sm text-muted-foreground ml-1">PST</span>
+                  </div>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Saturday - Sunday</span>

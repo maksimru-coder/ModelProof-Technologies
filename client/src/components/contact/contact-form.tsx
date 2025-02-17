@@ -62,7 +62,11 @@ export function ContactForm() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="John Doe" {...field} />
+                <Input 
+                  placeholder="John Doe" 
+                  {...field}
+                  className="transition-all focus:border-primary/50 hover:border-input" 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -78,6 +82,7 @@ export function ContactForm() {
                 <Input
                   type="email"
                   placeholder="john@company.com"
+                  className="transition-all focus:border-primary/50 hover:border-input"
                   {...field}
                 />
               </FormControl>
@@ -92,7 +97,11 @@ export function ContactForm() {
             <FormItem>
               <FormLabel>Company</FormLabel>
               <FormControl>
-                <Input placeholder="Your Company" {...field} />
+                <Input 
+                  placeholder="Your Company" 
+                  className="transition-all focus:border-primary/50 hover:border-input"
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -107,7 +116,7 @@ export function ContactForm() {
               <FormControl>
                 <Textarea
                   placeholder="Tell us about your project..."
-                  className="min-h-[120px]"
+                  className="min-h-[120px] transition-all focus:border-primary/50 hover:border-input"
                   {...field}
                 />
               </FormControl>
@@ -117,7 +126,7 @@ export function ContactForm() {
         />
         <Button
           type="submit"
-          className="w-full"
+          className="w-full transform transition-transform hover:scale-[1.02] active:scale-[0.98]"
           disabled={mutation.isPending}
         >
           {mutation.isPending ? "Sending..." : "Send Message"}
