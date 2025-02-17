@@ -240,6 +240,13 @@ export default function Methodology() {
         </div>
       </div>
 
+      {/* Conclusion */}
+      <div className="container py-12 text-center">
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          By using the ModelProof Framework™ and the ModelProof Quality Score™, we provide a complete end to end AI validation service that you can rely on.
+        </p>
+      </div>
+
       {/* CTA Section */}
       <div className="container py-24 text-center">
         <h2 className="text-2xl font-bold mb-6">Ready to ensure the quality of your AI system?</h2>
