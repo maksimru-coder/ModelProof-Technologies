@@ -20,7 +20,7 @@ const PhaseCard = ({ phase, title, description, icon: Icon, isLast = false }) =>
           </div>
           <div className="min-w-0"> {/* Add min-w-0 to enable text wrapping */}
             <div className="text-sm font-medium text-muted-foreground">Phase {phase}</div>
-            <CardTitle className="text-lg font-semibold">{title}</CardTitle>
+            <CardTitle className="text-base font-semibold whitespace-nowrap">{title}</CardTitle>
           </div>
         </div>
       </CardHeader>
