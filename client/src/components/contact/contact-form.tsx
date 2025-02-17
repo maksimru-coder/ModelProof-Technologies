@@ -37,6 +37,7 @@ export function ContactForm() {
       toast({
         title: "Message sent",
         description: "We'll get back to you as soon as possible.",
+        duration: 3000, // 3 seconds
       });
       form.reset();
     },
@@ -45,6 +46,7 @@ export function ContactForm() {
         title: "Error",
         description: "Something went wrong. Please try again.",
         variant: "destructive",
+        duration: 3000,
       });
     },
   });
