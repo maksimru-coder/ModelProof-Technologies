@@ -19,11 +19,13 @@ export function Header() {
     { href: "/services/professional-validation", label: "Professional Validation" },
     { href: "/services/enterprise-solution", label: "Enterprise Solution" },
     { href: "/services/retainer-services", label: "Retainer Services" },
+    { href: "/services/ai-chat-assistant", label: "AI Chat Assistant Services" },
   ];
 
   const links = [
     { href: "/methodology", label: "Methodology" },
     { href: "/about", label: "About" },
+    { href: "/services/ai-chat-assistant", label: "AI Assistants" },
   ];
 
   return (

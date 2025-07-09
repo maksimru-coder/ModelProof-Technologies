@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { ComparisonMatrix } from "@/components/services/comparison-matrix";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { ArrowRight, Search, Shield, Network, Clock } from "lucide-react";
+import { ArrowRight, Search, Shield, Network, Clock, Bot } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -245,6 +245,70 @@ export default function Services() {
             </ul>
             <div className="flex justify-center">
               <Link href="/services/retainer-services">
+                <Button 
+                  className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+                  onClick={() => window.scrollTo(0, 0)}
+                >
+                  Learn More
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card id="ai-chat-assistant">
+          <CardHeader>
+            <ServiceIcon>
+              <Bot className="h-12 w-12 stroke-[1.5] text-primary"
+                style={{
+                  filter: "drop-shadow(0 0 8px rgba(11, 36, 71, 0.2))"
+                }}
+              />
+            </ServiceIcon>
+            <CardTitle className="text-2xl mb-2">AI Chat Assistant Services</CardTitle>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">
+              24/7 lead generation and support engine
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-6 text-muted-foreground">
+              Custom-trained AI assistants that turn your website into a 24/7 lead generation and support engine. We design, deploy, and manage branded chatbots trained on your data — fully integrated with tools like Calendly, CRMs, and analytics platforms.
+            </p>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Website & Document Training:</span> Custom chatbot trained on your specific content and business processes
+                </span>
+              </li>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Lead Capture & Appointment Booking:</span> Automated scheduling and contact collection system
+                </span>
+              </li>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">CRM & Calendar Integrations:</span> Seamless data flow to your existing tools and platforms
+                </span>
+              </li>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Usage Monitoring & Monthly Reporting:</span> Comprehensive analytics and performance insights
+                </span>
+              </li>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Fully Branded Solution:</span> Complete white-label experience with no third-party logos
+                </span>
+              </li>
+            </ul>
+            <div className="flex justify-center">
+              <Link href="/services/ai-chat-assistant">
                 <Button 
                   className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
                   onClick={() => window.scrollTo(0, 0)}

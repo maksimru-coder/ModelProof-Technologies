@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Search, Shield, Network, Clock } from "lucide-react";
+import { Search, Shield, Network, Clock, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const services = [
@@ -38,6 +38,13 @@ const services = [
     description: "Continuous quality assurance and optimization to ensure your AI systems maintain peak performance and compliance.",
     icon: Clock,
     path: "/services/retainer-services"
+  },
+  {
+    title: "AI Chat Assistant Services",
+    headline: "24/7 Lead Generation & Support",
+    description: "Custom-trained AI assistants that turn your website into a 24/7 lead generation and support engine. Fully integrated with tools like Calendly, CRMs, and analytics platforms.",
+    icon: Bot,
+    path: "/services/ai-chat-assistant"
   }
 ];
 
@@ -64,7 +71,7 @@ export function ServicesOverview() {
             Elevating AI systems through expert validation, ensuring quality, reliability, and ethical excellence.
           </p>
         </div>
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {services.map((service, index) => (
             <motion.div
               key={service.title}

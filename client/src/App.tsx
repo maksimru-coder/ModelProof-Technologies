@@ -14,6 +14,7 @@ import EssentialAssessment from "@/pages/services/essential-assessment";
 import ProfessionalValidation from "@/pages/services/professional-validation";
 import EnterpriseSolution from "@/pages/services/enterprise-solution";
 import RetainerServices from "@/pages/services/retainer-services";
+import AIChatAssistant from "@/pages/services/ai-chat-assistant";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import Careers from "@/pages/careers";
@@ -30,6 +31,7 @@ function Router() {
           <Route path="/services/professional-validation" component={ProfessionalValidation} />
           <Route path="/services/enterprise-solution" component={EnterpriseSolution} />
           <Route path="/services/retainer-services" component={RetainerServices} />
+          <Route path="/services/ai-chat-assistant" component={AIChatAssistant} />
           <Route path="/methodology" component={Methodology} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
