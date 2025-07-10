@@ -28,9 +28,7 @@ export default function Terms() {
           <section className="mt-8">
             <h2 className="text-2xl font-bold mb-4">2. Services</h2>
             <p className="text-muted-foreground">
-              ModelProof Technologies provides AI quality assurance and
-              validation services. We reserve the right to modify, suspend, or
-              discontinue any aspect of our services at any time.
+              ModelProof Technologies provides AI solutions including validation, quality assurance, and intelligent automation services. We reserve the right to modify, suspend, or discontinue any aspect of our services at any time.
             </p>
           </section>
 
