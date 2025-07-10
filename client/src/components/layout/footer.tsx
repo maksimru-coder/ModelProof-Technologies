@@ -116,21 +116,19 @@ export function Footer() {
             © {new Date().getFullYear()} ModelProof Technologies LLC. All rights reserved.
           </p>
           <div className="space-x-6 text-xs">
-            <Link href="/privacy">
-              <span 
-                onClick={() => window.scrollTo(0, 0)}
-                className="text-gray-400 hover:text-[#19376D] transition-colors cursor-pointer"
-              >
-                Privacy Policy
-              </span>
+            <Link 
+              href="/privacy" 
+              className="text-gray-400 hover:text-[#19376D] transition-colors cursor-pointer"
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              Privacy Policy
             </Link>
-            <Link href="/terms">
-              <span 
-                onClick={() => window.scrollTo(0, 0)}
-                className="text-gray-400 hover:text-[#19376D] transition-colors cursor-pointer"
-              >
-                Terms of Service
-              </span>
+            <Link 
+              href="/terms" 
+              className="text-gray-400 hover:text-[#19376D] transition-colors cursor-pointer"
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              Terms of Service
             </Link>
           </div>
         </div>
