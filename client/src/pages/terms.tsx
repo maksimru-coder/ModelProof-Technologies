@@ -18,7 +18,7 @@ export default function Terms() {
           <section className="mt-8">
             <h2 className="text-2xl font-bold mb-4">1. Agreement to Terms</h2>
             <p className="text-muted-foreground">
-              By accessing or using ModelProof Technologies' services, you
+              By accessing or using ModelProof Technologies services, you
               agree to be bound by these Terms of Service and all applicable laws
               and regulations. If you do not agree with any of these terms, you
               are prohibited from using or accessing our services.
