@@ -35,6 +35,7 @@ export function Header() {
           <motion.div
             whileHover={{ scale: 1.05 }}
             className="mr-6 flex items-center space-x-2 cursor-pointer"
+            onClick={() => window.scrollTo(0, 0)}
           >
             <Logo />
           </motion.div>
@@ -44,7 +45,9 @@ export function Header() {
             {/* Services Dropdown */}
             <NavigationMenuItem>
               <NavigationMenuTrigger>
-                <Link href="/services">Services</Link>
+                <Link href="/services">
+                  <span onClick={() => window.scrollTo(0, 0)}>Services</span>
+                </Link>
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[400px] gap-3 p-4">
@@ -59,7 +62,10 @@ export function Header() {
                         }`}
                       >
                         <Link href={service.href}>
-                          <div className="text-sm font-medium leading-none">
+                          <div 
+                            className="text-sm font-medium leading-none"
+                            onClick={() => window.scrollTo(0, 0)}
+                          >
                             {service.label}
                           </div>
                         </Link>
@@ -76,6 +82,7 @@ export function Header() {
                 <NavigationMenuLink
                   onClick={(e) => {
                     e.preventDefault();
+                    window.scrollTo(0, 0);
                     window.location.href = link.href;
                   }}
                   className={`px-4 py-2 cursor-pointer ${
@@ -92,7 +99,12 @@ export function Header() {
         </NavigationMenu>
         <div className="ml-auto flex items-center space-x-4">
           <Link href="/contact">
-            <Button className="cursor-pointer">Contact Us</Button>
+            <Button 
+              className="cursor-pointer"
+              onClick={() => window.scrollTo(0, 0)}
+            >
+              Contact Us
+            </Button>
           </Link>
         </div>
       </div>
