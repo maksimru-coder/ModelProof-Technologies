@@ -51,7 +51,7 @@ export function Hero() {
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
           >
-            Elevating AI Through Expert Validation
+            AI You Can Trust. Results You Can Measure
           </motion.h1>
           <motion.p
             className="mt-8 text-xl md:text-2xl leading-relaxed text-white/80"
@@ -59,8 +59,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Your strategic partner in ensuring AI system quality, reliability, and
-            ethical compliance
+            From enterprise-grade model validation to custom AI assistants, we help companies deploy reliable, compliant, and high-performing AI systems
           </motion.p>
           <motion.div
             className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6"
