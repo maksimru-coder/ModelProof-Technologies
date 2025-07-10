@@ -68,7 +68,7 @@ export function ServicesOverview() {
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold">Our Services</h2>
           <p className="mt-4 text-muted-foreground">
-            Elevating AI systems through expert validation, ensuring quality, reliability, and ethical excellence.
+            Expert AI solutions that deliver quality, reliability, and measurable results.
           </p>
         </div>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">

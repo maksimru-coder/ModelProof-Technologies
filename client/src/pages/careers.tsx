@@ -52,7 +52,7 @@ export default function Careers() {
       >
         <h1 className="text-4xl font-bold mb-4">Careers at ModelProof</h1>
         <p className="text-lg text-muted-foreground">
-          Join us in shaping the future of AI quality assurance
+          Building the future of trusted AI solutions
         </p>
       </motion.div>
 
@@ -60,28 +60,86 @@ export default function Careers() {
         <div className="mb-12">
           <h2 className="text-2xl font-bold mb-4">Join Our Team</h2>
           <p className="text-muted-foreground mb-6">
-            We're always looking for talented AI Validation Engineers to join our growing team. 
-            If you're passionate about ensuring AI systems are reliable, ethical, and effective, 
-            we'd love to hear from you.
+            We're growing fast and looking for talented professionals to join our mission. Whether you're passionate about AI validation, conversational AI development, or helping businesses deploy reliable AI systems, we'd love to hear from you.
           </p>
-          <div className="space-y-4 mb-8">
-            <div className="flex items-start space-x-3">
-              <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-              <span className="text-muted-foreground">
-                Work with cutting-edge AI technologies and validation methodologies
-              </span>
+          
+          <div className="mb-8">
+            <h3 className="text-xl font-semibold mb-4">Current Opportunities:</h3>
+            <div className="space-y-2 mb-6">
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">AI Validation Engineers</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Conversational AI Developers</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Customer Success Specialists</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Business Development Representatives</span>
+              </div>
             </div>
-            <div className="flex items-start space-x-3">
-              <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-              <span className="text-muted-foreground">
-                Collaborate with industry experts and thought leaders
-              </span>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-xl font-semibold mb-4">Why ModelProof?</h3>
+            <div className="space-y-2 mb-6">
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">
+                  Work with cutting-edge AI technologies across validation and implementation
+                </span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">
+                  Collaborate with industry experts and innovative clients
+                </span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">
+                  Shape the future of AI quality and automation
+                </span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">
+                  Flexible work arrangements and competitive benefits
+                </span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">
+                  Be part of a growing company at the forefront of AI solutions
+                </span>
+              </div>
             </div>
-            <div className="flex items-start space-x-3">
-              <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-              <span className="text-muted-foreground">
-                Flexible work arrangements and competitive benefits
-              </span>
+          </div>
+
+          <div className="mb-8">
+            <h3 className="text-xl font-semibold mb-4">What We're Looking For:</h3>
+            <div className="space-y-2 mb-6">
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Technical expertise in AI/ML systems</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Passion for quality, reliability, and innovation</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Experience with enterprise client relationships</span>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                <span className="text-muted-foreground">Commitment to ethical AI development</span>
+              </div>
             </div>
           </div>
         </div>
