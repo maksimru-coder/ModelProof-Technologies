@@ -198,7 +198,6 @@ export default function Privacy() {
             <div className="text-muted-foreground">
               <p><strong>ModelProof Technologies</strong></p>
               <p>Email: <a href="mailto:contact@modelproof.ai" className="text-primary hover:underline">contact@modelproof.ai</a></p>
-              <p>Address: San Francisco Bay Area, California, United States</p>
             </div>
             <p className="text-muted-foreground mt-4">
               For privacy-related inquiries, please include "Privacy Policy" in the subject line of your email.
