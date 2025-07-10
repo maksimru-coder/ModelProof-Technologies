@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Mail, MapPin, Clock } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 export default function Contact() {
   return (
@@ -72,29 +72,7 @@ export default function Contact() {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-primary" />
-                <CardTitle>Business Hours</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Monday - Friday</span>
-                  <div className="text-right">
-                    <span>9:00 AM - 6:00 PM</span>
-                    <span className="text-sm text-muted-foreground ml-1">PST</span>
-                  </div>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Saturday - Sunday</span>
-                  <span>Closed</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+
         </div>
       </div>
     </div>
