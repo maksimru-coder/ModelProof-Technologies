@@ -6,54 +6,72 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Shield, Users, Lightbulb, Target, Building2, Compass, Landmark, Stethoscope, Monitor, CircuitBoard } from "lucide-react";
+import { Shield, Users, Lightbulb, Target, Building2, Compass, Landmark, Stethoscope, Monitor, CircuitBoard, Scale, Building, Calculator, TrendingUp } from "lucide-react";
 
 const values = [
   {
     icon: Shield,
     title: "Deep Expertise",
     description:
-      "Over 20 years of QA experience with deep understanding of AI/ML/DL and Fortune 500 background.",
+      "Over 20 years of Development & QA experience with deep understanding of AI/ML/DL, enterprise solutions, and Fortune 500 implementations.",
   },
   {
     icon: Users,
     title: "Client-Centric",
     description:
-      "We partner closely with you to achieve your goals for trustworthy AI systems.",
+      "We partner closely with you to achieve your goals, whether ensuring AI quality or implementing conversion-focused automation.",
   },
   {
     icon: Lightbulb,
     title: "Innovation",
     description:
-      "Our proprietary ModelProof Framework™ provides a structured and effective approach to AI validation.",
+      "Our proprietary ModelProof Framework™ and custom AI solutions provide structured, effective approaches to AI validation and implementation.",
   },
   {
     icon: Target,
     title: "Comprehensive",
     description:
-      "End-to-end validation that examines system results, model integrity, and data quality.",
+      "End-to-end AI solutions - from validation and compliance to intelligent automation and customer engagement.",
   },
 ];
 
-const industries = [
+const professionalServices = [
   {
-    icon: Landmark,
-    title: "FinTech & Financial Services",
-    description: "Ensuring reliable and compliant AI solutions in finance",
+    icon: Scale,
+    title: "Legal practices and law firms",
+    description: "AI solutions for legal document analysis and client engagement",
   },
   {
     icon: Stethoscope,
-    title: "Healthcare & Medical Applications",
+    title: "Medical and dental practices",
+    description: "AI automation for patient scheduling and support systems",
+  },
+  {
+    icon: Calculator,
+    title: "Financial and accounting services",
+    description: "AI validation and automation for financial processes",
+  },
+];
+
+const enterpriseTech = [
+  {
+    icon: TrendingUp,
+    title: "FinTech & financial services",
+    description: "Ensuring reliable and compliant AI solutions in finance",
+  },
+  {
+    icon: Building,
+    title: "Healthcare & medical applications",
     description: "Validating critical healthcare AI systems",
   },
   {
     icon: Monitor,
-    title: "Enterprise Software",
+    title: "Enterprise software companies",
     description: "Quality assurance for enterprise-grade AI solutions",
   },
   {
     icon: CircuitBoard,
-    title: "AI Product Companies",
+    title: "AI product companies",
     description: "Comprehensive validation for AI-first products",
   },
 ];
@@ -68,7 +86,7 @@ export default function About() {
       >
         <h1 className="text-4xl font-bold mb-4">About ModelProof</h1>
         <p className="text-lg text-muted-foreground">
-          Your expert partner in ensuring AI quality and reliability
+          Your expert partner in AI excellence and automation
         </p>
       </motion.div>
 
@@ -84,10 +102,7 @@ export default function About() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              ModelProof Technologies LLC is a specialized Artificial Intelligence
-              (AI) quality assurance and validation firm dedicated to ensuring the
-              reliability, accuracy, ethical soundness, and regulatory compliance
-              of AI systems. We are the "quality control" for AI.
+              ModelProof Technologies LLC is a specialized AI solutions company dedicated to ensuring the reliability, performance, and ethical deployment of artificial intelligence systems. From rigorous validation and quality assurance to intelligent conversational AI, we help businesses deploy AI they can trust and rely on.
             </p>
           </CardContent>
         </Card>
@@ -103,10 +118,7 @@ export default function About() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              Our mission is to build trust in AI systems through rigorous
-              validation and quality assurance. We help organizations develop and
-              deploy AI solutions that are reliable, ethical, and compliant with
-              industry standards.
+              Our mission is to empower businesses with trusted AI solutions. We help organizations validate existing AI systems for quality and compliance, while also implementing custom AI automation that drives real business results.
             </p>
           </CardContent>
         </Card>
@@ -137,36 +149,50 @@ export default function About() {
       </div>
 
       <div className="max-w-5xl mx-auto">
-        <Card className="hover:shadow-lg transition-all duration-200">
-          <CardHeader>
-            <CardTitle>Industries We Serve</CardTitle>
-            <CardDescription>
-              We provide specialized AI validation services across various sectors
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-6 md:grid-cols-2">
-              {industries.map((industry) => (
-                <Card 
-                  key={industry.title}
-                  className="hover:shadow-lg transition-all duration-200 border-0 shadow-none hover:bg-accent/50"
-                >
-                  <CardHeader className="flex flex-row items-center gap-4">
-                    <div className="p-3 rounded-lg bg-primary/10">
-                      <industry.icon className="h-6 w-6 text-primary" />
-                    </div>
+        <h2 className="text-2xl font-bold mb-8 text-center">Industries We Serve</h2>
+        <p className="text-muted-foreground text-center mb-12">
+          We provide specialized AI solutions across various sectors
+        </p>
+        
+        <div className="grid gap-8 md:grid-cols-2">
+          <Card className="hover:shadow-lg transition-all duration-200">
+            <CardHeader>
+              <CardTitle>Professional Services</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {professionalServices.map((service) => (
+                  <div key={service.title} className="flex items-start space-x-3">
+                    <service.icon className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
                     <div>
-                      <CardTitle className="text-lg">{industry.title}</CardTitle>
+                      <h4 className="font-medium">{service.title}</h4>
+                      <p className="text-sm text-muted-foreground">{service.description}</p>
                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{industry.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-lg transition-all duration-200">
+            <CardHeader>
+              <CardTitle>Enterprise & Technology</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {enterpriseTech.map((industry) => (
+                  <div key={industry.title} className="flex items-start space-x-3">
+                    <industry.icon className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-medium">{industry.title}</h4>
+                      <p className="text-sm text-muted-foreground">{industry.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
