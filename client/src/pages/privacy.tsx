@@ -18,7 +18,7 @@ export default function Privacy() {
           <section className="mt-8">
             <h2 className="text-2xl font-bold mb-4">Introduction</h2>
             <p className="text-muted-foreground">
-              ModelProof Technologies LLC ("we," "our," or "us") respects your
+              ModelProof Technologies ("we," "our," or "us") respects your
               privacy and is committed to protecting your personal information. This
               Privacy Policy explains how we collect, use, and safeguard your
               information when you visit our website or use our services.

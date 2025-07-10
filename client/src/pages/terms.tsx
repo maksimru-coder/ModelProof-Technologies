@@ -18,7 +18,7 @@ export default function Terms() {
           <section className="mt-8">
             <h2 className="text-2xl font-bold mb-4">1. Agreement to Terms</h2>
             <p className="text-muted-foreground">
-              By accessing or using ModelProof Technologies LLC's services, you
+              By accessing or using ModelProof Technologies' services, you
               agree to be bound by these Terms of Service and all applicable laws
               and regulations. If you do not agree with any of these terms, you
               are prohibited from using or accessing our services.
@@ -28,7 +28,7 @@ export default function Terms() {
           <section className="mt-8">
             <h2 className="text-2xl font-bold mb-4">2. Services</h2>
             <p className="text-muted-foreground">
-              ModelProof Technologies LLC provides AI quality assurance and
+              ModelProof Technologies provides AI quality assurance and
               validation services. We reserve the right to modify, suspend, or
               discontinue any aspect of our services at any time.
             </p>
@@ -39,7 +39,7 @@ export default function Terms() {
             <p className="text-muted-foreground">
               All content, features, and functionality of our services, including
               but not limited to text, graphics, logos, and software, are the
-              exclusive property of ModelProof Technologies LLC and are protected
+              exclusive property of ModelProof Technologies and are protected
               by copyright and other intellectual property laws.
             </p>
           </section>
@@ -47,7 +47,7 @@ export default function Terms() {
           <section className="mt-8">
             <h2 className="text-2xl font-bold mb-4">4. Limitation of Liability</h2>
             <p className="text-muted-foreground">
-              ModelProof Technologies LLC shall not be liable for any indirect,
+              ModelProof Technologies shall not be liable for any indirect,
               incidental, special, consequential, or punitive damages resulting
               from your use of our services.
             </p>

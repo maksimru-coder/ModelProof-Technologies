@@ -113,7 +113,7 @@ export function Footer() {
         {/* Copyright Notice with Privacy and Terms */}
         <div className="mt-16 pt-8 border-t text-center">
           <p className="text-gray-400 text-sm mb-4">
-            © {new Date().getFullYear()} ModelProof Technologies LLC. All rights reserved.
+            © {new Date().getFullYear()} ModelProof Technologies. All rights reserved.
           </p>
           <div className="space-x-6 text-xs">
             <Link 
