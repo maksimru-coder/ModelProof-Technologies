@@ -117,7 +117,7 @@ export default function About() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              ModelProof Technologies is a specialized AI solutions company dedicated to ensuring the reliability, performance, and ethical deployment of artificial intelligence systems. From rigorous validation and quality assurance to intelligent conversational AI, we help businesses deploy AI they can trust and rely on.
+              ModelProof Technologies is a Silicon Valley-based AI solutions company dedicated to ensuring the reliability, performance, and ethical deployment of artificial intelligence systems. From rigorous validation and quality assurance to intelligent conversational AI, we help businesses deploy AI they can trust and rely on.
             </p>
           </CardContent>
         </Card>
