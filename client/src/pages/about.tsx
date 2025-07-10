@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Shield, Users, Lightbulb, Target, Building2, Compass, Landmark, Stethoscope, Monitor, CircuitBoard, Scale, Building, Calculator, TrendingUp } from "lucide-react";
+import { Shield, Users, Lightbulb, Target, Building2, Compass, Landmark, Stethoscope, Monitor, CircuitBoard, Scale, Building, Calculator, TrendingUp, Home, Briefcase, Heart } from "lucide-react";
 
 const values = [
   {
@@ -38,18 +38,33 @@ const values = [
 const professionalServices = [
   {
     icon: Scale,
-    title: "Legal practices and law firms",
-    description: "AI solutions for legal document analysis and client engagement",
+    title: "Legal & Law Firms",
+    description: "AI solutions for client intake, case qualification, and automated legal consultations",
   },
   {
     icon: Stethoscope,
-    title: "Medical and dental practices",
-    description: "AI automation for patient scheduling and support systems",
+    title: "Medical & Dental Practices",
+    description: "AI automation for patient scheduling, appointment booking, and 24/7 patient support",
+  },
+  {
+    icon: Home,
+    title: "Real Estate Agencies",
+    description: "AI assistants for lead qualification, property inquiries, and showing coordination",
   },
   {
     icon: Calculator,
-    title: "Financial and accounting services",
-    description: "AI validation and automation for financial processes",
+    title: "Financial & Accounting Services",
+    description: "AI validation for compliance and automated client consultation systems",
+  },
+  {
+    icon: Briefcase,
+    title: "Business Consulting",
+    description: "AI solutions for lead generation, client qualification, and service automation",
+  },
+  {
+    icon: Heart,
+    title: "Healthcare Specialists",
+    description: "AI automation for appointment management and patient pre-screening",
   },
 ];
 
@@ -170,6 +185,17 @@ export default function About() {
                     </div>
                   </div>
                 ))}
+                <div className="mt-6 pt-4 border-t border-border">
+                  <div className="flex items-start space-x-3">
+                    <Building2 className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-medium">Your Industry</h4>
+                      <p className="text-sm text-muted-foreground">
+                        If you're in an industry that would benefit from AI validation or intelligent automation to improve customer engagement, streamline operations, or ensure compliance, we'd love to discuss how our solutions can help your business.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
