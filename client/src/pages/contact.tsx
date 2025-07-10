@@ -19,8 +19,7 @@ export default function Contact() {
       >
         <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
         <p className="text-lg text-muted-foreground">
-          Get in touch to discuss how we can help ensure the quality of your AI
-          systems
+          Get in touch to discuss how we can help optimize your AI systems and automate your business growth
         </p>
       </motion.div>
 
