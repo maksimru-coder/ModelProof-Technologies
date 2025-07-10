@@ -1,0 +1,94 @@
+# Terms of Service
+
+**Last updated: July 10, 2025**
+
+## 1. Agreement to Terms
+
+By accessing or using ModelProof Technologies LLC (“ModelProof,” “we,” “our,” or “us”) website or services, you (“you,” “your,” or “user”) agree to be bound by these Terms of Service (“Terms”) and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing our services.
+
+## 2. Services
+
+ModelProof Technologies provides AI solutions including validation, quality assurance, and intelligent automation services such as conversational AI systems. We reserve the right to modify, suspend, or discontinue any aspect of our services at any time with or without notice. Service descriptions, pricing, and availability are subject to change.
+
+## 3. Use License and Restrictions
+
+### Permitted Use
+
+You may use our services for lawful business purposes in accordance with these Terms.
+
+### Prohibited Uses
+
+You may not:
+
+- Use our services for any unlawful purpose or to solicit unlawful activity
+- Attempt to gain unauthorized access to our systems or networks
+- Interfere with or disrupt our services or servers
+- Use our services to transmit viruses, malware, or other harmful code
+- Reverse engineer, decompile, or disassemble our software
+- Use our services to compete with ModelProof or create similar services
+- Violate any applicable local, state, national, or international law
+
+## 4. User Accounts and Responsibilities
+
+If you create an account with us, you are responsible for:
+
+- Maintaining the confidentiality of your account credentials
+- All activities that occur under your account
+- Notifying us immediately of any unauthorized use
+- Ensuring all information provided is accurate and current
+
+## 5. Client Data and Confidentiality
+
+You retain ownership of all data, content, and information you provide to us. You grant us a limited license to use your data solely to provide our services to you. We will maintain appropriate security measures and confidentiality of all proprietary information shared with us.
+
+## 6. Intellectual Property
+
+All content, features, and functionality of our services, including but not limited to text, graphics, logos, software, the ModelProof Framework™, AI models, and methodologies, are the exclusive property of ModelProof Technologies and are protected by copyright, trademark, and other intellectual property laws.
+
+## 7. Payment Terms
+
+Service fees are as specified in your service agreement. All fees are non-refundable unless otherwise specified. Invoices are due within 30 days of receipt. We reserve the right to suspend services for non-payment.
+
+## 8. Warranties and Disclaimers
+
+We will provide services with reasonable skill and care. However, EXCEPT AS EXPRESSLY SET FORTH IN A SEPARATE SERVICE AGREEMENT, OUR SERVICES ARE PROVIDED “AS IS” WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+
+## 9. Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, ModelProof Technologies’ total liability shall not exceed the amount paid by you for services in the 12 months preceding any claim. ModelProof Technologies shall not be liable for any indirect, incidental, special, consequential, or punitive damages, loss of profits, revenue, data, or business interruption resulting from your use of our services.
+
+## 10. Indemnification
+
+You agree to indemnify and hold harmless ModelProof Technologies from any claims, damages, losses, or expenses arising from your use of our services, violation of these Terms, or violation of any third-party rights.
+
+## 11. Termination
+
+We may terminate or suspend your access immediately for violation of these Terms, non-payment, or at our sole discretion with 30 days’ notice. Upon termination, your right to use our services ceases immediately, and outstanding fees become due.
+
+## 12. Privacy
+
+Your privacy is governed by our Privacy Policy, which is incorporated into these Terms by reference.
+
+## 13. Modifications
+
+We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting. Your continued use constitutes acceptance of modified Terms.
+
+## 14. Governing Law and Disputes
+
+These Terms are governed by California law. Any disputes shall be resolved through binding arbitration in San Francisco, California, under American Arbitration Association rules. You waive any right to participate in class action lawsuits.
+
+## 15. Force Majeure
+
+We shall not be liable for any failure in performance due to circumstances beyond our reasonable control, including acts of God, natural disasters, war, terrorism, or government actions.
+
+## 16. Severability and Entire Agreement
+
+If any provision is found unenforceable, the remaining provisions remain in effect. These Terms, along with our Privacy Policy and service agreements, constitute the entire agreement between parties.
+
+## Contact
+
+Questions about these Terms of Service should be sent to us at contact@modelproof.ai.
+
+-----
+
+*These Terms of Service are effective as of the date listed above and apply to all use of ModelProof Technologies services.*
