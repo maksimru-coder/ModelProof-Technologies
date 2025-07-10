@@ -49,6 +49,16 @@ export function Footer() {
                   </span>
                 </Link>
               </li>
+              <li>
+                <Link href="/services/ai-chat-assistant">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                  >
+                    AI Chat Assistant Services
+                  </span>
+                </Link>
+              </li>
             </ul>
           </div>
 
