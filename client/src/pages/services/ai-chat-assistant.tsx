@@ -187,7 +187,11 @@ export default function AIChatAssistant() {
               Let's build your intelligent AI assistant — fully managed, branded, and results-driven.
             </p>
             <Link href="/contact">
-              <Button size="lg" className="px-8">
+              <Button 
+                size="lg" 
+                className="px-8"
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 Get Started Today
               </Button>
             </Link>
