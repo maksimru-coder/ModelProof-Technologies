@@ -275,18 +275,6 @@ export default function Services() {
             <p className="mb-6 text-muted-foreground">
               Custom-trained AI assistants and smart agents that turn your website into a 24/7 lead generation and support engine. We design, deploy, and manage fully branded AI chat solutions trained on your unique content — seamlessly integrated with tools like Calendly, CRMs, and analytics platforms.
             </p>
-            
-            <div className="mb-6">
-              <div className="w-12 h-px bg-muted-foreground/30 mb-6"></div>
-            </div>
-            
-            <div className="mb-6">
-              <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span className="text-lg">🔧</span>
-                Key Features
-              </h4>
-            </div>
-            
             <ul className="space-y-4 mb-8">
               <li className="flex items-start space-x-3 group">
                 <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
