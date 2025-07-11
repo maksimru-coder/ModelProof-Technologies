@@ -268,42 +268,59 @@ export default function Services() {
             </ServiceIcon>
             <CardTitle className="text-2xl mb-2">AI Chat Assistant Services</CardTitle>
             <CardDescription className="text-lg font-medium text-primary/80 mb-4">
-              24/7 lead generation and support engine
+              24/7 Lead Generation & Support — Powered by Intelligent AI Agents
             </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="mb-6 text-muted-foreground">
-              Custom-trained AI assistants that turn your website into a 24/7 lead generation and support engine. We design, deploy, and manage branded chatbots trained on your data — fully integrated with tools like Calendly, CRMs, and analytics platforms.
+              Custom-trained AI assistants and smart agents that turn your website into a 24/7 lead generation and support engine. We design, deploy, and manage fully branded AI chat solutions trained on your unique content — seamlessly integrated with tools like Calendly, CRMs, and analytics platforms.
             </p>
+            
+            <div className="mb-6">
+              <div className="w-12 h-px bg-muted-foreground/30 mb-6"></div>
+            </div>
+            
+            <div className="mb-6">
+              <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span className="text-lg">🔧</span>
+                Key Features
+              </h4>
+            </div>
+            
             <ul className="space-y-4 mb-8">
               <li className="flex items-start space-x-3 group">
                 <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
                 <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
-                  <span className="font-medium text-foreground">Website & Document Training:</span> Custom chatbot trained on your specific content and business processes
+                  <span className="font-medium text-foreground">Website & Document Training</span><br />
+                  <span className="text-sm">Your AI assistant is trained using your website, FAQs, PDFs, and internal documentation</span>
                 </span>
               </li>
               <li className="flex items-start space-x-3 group">
                 <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
                 <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
-                  <span className="font-medium text-foreground">Lead Capture & Appointment Booking:</span> Automated scheduling and contact collection system
+                  <span className="font-medium text-foreground">Lead Capture & Appointment Booking</span><br />
+                  <span className="text-sm">Automates contact collection, lead qualification, and meeting scheduling through tools like Calendly</span>
                 </span>
               </li>
               <li className="flex items-start space-x-3 group">
                 <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
                 <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
-                  <span className="font-medium text-foreground">CRM & Calendar Integrations:</span> Seamless data flow to your existing tools and platforms
+                  <span className="font-medium text-foreground">CRM & Calendar Integrations</span><br />
+                  <span className="text-sm">Routes leads directly into your CRM or calendar for immediate follow-up and automation</span>
                 </span>
               </li>
               <li className="flex items-start space-x-3 group">
                 <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
                 <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
-                  <span className="font-medium text-foreground">Usage Monitoring & Monthly Reporting:</span> Comprehensive analytics and performance insights
+                  <span className="font-medium text-foreground">Usage Monitoring & Monthly Reporting</span><br />
+                  <span className="text-sm">Real-time analytics with performance insights delivered monthly</span>
                 </span>
               </li>
               <li className="flex items-start space-x-3 group">
                 <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
                 <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
-                  <span className="font-medium text-foreground">Fully Branded Solution:</span> Complete white-label experience with no third-party logos
+                  <span className="font-medium text-foreground">Fully Branded Solution</span><br />
+                  <span className="text-sm">100% white-labeled — no third-party logos or tool branding</span>
                 </span>
               </li>
             </ul>
