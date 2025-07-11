@@ -28,16 +28,17 @@ export default function AIChatAssistant() {
       >
         <h1 className="text-4xl font-bold mb-6">AI Chat Assistant Services</h1>
         <p className="text-xl text-muted-foreground mb-6">
-          24/7 Lead Generation & Support — Powered by Custom AI
+          24/7 Lead Generation & Support — Powered by Custom AI Agents
         </p>
 
         <div className="prose prose-slate max-w-none">
           <p className="text-muted-foreground text-lg mb-8">
-            Transform your website into a smart, always-on sales and support machine. Our custom-trained AI chat assistants engage visitors, answer questions, capture leads, and book appointments — all while reflecting your brand voice and expertise.
+            Transform your website into a smart, always-on sales and support engine.
+            Our custom-trained AI chat assistants and intelligent agents engage visitors, answer questions, qualify leads, and book appointments — all while reflecting your brand voice and expertise.
           </p>
           
           <p className="text-muted-foreground text-lg mb-12">
-            We handle the full process — from training and setup to deployment and monitoring — so you can focus on growing your business.
+            We handle the full process — from training and setup to integration, launch, and monitoring — so you can focus on growing your business.
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
