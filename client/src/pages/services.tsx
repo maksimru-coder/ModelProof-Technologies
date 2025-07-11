@@ -32,7 +32,7 @@ export default function Services() {
       >
         <h1 className="text-4xl font-bold mb-4">Our Services</h1>
         <p className="text-lg text-muted-foreground">
-          Comprehensive AI validation services tailored to your organization's needs
+          Comprehensive AI solutions — from system validation to intelligent assistants
         </p>
       </motion.div>
 
