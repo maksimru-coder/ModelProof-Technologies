@@ -41,8 +41,8 @@ const services = [
   },
   {
     title: "AI Chat Assistant Services",
-    headline: "24/7 Lead Generation & Support",
-    description: "Custom-trained AI assistants that turn your website into a 24/7 lead generation and support engine. Fully integrated with tools like Calendly, CRMs, and analytics platforms.",
+    headline: "24/7 Lead Generation & Support — Powered by Smart AI Agents",
+    description: "Custom-trained AI assistants and intelligent agents that engage visitors, qualify leads, and book appointments — fully integrated with tools like Calendly, CRMs, and analytics platforms.",
     icon: Bot,
     path: "/services/ai-chat-assistant"
   }
