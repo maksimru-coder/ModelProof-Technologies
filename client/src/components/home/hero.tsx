@@ -35,7 +35,7 @@ const NetworkGrid = () => {
 
 export function Hero() {
   return (
-    <div className="relative min-h-[80vh] flex items-center overflow-hidden pb-16 md:pb-20">
+    <div className="relative min-h-[85vh] flex items-center overflow-hidden pb-16 md:pb-20 pt-8 md:pt-16">
       <div className="absolute inset-0 bg-primary" />
       <NetworkGrid />
       <div className="container relative z-10">
