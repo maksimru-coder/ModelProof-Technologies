@@ -59,6 +59,16 @@ export function Footer() {
                   </span>
                 </Link>
               </li>
+              <li>
+                <Link href="/services/custom-ai-solutions">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                  >
+                    Custom AI Solutions
+                  </span>
+                </Link>
+              </li>
             </ul>
           </div>
 

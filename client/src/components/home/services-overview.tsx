@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Search, Shield, Network, Clock, Bot } from "lucide-react";
+import { Search, Shield, Network, Clock, Bot, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const services = [
@@ -45,6 +45,13 @@ const services = [
     description: "Custom-trained AI assistants and intelligent agents that engage visitors, qualify leads, and book appointments — fully integrated with tools like Calendly, CRMs, and analytics platforms.",
     icon: Bot,
     path: "/services/ai-chat-assistant"
+  },
+  {
+    title: "Custom AI Solutions",
+    headline: "Tailored AI Built for Your Business",
+    description: "From workflow automation to industry-specific AI agents, we design intelligent solutions customized to your unique needs. Scalable, secure, and fully integrated with your tools.",
+    icon: Settings,
+    path: "/services/custom-ai-solutions"
   }
 ];
 
@@ -71,7 +78,7 @@ export function ServicesOverview() {
             Expert AI solutions that deliver quality, reliability, and measurable results.
           </p>
         </div>
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
