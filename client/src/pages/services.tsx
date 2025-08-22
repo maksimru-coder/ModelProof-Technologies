@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { ComparisonMatrix } from "@/components/services/comparison-matrix";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { ArrowRight, Search, Shield, Network, Clock, Bot } from "lucide-react";
+import { ArrowRight, Search, Shield, Network, Clock, Bot, Settings } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -314,6 +314,70 @@ export default function Services() {
             </ul>
             <div className="flex justify-center">
               <Link href="/services/ai-chat-assistant">
+                <Button 
+                  className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+                  onClick={() => window.scrollTo(0, 0)}
+                >
+                  Learn More
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card id="custom-ai-solutions">
+          <CardHeader>
+            <ServiceIcon>
+              <Settings className="h-12 w-12 stroke-[1.5] text-primary"
+                style={{
+                  filter: "drop-shadow(0 0 8px rgba(11, 36, 71, 0.2))"
+                }}
+              />
+            </ServiceIcon>
+            <CardTitle className="text-2xl mb-2">Custom AI Solutions</CardTitle>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">
+              Tailored AI Built for Your Business
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-6 text-muted-foreground">
+              From workflow automation to industry-specific AI agents, we design intelligent solutions customized to your unique needs. Scalable, secure, and fully integrated with your tools.
+            </p>
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Knowledge Automation:</span> Train AI on your private data for instant, accurate answers
+                </span>
+              </li>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Workflow Automation:</span> Automate processes like ticket routing, lead scoring, or compliance checks
+                </span>
+              </li>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Industry-Specific Agents:</span> Healthcare, finance, e-commerce, or enterprise operations
+                </span>
+              </li>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">API & System Integrations:</span> Connect AI to your CRM, ERP, or internal tools
+                </span>
+              </li>
+              <li className="flex items-start space-x-3 group">
+                <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
+                <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
+                  <span className="font-medium text-foreground">Custom Analytics Dashboards:</span> Track usage, performance, and ROI
+                </span>
+              </li>
+            </ul>
+            <div className="flex justify-center">
+              <Link href="/services/custom-ai-solutions">
                 <Button 
                   className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
                   onClick={() => window.scrollTo(0, 0)}
