@@ -1,9 +1,8 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
-// import { storage } from "./storage"; // Disabled for serverless compatibility
-import { insertContactSchema } from "@shared/schema";
 import sgMail from "@sendgrid/mail";
 import multer from "multer";
+import { registerContactAPI } from "./contact-api";
 
 // Extend Express Request type to include file
 interface MulterRequest extends Request {
@@ -100,44 +99,8 @@ const sendNotificationEmail = async (submission: any, isCareer = false) => {
 };
 
 export function registerRoutes(app: Express): Server {
-  app.post("/api/contact", async (req, res) => {
-    try {
-      console.log("Contact form submission received:", { body: req.body });
-      console.log("Environment check - SENDGRID_API_KEY available:", !!process.env.SENDGRID_API_KEY);
-      
-      const data = insertContactSchema.parse(req.body);
-      console.log("Validation passed:", data);
-      
-      // Create submission object for email
-      const submission = {
-        ...data,
-        id: Date.now(), // Use timestamp as simple ID
-        createdAt: new Date()
-      };
-      
-      // Send email notification (gracefully handles missing API key)
-      console.log("Attempting to send email notification...");
-      const emailSent = await sendNotificationEmail(submission, false);
-      console.log("Email notification result:", emailSent);
-      
-      // Skip database storage in serverless environment to avoid connection issues
-      console.log("Skipping database storage in serverless environment");
-      
-      res.json({ 
-        success: true, 
-        message: "Contact form submitted successfully",
-        id: submission.id 
-      });
-    } catch (error) {
-      console.error("Contact form error details:", error);
-      console.error("Error stack:", error instanceof Error ? error.stack : 'No stack available');
-      res.status(500).json({ 
-        error: "Server error occurred", 
-        details: error instanceof Error ? error.message : String(error),
-        timestamp: new Date().toISOString()
-      });
-    }
-  });
+  // Use simplified contact API for better serverless compatibility
+  registerContactAPI(app);
 
   // Career form endpoint with file upload
   app.post("/api/careers", upload.single('resume'), async (req: MulterRequest, res) => {
