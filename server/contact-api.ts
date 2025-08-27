@@ -28,21 +28,21 @@ const validateContactData = (data: any) => {
 };
 
 const sendEmail = async (submission: any) => {
-  console.log("Attempting to send email notification...");
+  console.log("Attempting to send email notification with Resend...");
   
-  if (!process.env.SENDGRID_API_KEY) {
-    console.log("SendGrid API key not configured, skipping email notification");
+  if (!process.env.RESEND_API_KEY) {
+    console.log("Resend API key not configured, skipping email notification");
     return false;
   }
 
   try {
-    // Dynamic import to avoid module issues
-    const { default: sgMail } = await import('@sendgrid/mail');
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    // Dynamic import for Resend
+    const { Resend } = await import('resend');
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const msg = {
-      to: process.env.CONTACT_EMAIL || "contact@modelproof.ai",
-      from: process.env.EMAIL_FROM || "maksim@modelproof.ai",
+    const { data, error } = await resend.emails.send({
+      from: 'ModelProof Contact <maksim@modelproof.ai>',
+      to: ['contact@modelproof.ai'],
       replyTo: submission.email,
       subject: `New Contact Form Submission from ${submission.name}`,
       html: `
@@ -52,18 +52,17 @@ const sendEmail = async (submission: any) => {
         <p><strong>Company:</strong> ${submission.company || 'Not specified'}</p>
         <p><strong>Message:</strong></p>
         <p>${submission.message}</p>
-        <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
+        <hr>
+        <p><small>Submitted: ${new Date().toLocaleString()}</small></p>
       `,
-    };
-
-    console.log("Sending email with config:", { 
-      to: msg.to, 
-      from: msg.from, 
-      subject: msg.subject 
     });
-    
-    await sgMail.send(msg);
-    console.log("Email notification sent successfully");
+
+    if (error) {
+      console.error("Resend error:", error);
+      return false;
+    }
+
+    console.log("Email notification sent successfully with Resend:", data);
     return true;
   } catch (error) {
     console.error("Failed to send email notification:", error);
@@ -75,8 +74,8 @@ export function registerContactAPI(app: Express) {
   // Diagnostic endpoint to check environment
   app.get("/api/contact/status", (req, res) => {
     res.json({
-      status: "Contact API is running",
-      hasApiKey: !!process.env.SENDGRID_API_KEY,
+      status: "Contact API is running with Resend",
+      hasApiKey: !!process.env.RESEND_API_KEY,
       environment: process.env.NODE_ENV || 'development',
       timestamp: new Date().toISOString()
     });
@@ -85,7 +84,7 @@ export function registerContactAPI(app: Express) {
   app.post("/api/contact", async (req, res) => {
     try {
       console.log("Contact form submission received:", req.body);
-      console.log("Environment check - SENDGRID_API_KEY available:", !!process.env.SENDGRID_API_KEY);
+      console.log("Environment check - RESEND_API_KEY available:", !!process.env.RESEND_API_KEY);
       
       const data = validateContactData(req.body);
       console.log("Validation passed:", data);
