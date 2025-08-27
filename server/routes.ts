@@ -1,6 +1,6 @@
 import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+// import { storage } from "./storage"; // Disabled for serverless compatibility
 import { insertContactSchema } from "@shared/schema";
 import sgMail from "@sendgrid/mail";
 import multer from "multer";
@@ -37,12 +37,13 @@ const upload = multer({
 });
 
 const sendNotificationEmail = async (submission: any, isCareer = false) => {
-  if (!process.env.SENDGRID_API_KEY) {
-    console.log("SendGrid API key not configured, skipping email notification");
-    return false;
-  }
+  try {
+    if (!process.env.SENDGRID_API_KEY) {
+      console.log("SendGrid API key not configured, skipping email notification");
+      return false;
+    }
 
-  const toEmail = isCareer ? 
+    const toEmail = isCareer ? 
     (process.env.CAREERS_EMAIL || "careers@modelproof.ai") : 
     (process.env.CONTACT_EMAIL || "contact@modelproof.ai");
 
@@ -92,6 +93,10 @@ const sendNotificationEmail = async (submission: any, isCareer = false) => {
     console.error("Please verify maksim@modelproof.ai as a sender in SendGrid dashboard");
     return false;
   }
+  } catch (outerError) {
+    console.error("Critical error in sendNotificationEmail:", outerError);
+    return false;
+  }
 };
 
 export function registerRoutes(app: Express): Server {
@@ -115,13 +120,8 @@ export function registerRoutes(app: Express): Server {
       const emailSent = await sendNotificationEmail(submission, false);
       console.log("Email notification result:", emailSent);
       
-      // Try to store in database, but don't fail if storage isn't available
-      try {
-        await storage.createContactSubmission(data);
-        console.log("Data stored successfully");
-      } catch (storageError) {
-        console.log("Storage not available, but continuing:", storageError);
-      }
+      // Skip database storage in serverless environment to avoid connection issues
+      console.log("Skipping database storage in serverless environment");
       
       res.json({ 
         success: true, 
