@@ -9,11 +9,6 @@
       }
     }
   ],
-  "functions": {
-    "api/contact.ts": {
-      "runtime": "@vercel/node@3"
-    }
-  },
   "routes": [
     {
       "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",

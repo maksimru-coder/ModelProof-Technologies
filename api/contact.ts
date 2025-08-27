@@ -1,12 +1,4 @@
-// Vercel serverless function for contact form
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-
-// Enable CORS for all origins
-const cors = (res: VercelResponse) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-};
 
 // Simple email validation
 const isValidEmail = (email: string): boolean => {
@@ -35,52 +27,34 @@ const validateContactData = (data: any) => {
 };
 
 const sendEmail = async (submission: any) => {
-  console.log("Attempting to send email notification...");
-  
   if (!process.env.SENDGRID_API_KEY) {
-    console.log("SendGrid API key not configured, skipping email notification");
+    console.log("SendGrid API key not configured");
     return false;
   }
 
   try {
-    // Dynamic import for serverless compatibility
     const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-    const msg = {
-      to: process.env.CONTACT_EMAIL || "contact@modelproof.ai",
-      from: process.env.EMAIL_FROM || "maksim@modelproof.ai",
+    await sgMail.send({
+      to: "contact@modelproof.ai",
+      from: "maksim@modelproof.ai",
       replyTo: submission.email,
       subject: `New Contact Form Submission from ${submission.name}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${submission.name}</p>
-        <p><strong>Email:</strong> ${submission.email}</p>
-        <p><strong>Company:</strong> ${submission.company || 'Not specified'}</p>
-        <p><strong>Message:</strong></p>
-        <p>${submission.message}</p>
-        <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
-      `,
-    };
-
-    console.log("Sending email with config:", { 
-      to: msg.to, 
-      from: msg.from, 
-      subject: msg.subject 
+      html: `<h2>New Contact Form Submission</h2><p><strong>Name:</strong> ${submission.name}</p><p><strong>Email:</strong> ${submission.email}</p><p><strong>Company:</strong> ${submission.company || 'Not specified'}</p><p><strong>Message:</strong> ${submission.message}</p>`
     });
     
-    await sgMail.send(msg);
-    console.log("Email notification sent successfully");
     return true;
   } catch (error) {
-    console.error("Failed to send email notification:", error);
+    console.error("Email error:", error);
     return false;
   }
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Handle CORS
-  cors(res);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -90,7 +64,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.json({
       status: "Contact API is running",
       hasApiKey: !!process.env.SENDGRID_API_KEY,
-      environment: process.env.NODE_ENV || 'production',
       timestamp: new Date().toISOString()
     });
   }
@@ -100,20 +73,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    console.log("Contact form submission received:", req.body);
-    console.log("Environment check - SENDGRID_API_KEY available:", !!process.env.SENDGRID_API_KEY);
-    
     const data = validateContactData(req.body);
-    console.log("Validation passed:", data);
-    
-    const submission = {
-      ...data,
-      id: Date.now(),
-      createdAt: new Date()
-    };
-    
-    const emailSent = await sendEmail(submission);
-    console.log("Email notification result:", emailSent);
+    const submission = { ...data, id: Date.now() };
+    await sendEmail(submission);
     
     return res.json({ 
       success: true, 
@@ -121,10 +83,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       id: submission.id 
     });
   } catch (error) {
-    console.error("Contact form error:", error);
     return res.status(500).json({ 
-      error: "Server error occurred", 
-      details: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : 'Server error',
       timestamp: new Date().toISOString()
     });
   }
