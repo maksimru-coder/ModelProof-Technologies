@@ -1,32 +1,53 @@
-import type { Express } from "express";
+import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSchema } from "@shared/schema";
-import nodemailer from "nodemailer";
+import sgMail from "@sendgrid/mail";
+import multer from "multer";
 
-// Email configuration
-const createEmailTransporter = () => {
-  if (process.env.EMAIL_HOST && process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-    return nodemailer.createTransporter({
-      host: process.env.EMAIL_HOST,
-      port: parseInt(process.env.EMAIL_PORT || "587"),
-      secure: process.env.EMAIL_PORT === "465",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+// Extend Express Request type to include file
+interface MulterRequest extends Request {
+  file?: Express.Multer.File;
+}
+
+// Initialize SendGrid
+if (process.env.SENDGRID_API_KEY) {
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+}
+
+// Configure multer for file uploads
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  },
+  fileFilter: (req: any, file: any, cb: any) => {
+    // Allow only common resume file types
+    const allowedMimeTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
+    if (allowedMimeTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only PDF, DOC, and DOCX files are allowed.'));
+    }
   }
-  return null;
-};
+});
 
 const sendNotificationEmail = async (submission: any, isCareer = false) => {
-  const transporter = createEmailTransporter();
-  if (!transporter) return;
+  if (!process.env.SENDGRID_API_KEY) {
+    console.log("SendGrid API key not configured, skipping email notification");
+    return false;
+  }
 
   const toEmail = isCareer ? 
     (process.env.CAREERS_EMAIL || "careers@modelproof.ai") : 
     (process.env.CONTACT_EMAIL || "contact@modelproof.ai");
+
+  // Use a verified sender email for SendGrid
+  const fromEmail = process.env.EMAIL_FROM || "maksim@modelproof.ai";
 
   const subject = isCareer ? 
     `New Career Application from ${submission.name}` : 
@@ -36,10 +57,11 @@ const sendNotificationEmail = async (submission: any, isCareer = false) => {
     <h2>New Career Application</h2>
     <p><strong>Name:</strong> ${submission.name}</p>
     <p><strong>Email:</strong> ${submission.email}</p>
-    <p><strong>Position:</strong> ${submission.position || 'Not specified'}</p>
-    <p><strong>Experience:</strong> ${submission.experience || 'Not specified'}</p>
+    <p><strong>Resume:</strong> ${submission.resumeFileName || 'Not provided'}</p>
+    <p><strong>File Size:</strong> ${submission.resumeSize ? Math.round(submission.resumeSize / 1024) + ' KB' : 'N/A'}</p>
+    <p><strong>File Type:</strong> ${submission.resumeType || 'N/A'}</p>
     <p><strong>Message:</strong></p>
-    <p>${submission.message}</p>
+    <p>${submission.message || 'No additional message provided'}</p>
     <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
   ` : `
     <h2>New Contact Form Submission</h2>
@@ -51,15 +73,22 @@ const sendNotificationEmail = async (submission: any, isCareer = false) => {
     <p><strong>Submitted:</strong> ${new Date().toLocaleString()}</p>
   `;
 
+  const msg = {
+    to: toEmail,
+    from: fromEmail,
+    replyTo: submission.email, // This allows you to reply directly to the person who submitted the form
+    subject: subject,
+    html: htmlContent,
+  };
+
   try {
-    await transporter.sendMail({
-      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
-      to: toEmail,
-      subject: subject,
-      html: htmlContent,
-    });
+    await sgMail.send(msg);
+    console.log(`Email notification sent successfully from ${fromEmail} to ${toEmail}`);
+    return true;
   } catch (error) {
-    console.error("Failed to send email:", error);
+    console.error("Failed to send email notification:", error);
+    console.error("Please verify maksim@modelproof.ai as a sender in SendGrid dashboard");
+    return false;
   }
 };
 
@@ -67,27 +96,60 @@ export function registerRoutes(app: Express): Server {
   app.post("/api/contact", async (req, res) => {
     try {
       const data = insertContactSchema.parse(req.body);
-      const submission = await storage.createContactSubmission(data);
       
-      // Send email notification
+      // Create submission object for email
+      const submission = {
+        ...data,
+        id: Date.now(), // Use timestamp as simple ID
+        createdAt: new Date()
+      };
+      
+      // Send email notification (gracefully handles missing API key)
       await sendNotificationEmail(submission, false);
       
-      res.json(submission);
+      // Try to store in database, but don't fail if storage isn't available
+      try {
+        await storage.createContactSubmission(data);
+      } catch (storageError) {
+        console.log("Storage not available, but email notification sent:", storageError);
+      }
+      
+      res.json({ 
+        success: true, 
+        message: "Contact form submitted successfully",
+        id: submission.id 
+      });
     } catch (error) {
+      console.error("Contact form error:", error);
       res.status(400).json({ error: "Invalid submission data" });
     }
   });
 
-  // Career form endpoint
-  app.post("/api/careers", async (req, res) => {
+  // Career form endpoint with file upload
+  app.post("/api/careers", upload.single('resume'), async (req: MulterRequest, res) => {
     try {
-      const data = req.body;
+      const { name, email, message } = req.body;
+      const resumeFile = req.file;
+
+      if (!resumeFile) {
+        return res.status(400).json({ error: "Resume file is required" });
+      }
+
+      const careerData = {
+        name,
+        email,
+        message: message || '',
+        resumeFileName: resumeFile.originalname,
+        resumeSize: resumeFile.size,
+        resumeType: resumeFile.mimetype
+      };
       
-      // Send email notification for career applications
-      await sendNotificationEmail(data, true);
+      // Send email notification for career applications (gracefully handles missing API key)
+      await sendNotificationEmail(careerData, true);
       
       res.json({ success: true, message: "Application submitted successfully" });
     } catch (error) {
+      console.error("Career application error:", error);
       res.status(400).json({ error: "Invalid application data" });
     }
   });

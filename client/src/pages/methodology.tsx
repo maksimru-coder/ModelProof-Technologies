@@ -12,7 +12,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 
-const PhaseCard = ({ phase, title, description, icon: Icon, isLast = false }) => (
+const PhaseCard = ({ phase, title, description, icon: Icon, isLast = false }: {
+  phase: number;
+  title: string;
+  description: string;
+  icon: any;
+  isLast?: boolean;
+}) => (
   <div className="relative">
     <Card className="relative z-10 hover:shadow-lg transition-shadow duration-200">
       <CardHeader>
@@ -38,7 +44,12 @@ const PhaseCard = ({ phase, title, description, icon: Icon, isLast = false }) =>
   </div>
 );
 
-const ScoreLevel = ({ level, range, description, score }) => (
+const ScoreLevel = ({ level, range, description, score }: {
+  level: string;
+  range: string;
+  description: string;
+  score: number;
+}) => (
   <div className="flex items-center gap-4 p-4 rounded-lg hover:bg-accent transition-colors">
     <Progress value={score} className="w-24 h-2" />
     <div>
@@ -49,7 +60,11 @@ const ScoreLevel = ({ level, range, description, score }) => (
   </div>
 );
 
-const ScoreUsageCard = ({ icon: Icon, title, description }) => (
+const ScoreUsageCard = ({ icon: Icon, title, description }: {
+  icon: any;
+  title: string;
+  description: string;
+}) => (
   <div className="flex items-start space-x-3 p-4">
     <div className="mt-1">
       <Icon className="h-5 w-5 text-primary" />

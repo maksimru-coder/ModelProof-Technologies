@@ -14,6 +14,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 const careerFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -35,12 +37,40 @@ export default function Careers() {
     },
   });
 
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('message', data.message || '');
+      formData.append('resume', data.resume);
+      
+      const res = await fetch('/api/careers', {
+        method: 'POST',
+        body: formData,
+      });
+      return res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Application received",
+        description: "Thank you for your interest! We'll review your application and get back to you soon.",
+        duration: 3000,
+      });
+      form.reset();
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+        duration: 3000,
+      });
+    },
+  });
+
   const onSubmit = (data: CareerFormValues) => {
-    toast({
-      title: "Application received",
-      description: "Thank you for your interest! We'll review your application and get back to you soon.",
-    });
-    form.reset();
+    mutation.mutate(data);
   };
 
   return (
