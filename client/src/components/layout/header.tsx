@@ -80,18 +80,18 @@ export function Header() {
             {links.map((link) => (
               <NavigationMenuItem key={link.href}>
                 <NavigationMenuLink
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.scrollTo(0, 0);
-                    window.location.href = link.href;
-                  }}
+                  asChild
                   className={`px-4 py-2 cursor-pointer ${
                     location === link.href
                       ? "text-primary font-medium"
                       : "text-muted-foreground"
                   }`}
                 >
-                  {link.label}
+                  <Link href={link.href}>
+                    <span onClick={() => window.scrollTo(0, 0)}>
+                      {link.label}
+                    </span>
+                  </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}
