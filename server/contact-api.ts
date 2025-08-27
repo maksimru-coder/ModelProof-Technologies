@@ -72,6 +72,16 @@ const sendEmail = async (submission: any) => {
 };
 
 export function registerContactAPI(app: Express) {
+  // Diagnostic endpoint to check environment
+  app.get("/api/contact/status", (req, res) => {
+    res.json({
+      status: "Contact API is running",
+      hasApiKey: !!process.env.SENDGRID_API_KEY,
+      environment: process.env.NODE_ENV || 'development',
+      timestamp: new Date().toISOString()
+    });
+  });
+
   app.post("/api/contact", async (req, res) => {
     try {
       console.log("Contact form submission received:", req.body);
