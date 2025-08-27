@@ -82,11 +82,13 @@ const sendNotificationEmail = async (submission: any, isCareer = false) => {
   };
 
   try {
-    await sgMail.send(msg);
-    console.log(`Email notification sent successfully from ${fromEmail} to ${toEmail}`);
+    console.log("Sending email with config:", { to: toEmail, from: fromEmail, subject });
+    const result = await sgMail.send(msg);
+    console.log(`Email notification sent successfully from ${fromEmail} to ${toEmail}`, result);
     return true;
   } catch (error) {
     console.error("Failed to send email notification:", error);
+    console.error("SendGrid error details:", JSON.stringify(error, null, 2));
     console.error("Please verify maksim@modelproof.ai as a sender in SendGrid dashboard");
     return false;
   }
@@ -95,7 +97,11 @@ const sendNotificationEmail = async (submission: any, isCareer = false) => {
 export function registerRoutes(app: Express): Server {
   app.post("/api/contact", async (req, res) => {
     try {
+      console.log("Contact form submission received:", { body: req.body });
+      console.log("Environment check - SENDGRID_API_KEY available:", !!process.env.SENDGRID_API_KEY);
+      
       const data = insertContactSchema.parse(req.body);
+      console.log("Validation passed:", data);
       
       // Create submission object for email
       const submission = {
@@ -105,13 +111,16 @@ export function registerRoutes(app: Express): Server {
       };
       
       // Send email notification (gracefully handles missing API key)
-      await sendNotificationEmail(submission, false);
+      console.log("Attempting to send email notification...");
+      const emailSent = await sendNotificationEmail(submission, false);
+      console.log("Email notification result:", emailSent);
       
       // Try to store in database, but don't fail if storage isn't available
       try {
         await storage.createContactSubmission(data);
+        console.log("Data stored successfully");
       } catch (storageError) {
-        console.log("Storage not available, but email notification sent:", storageError);
+        console.log("Storage not available, but continuing:", storageError);
       }
       
       res.json({ 
@@ -120,8 +129,13 @@ export function registerRoutes(app: Express): Server {
         id: submission.id 
       });
     } catch (error) {
-      console.error("Contact form error:", error);
-      res.status(400).json({ error: "Invalid submission data" });
+      console.error("Contact form error details:", error);
+      console.error("Error stack:", error instanceof Error ? error.stack : 'No stack available');
+      res.status(500).json({ 
+        error: "Server error occurred", 
+        details: error instanceof Error ? error.message : String(error),
+        timestamp: new Date().toISOString()
+      });
     }
   });
 
