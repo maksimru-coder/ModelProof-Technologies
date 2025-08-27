@@ -28,12 +28,12 @@ const validateContactData = (data: any) => {
 
 const sendEmail = async (submission: any) => {
   if (!process.env.SENDGRID_API_KEY) {
-    console.log("SendGrid API key not configured");
     return false;
   }
 
   try {
-    const sgMail = require('@sendgrid/mail');
+    // Use dynamic import for ES modules compatibility
+    const { default: sgMail } = await import('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
     await sgMail.send({
