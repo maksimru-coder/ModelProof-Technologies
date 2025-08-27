@@ -1,5 +1,5 @@
-// Simple Node.js serverless function for contact form
-const sgMail = require('@sendgrid/mail');
+// Simple Node.js serverless function for contact form using Resend
+const { Resend } = require('resend');
 
 // Simple email validation
 const isValidEmail = (email) => {
@@ -28,21 +28,37 @@ const validateContactData = (data) => {
 };
 
 const sendEmail = async (submission) => {
-  if (!process.env.SENDGRID_API_KEY) {
+  if (!process.env.RESEND_API_KEY) {
+    console.log("Resend API key not configured");
     return false;
   }
 
   try {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    await sgMail.send({
-      to: "contact@modelproof.ai",
-      from: "maksim@modelproof.ai",
+    const { data, error } = await resend.emails.send({
+      from: 'ModelProof Contact <maksim@modelproof.ai>',
+      to: ['contact@modelproof.ai'],
       replyTo: submission.email,
       subject: `New Contact Form Submission from ${submission.name}`,
-      html: `<h2>New Contact Form Submission</h2><p><strong>Name:</strong> ${submission.name}</p><p><strong>Email:</strong> ${submission.email}</p><p><strong>Company:</strong> ${submission.company || 'Not specified'}</p><p><strong>Message:</strong> ${submission.message}</p>`
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${submission.name}</p>
+        <p><strong>Email:</strong> ${submission.email}</p>
+        <p><strong>Company:</strong> ${submission.company || 'Not specified'}</p>
+        <p><strong>Message:</strong></p>
+        <p>${submission.message}</p>
+        <hr>
+        <p><small>Submitted: ${new Date().toLocaleString()}</small></p>
+      `,
     });
-    
+
+    if (error) {
+      console.error("Resend error:", error);
+      return false;
+    }
+
+    console.log("Email sent successfully:", data);
     return true;
   } catch (error) {
     console.error("Email error:", error);
@@ -61,8 +77,8 @@ module.exports = async (req, res) => {
 
   if (req.method === 'GET') {
     return res.json({
-      status: "Contact API is running",
-      hasApiKey: !!process.env.SENDGRID_API_KEY,
+      status: "Contact API is running with Resend",
+      hasApiKey: !!process.env.RESEND_API_KEY,
       timestamp: new Date().toISOString()
     });
   }
