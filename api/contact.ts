@@ -1,6 +1,13 @@
 // Vercel serverless function for contact form
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
+// Enable CORS for all origins
+const cors = (res: VercelResponse) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+};
+
 // Simple email validation
 const isValidEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -73,9 +80,7 @@ const sendEmail = async (submission: any) => {
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Handle CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  cors(res);
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
