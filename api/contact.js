@@ -37,7 +37,7 @@ const sendEmail = async (submission) => {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const { data, error } = await resend.emails.send({
-      from: 'ModelProof Contact <maksim@modelproof.ai>',
+      from: 'ModelProof Contact <contact@modelproof.ai>',
       to: ['contact@modelproof.ai'],
       replyTo: submission.email,
       subject: `New Contact Form Submission from ${submission.name}`,
