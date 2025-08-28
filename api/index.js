@@ -1,5 +1,5 @@
 // Simple test endpoint to verify Vercel function deployment
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -15,4 +15,4 @@ module.exports = async (req, res) => {
     timestamp: new Date().toISOString(),
     hasResendKey: !!process.env.RESEND_API_KEY
   });
-};
+}

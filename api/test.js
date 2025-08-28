@@ -1,5 +1,5 @@
 // Simple test endpoint
-module.exports = (req, res) => {
+export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -10,4 +10,4 @@ module.exports = (req, res) => {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'production'
   });
-};
+}
