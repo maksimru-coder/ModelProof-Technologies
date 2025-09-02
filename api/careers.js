@@ -95,7 +95,7 @@ const sendCareerEmail = async (submission, resume) => {
     }
 
     const { data, error } = await resend.emails.send({
-      from: 'Careers <careers@modelproof.ai>',
+      from: 'ModelProof Careers <careers@modelproof.ai>',
       to: ['careers@modelproof.ai'],
       replyTo: submission.email,
       subject: `New Job Application from ${submission.name}`,
