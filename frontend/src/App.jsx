@@ -243,12 +243,26 @@ function App() {
                 className="w-full h-48 p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all resize-none"
                 maxLength={10000}
               />
-              <div className={`text-right text-sm mt-2 font-medium ${
-                text.length >= 9500 ? 'text-red-600' : 
-                text.length >= 8000 ? 'text-yellow-600' : 
-                'text-gray-500'
-              }`}>
-                {text.length}/10,000 characters
+              <div className="flex items-center justify-between mt-2">
+                <button
+                  onClick={() => {
+                    setText('')
+                    setUploadedFileName(null)
+                    setResults(null)
+                    setFixedText(null)
+                    toast.success('All cleared!')
+                  }}
+                  className="text-sm text-gray-600 hover:text-red-600 font-medium underline transition-colors"
+                >
+                  🗑️ Clear All
+                </button>
+                <div className={`text-sm font-medium ${
+                  text.length >= 9500 ? 'text-red-600' : 
+                  text.length >= 8000 ? 'text-yellow-600' : 
+                  'text-gray-500'
+                }`}>
+                  {text.length}/10,000 characters
+                </div>
               </div>
 
               <div className="mt-4 pt-4 border-t border-gray-200">
