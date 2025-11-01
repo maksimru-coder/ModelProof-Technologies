@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 import spacy
 import numpy as np
 from openai import OpenAI
@@ -79,7 +79,7 @@ class ScanResponse(BaseModel):
     score: int
     severity: str
     issues: List[BiasIssue]
-    heatmap: List[Dict[str, any]]
+    heatmap: List[Dict[str, Any]]
     summary: str
 
 class FixResponse(BaseModel):
@@ -381,7 +381,7 @@ async def fix_text(request: FixRequest):
             max_tokens=500
         )
         
-        fixed_text = response.choices[0].message.content.strip()
+        fixed_text = (response.choices[0].message.content or "").strip()
         
         improvements_response = client.chat.completions.create(
             model="gpt-4o-mini",
@@ -399,7 +399,7 @@ async def fix_text(request: FixRequest):
             max_tokens=200
         )
         
-        improvements_text = improvements_response.choices[0].message.content.strip()
+        improvements_text = (improvements_response.choices[0].message.content or "").strip()
         improvements = [imp.strip() for imp in improvements_text.split('\n') if imp.strip() and not imp.strip().startswith('#')]
         improvements = [imp.lstrip('•-*123456789. ') for imp in improvements if imp][:5]
         
