@@ -1,0 +1,147 @@
+import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Radar, ChevronDown } from "lucide-react";
+import {
+  Card,
+  CardContent,
+} from "@/components/ui/card";
+
+export default function BiasRadar() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const scrollToTool = () => {
+    const toolSection = document.getElementById("biasradar-tool");
+    if (toolSection) {
+      toolSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  return (
+    <div className="min-h-screen">
+      <div className="relative bg-primary text-white py-20">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <div className="flex justify-center mb-6">
+              <Radar 
+                className="h-16 w-16 stroke-[1.5]" 
+                style={{
+                  filter: "drop-shadow(0 0 12px rgba(255, 255, 255, 0.3))"
+                }}
+              />
+            </div>
+            <h1 className="text-5xl font-bold mb-6">BiasRadar™</h1>
+            <p className="text-2xl mb-8 text-white/90">
+              AI Bias Detection Tool by ModelProof Technologies
+            </p>
+            <p className="text-lg mb-10 text-white/80 max-w-3xl mx-auto">
+              Analyze your text or document for bias across multiple categories — gender, race, age, disability, and more.
+              Ensure your content and AI outputs are fair, inclusive, and compliant with ethical AI standards.
+            </p>
+            <Button 
+              size="lg"
+              onClick={scrollToTool}
+              className="px-8 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg border-2 border-white/20 hover:border-white/40"
+              data-testid="button-scroll-to-tool"
+            >
+              Launch BiasRadar Tool
+              <ChevronDown className="ml-2 h-5 w-5" />
+            </Button>
+          </motion.div>
+        </div>
+      </div>
+
+      <div id="biasradar-tool" className="py-16 bg-muted/30">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="max-w-6xl mx-auto"
+          >
+            <Card className="shadow-lg">
+              <CardContent className="p-12">
+                <div className="text-center py-20">
+                  <Radar className="h-24 w-24 text-primary mx-auto mb-6 opacity-50" />
+                  <h2 className="text-2xl font-bold mb-4 text-muted-foreground">
+                    BiasRadar Tool Integration Area
+                  </h2>
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    This section is ready for the BiasRadar application to be integrated.
+                    Once the BiasRadar folder is uploaded to the repository, the tool will be seamlessly embedded here.
+                  </p>
+                  <div className="mt-8 p-6 bg-muted/50 rounded-lg max-w-xl mx-auto">
+                    <p className="text-sm text-muted-foreground">
+                      <strong>Next Steps:</strong> Upload the BiasRadar application files to the repository, 
+                      and this area will automatically display the fully functional bias detection interface.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="py-16 bg-white">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold mb-8 text-center">Key Features</h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+                className="p-6 border rounded-lg hover:shadow-md transition-shadow"
+              >
+                <h3 className="text-xl font-semibold mb-3">Multi-Category Bias Detection</h3>
+                <p className="text-muted-foreground">
+                  Identifies bias across gender, race, age, disability, religion, and more in your text and documents.
+                </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                className="p-6 border rounded-lg hover:shadow-md transition-shadow"
+              >
+                <h3 className="text-xl font-semibold mb-3">Real-Time Analysis</h3>
+                <p className="text-muted-foreground">
+                  Get instant feedback on potential bias in your content with detailed explanations and suggestions.
+                </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+                className="p-6 border rounded-lg hover:shadow-md transition-shadow"
+              >
+                <h3 className="text-xl font-semibold mb-3">Document Upload Support</h3>
+                <p className="text-muted-foreground">
+                  Analyze entire documents including PDFs, Word files, and text files for comprehensive bias assessment.
+                </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.7 }}
+                className="p-6 border rounded-lg hover:shadow-md transition-shadow"
+              >
+                <h3 className="text-xl font-semibold mb-3">Compliance Ready</h3>
+                <p className="text-muted-foreground">
+                  Ensure your content meets ethical AI standards and regulatory requirements for fairness and inclusivity.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
