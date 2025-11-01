@@ -1,0 +1,22 @@
+Frontend (React) Additions:
+•  Add a file upload input below the textarea: Use a styled button like “Upload File (PDF, DOC, TXT)” with <input type="file" accept=".pdf,.doc,.docx,.txt" /> hidden behind it.
+•  On upload: Use FormData to send the file via axios POST to /upload-and-scan. Handle multiple files if possible, but limit to one for MVP.
+•  Show loading spinner (via react-hot-toast) during upload/processing.
+•  If file uploaded, auto-populate textarea with extracted text (truncated to 10,000 chars if needed) and trigger scan.
+•  Update textarea: Set maxlength=10000 with real-time counter (e.g., “Chars: 423/10000”) that turns yellow at 80%, red at 95%.
+•  Design: Keep responsive; add drag-and-drop zone for files using react-dropzone for extra user-friendliness.
+Dependencies: Add react-dropzone (for drag/drop), docx (if needed for client-side preview, but handle extraction server-side).
+Backend (FastAPI) Additions:
+•  Dependencies: Add pypdf2 (for PDF), python-docx (for DOC/DOCX).
+•  New Endpoint: POST /upload-and-scan: Input UploadFile (file: UploadFile = File(…)), bias_types: list[str].
+	•  Extract text: For PDF use PyPDF2.PdfReader(file.file).pages to get text; for DOC use docx.Document(file.file).text; for TXT use file.file.read().decode().
+	•  Limit extracted text to 10,000 chars (truncate with ellipsis if longer, log warning).
+	•  Then run the same /scan logic on extracted text.
+	•  Return: Same as /scan, plus {original_file_name: str, extracted_text: str}.
+•  Handle errors: e.g., invalid file type returns 400 with message.
+•  Security: Sanitize uploads, limit size to 5MB using FastAPI’s max_upload_size.
+Integration & Functionality Updates:
+•  Frontend calls: On file select/drop, POST to /upload-and-scan with FormData.append(‘file’, selectedFile).
+•  Example Flow: User uploads “report.pdf” → Extracts text → Scans for biases → Shows results with “From uploaded file: report.pdf”.
+•  Handle edge cases: Large files (reject >5MB), non-text files (error), empty files.
+•  Make default textarea limit 10000 chars.
