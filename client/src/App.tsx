@@ -6,6 +6,8 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import Home from "@/pages/home";
 import Services from "@/pages/services";
+import Products from "@/pages/products";
+import BiasRadar from "@/pages/biasradar";
 import Methodology from "@/pages/methodology";
 import About from "@/pages/about";
 import Contact from "@/pages/contact";
@@ -28,6 +30,8 @@ function Router() {
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/services" component={Services} />
+          <Route path="/products" component={Products} />
+          <Route path="/biasradar" component={BiasRadar} />
           <Route path="/services/essential-assessment" component={EssentialAssessment} />
           <Route path="/services/professional-validation" component={ProfessionalValidation} />
           <Route path="/services/enterprise-solution" component={EnterpriseSolution} />
