@@ -55,10 +55,8 @@ export function ProductsOverview() {
                   <CardTitle className="text-xl mb-2">BiasRadar™ — Bias Detection for Responsible AI</CardTitle>
                   <p className="text-lg font-medium text-primary/80">AI Bias Detection Engine</p>
                 </div>
-                <CardDescription className="text-sm">
-                  <p className="text-muted-foreground">
-                    Scan text or documents for potential bias across gender, race, age, and more. Ensure your AI systems and communications remain fair, inclusive, and compliant.
-                  </p>
+                <CardDescription className="text-sm text-muted-foreground">
+                  Scan text or documents for potential bias across gender, race, age, and more. Ensure your AI systems and communications remain fair, inclusive, and compliant.
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto pt-6">
