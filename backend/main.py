@@ -26,7 +26,13 @@ except OSError:
     subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
     nlp = spacy.load("en_core_web_sm")
 
-client = OpenAI()
+AI_INTEGRATIONS_OPENAI_API_KEY = os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY")
+AI_INTEGRATIONS_OPENAI_BASE_URL = os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL")
+
+client = OpenAI(
+    api_key=AI_INTEGRATIONS_OPENAI_API_KEY,
+    base_url=AI_INTEGRATIONS_OPENAI_BASE_URL
+)
 
 GENDER_BIAS_WORDS = {
     "male": ["aggressive", "dominant", "assertive", "competitive", "ambitious", "decisive", 
