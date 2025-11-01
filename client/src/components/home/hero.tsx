@@ -71,14 +71,25 @@ export function Hero() {
               <Button
                 size="lg"
                 className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg border-2 border-white/20 hover:border-white/40"
+                data-testid="button-view-services"
               >
                 View Our Services
+              </Button>
+            </Link>
+            <Link href="/products">
+              <Button
+                size="lg"
+                className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg border-2 border-white/20 hover:border-white/40"
+                data-testid="button-view-products"
+              >
+                View Our Products
               </Button>
             </Link>
             <Link href="/methodology">
               <Button
                 size="lg"
                 className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg border-2 border-white/20 hover:border-white/40"
+                data-testid="button-learn-methodology"
               >
                 Learn Our Methodology
               </Button>
