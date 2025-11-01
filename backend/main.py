@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Optional, Any
@@ -7,8 +7,11 @@ import numpy as np
 from openai import OpenAI
 import os
 import re
+import PyPDF2
+from docx import Document
+import io
 
-app = FastAPI(title="BiasRadar.ai API")
+app = FastAPI(title="BiasRadar API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -67,9 +70,40 @@ CULTURAL_BIAS_WORDS = {
                         "oriental", "native", "tribal"]
 }
 
+POLITICAL_BIAS_WORDS = {
+    "partisan": ["woke", "snowflake", "libtard", "conservative", "liberal agenda", "far-left", "far-right",
+                 "radical left", "alt-right", "social justice warrior", "sjw", "politically correct",
+                 "virtue signaling", "cancel culture", "indoctrination", "brainwashed", "sheeple",
+                 "fake news", "mainstream media", "deep state", "communist", "socialist agenda"],
+    "ideological": ["obviously", "clearly", "everyone knows", "common sense", "natural law",
+                    "traditional values", "family values", "real american", "patriotic"]
+}
+
+RELIGION_BIAS_WORDS = {
+    "problematic": ["infidel", "heathen", "godless", "pagan", "cult", "radical islam", 
+                    "fundamentalist", "extremist", "judeo-christian", "christian nation",
+                    "backwards religion", "primitive beliefs", "superstitious", "jihadist",
+                    "crusade", "holy war", "religious fanatic"]
+}
+
+LGBTQ_BIAS_WORDS = {
+    "problematic": ["lifestyle choice", "sexual preference", "homosexual agenda", "gay lifestyle",
+                    "unnatural", "normal", "traditional family", "real man", "real woman",
+                    "born male", "born female", "biological male", "biological female",
+                    "transvestite", "transsexual", "hermaphrodite", "cross-dresser",
+                    "lifestyle", "deviant", "perversion", "confused"]
+}
+
+SOCIOECONOMIC_BIAS_WORDS = {
+    "class_based": ["low class", "welfare queen", "trailer trash", "ghetto", "hood", "inner-city",
+                    "underprivileged", "disadvantaged", "less fortunate", "poor people",
+                    "uneducated", "blue collar", "working class", "elitist", "privileged",
+                    "trust fund baby", "silver spoon", "entitled", "lazy poor"]
+}
+
 class ScanRequest(BaseModel):
     text: str
-    bias_types: List[str] = ["gender", "race", "age", "disability", "culture"]
+    bias_types: List[str] = ["gender", "race", "age", "disability", "culture", "political", "religion", "lgbtq", "socioeconomic", "intersectional"]
 
 class FixRequest(BaseModel):
     text: str
@@ -92,6 +126,15 @@ class FixResponse(BaseModel):
     original_text: str
     fixed_text: str
     improvements: List[str]
+
+class UploadScanResponse(BaseModel):
+    score: int
+    severity: str
+    issues: List[BiasIssue]
+    heatmap: List[Dict[str, Any]]
+    summary: str
+    original_file_name: str
+    extracted_text: str
 
 def calculate_bias_score(issues: List[BiasIssue]) -> int:
     if not issues:
@@ -266,6 +309,119 @@ def detect_cultural_bias(text_lower: str) -> List[BiasIssue]:
     
     return issues
 
+def detect_political_bias(text_lower: str) -> List[BiasIssue]:
+    issues = []
+    
+    for category, words in POLITICAL_BIAS_WORDS.items():
+        for word in words:
+            pattern = r'\b' + re.escape(word) + r'\b'
+            for match in re.finditer(pattern, text_lower, re.IGNORECASE):
+                position = match.start()
+                actual_word = text_lower[position:match.end()]
+                
+                severity = "high" if word in ["woke", "libtard", "snowflake", "brainwashed", "sheeple", "fake news"] else "medium"
+                
+                if category == "partisan":
+                    explanation = f"'{actual_word}' reflects partisan political bias and divisive language"
+                else:
+                    explanation = f"'{actual_word}' contains ideological assumptions that may not be universally shared"
+                
+                issues.append(BiasIssue(
+                    word=actual_word,
+                    bias_type="political",
+                    severity=severity,
+                    explanation=explanation,
+                    position=position
+                ))
+    
+    return issues
+
+def detect_religion_bias(text_lower: str) -> List[BiasIssue]:
+    issues = []
+    
+    for word in RELIGION_BIAS_WORDS["problematic"]:
+        pattern = r'\b' + re.escape(word) + r'\b'
+        for match in re.finditer(pattern, text_lower, re.IGNORECASE):
+            position = match.start()
+            actual_word = text_lower[position:match.end()]
+            
+            severity = "high" if word in ["infidel", "heathen", "jihadist", "crusade", "holy war"] else "medium"
+            
+            issues.append(BiasIssue(
+                word=actual_word,
+                bias_type="religion",
+                severity=severity,
+                explanation=f"'{actual_word}' contains religious bias or stereotyping",
+                position=position
+            ))
+    
+    return issues
+
+def detect_lgbtq_bias(text_lower: str) -> List[BiasIssue]:
+    issues = []
+    
+    for word in LGBTQ_BIAS_WORDS["problematic"]:
+        pattern = r'\b' + re.escape(word) + r'\b'
+        for match in re.finditer(pattern, text_lower, re.IGNORECASE):
+            position = match.start()
+            actual_word = text_lower[position:match.end()]
+            
+            severity = "high" if word in ["lifestyle choice", "unnatural", "deviant", "perversion", "confused"] else "medium"
+            
+            issues.append(BiasIssue(
+                word=actual_word,
+                bias_type="lgbtq",
+                severity=severity,
+                explanation=f"'{actual_word}' reflects bias against LGBTQ+ individuals and non-binary identities",
+                position=position
+            ))
+    
+    return issues
+
+def detect_socioeconomic_bias(text_lower: str) -> List[BiasIssue]:
+    issues = []
+    
+    for word in SOCIOECONOMIC_BIAS_WORDS["class_based"]:
+        pattern = r'\b' + re.escape(word) + r'\b'
+        for match in re.finditer(pattern, text_lower, re.IGNORECASE):
+            position = match.start()
+            actual_word = text_lower[position:match.end()]
+            
+            severity = "high" if word in ["welfare queen", "trailer trash", "lazy poor"] else "medium"
+            
+            issues.append(BiasIssue(
+                word=actual_word,
+                bias_type="socioeconomic",
+                severity=severity,
+                explanation=f"'{actual_word}' contains class-based bias or socioeconomic stereotyping",
+                position=position
+            ))
+    
+    return issues
+
+def detect_intersectional_bias(all_issues: List[BiasIssue]) -> List[BiasIssue]:
+    """Detect intersectional bias by finding overlapping biases on the same or nearby words"""
+    intersectional_issues = []
+    
+    # Group issues by position proximity (within 20 characters)
+    for i, issue1 in enumerate(all_issues):
+        for issue2 in all_issues[i+1:]:
+            # Check if issues are close together and of different types
+            if (abs(issue1.position - issue2.position) <= 20 and 
+                issue1.bias_type != issue2.bias_type):
+                
+                # Create an intersectional issue
+                combined_types = f"{issue1.bias_type} + {issue2.bias_type}"
+                intersectional_issues.append(BiasIssue(
+                    word=f"{issue1.word}/{issue2.word}",
+                    bias_type="intersectional",
+                    severity="high",
+                    explanation=f"Intersectional bias detected: {combined_types} - overlapping discriminations amplify harm",
+                    position=min(issue1.position, issue2.position)
+                ))
+    
+    return intersectional_issues
+
 def create_heatmap(text: str, issues: List[BiasIssue]) -> List[Dict]:
     heatmap = []
     words = text.split()
@@ -309,9 +465,9 @@ def create_heatmap(text: str, issues: List[BiasIssue]) -> List[Dict]:
 @app.get("/")
 async def root():
     return {
-        "message": "Welcome to BiasRadar.ai API",
-        "version": "1.0.0",
-        "endpoints": ["/scan", "/fix"]
+        "message": "Welcome to BiasRadar API",
+        "version": "2.0.0",
+        "endpoints": ["/scan", "/fix", "/upload-and-scan"]
     }
 
 @app.post("/scan", response_model=ScanResponse)
@@ -319,8 +475,8 @@ async def scan_text(request: ScanRequest):
     if not request.text or len(request.text.strip()) == 0:
         raise HTTPException(status_code=400, detail="Text cannot be empty")
     
-    if len(request.text) > 5000:
-        raise HTTPException(status_code=400, detail="Text too long. Maximum 5000 characters.")
+    if len(request.text) > 10000:
+        raise HTTPException(status_code=400, detail="Text too long. Maximum 10,000 characters.")
     
     doc = nlp(request.text)
     text_lower = request.text.lower()
@@ -341,6 +497,22 @@ async def scan_text(request: ScanRequest):
     
     if "culture" in request.bias_types:
         all_issues.extend(detect_cultural_bias(text_lower))
+    
+    if "political" in request.bias_types:
+        all_issues.extend(detect_political_bias(text_lower))
+    
+    if "religion" in request.bias_types:
+        all_issues.extend(detect_religion_bias(text_lower))
+    
+    if "lgbtq" in request.bias_types:
+        all_issues.extend(detect_lgbtq_bias(text_lower))
+    
+    if "socioeconomic" in request.bias_types:
+        all_issues.extend(detect_socioeconomic_bias(text_lower))
+    
+    # Detect intersectional bias if requested
+    if "intersectional" in request.bias_types and len(all_issues) > 1:
+        all_issues.extend(detect_intersectional_bias(all_issues))
     
     score = calculate_bias_score(all_issues)
     severity = get_severity_label(score)
@@ -376,7 +548,7 @@ async def fix_text(request: FixRequest):
             messages=[
                 {
                     "role": "system",
-                    "content": "You are a bias detection and correction expert. Your job is to rewrite text to remove all forms of bias including gender, racial, age, disability, and cultural bias. Maintain the core message but use inclusive, neutral language. Be concise and professional."
+                    "content": "You are a bias detection and correction expert. Your job is to rewrite text to remove all forms of bias including gender, racial, age, disability, cultural, political, religious, LGBTQ+, socioeconomic, and intersectional bias. Maintain the core message but use inclusive, neutral language. Be concise and professional."
                 },
                 {
                     "role": "user",
@@ -417,6 +589,134 @@ async def fix_text(request: FixRequest):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error generating fix: {str(e)}")
+
+@app.post("/upload-and-scan", response_model=UploadScanResponse)
+async def upload_and_scan(
+    file: UploadFile = File(...),
+    bias_types: str = Form(default='["gender","race","age","disability","culture","political","religion","lgbtq","socioeconomic","intersectional"]')
+):
+    """Upload a file (PDF, DOC, DOCX, TXT) and scan it for biases"""
+    
+    # Check file size (max 5MB)
+    contents = await file.read()
+    file_size_mb = len(contents) / (1024 * 1024)
+    if file_size_mb > 5:
+        raise HTTPException(status_code=400, detail=f"File too large ({file_size_mb:.1f}MB). Maximum size is 5MB.")
+    
+    # Get file extension
+    filename = file.filename or "unknown"
+    file_ext = filename.lower().split('.')[-1] if '.' in filename else ''
+    
+    # Extract text based on file type
+    extracted_text = ""
+    try:
+        if file_ext == 'pdf':
+            # Extract from PDF
+            pdf_file = io.BytesIO(contents)
+            pdf_reader = PyPDF2.PdfReader(pdf_file)
+            text_parts = []
+            for page in pdf_reader.pages:
+                text_parts.append(page.extract_text())
+            extracted_text = '\n'.join(text_parts)
+            
+        elif file_ext in ['doc', 'docx']:
+            # Extract from Word document
+            doc_file = io.BytesIO(contents)
+            doc = Document(doc_file)
+            text_parts = [paragraph.text for paragraph in doc.paragraphs]
+            extracted_text = '\n'.join(text_parts)
+            
+        elif file_ext == 'txt':
+            # Extract from text file
+            extracted_text = contents.decode('utf-8', errors='ignore')
+            
+        else:
+            raise HTTPException(
+                status_code=400, 
+                detail=f"Unsupported file type: {file_ext}. Please upload PDF, DOC, DOCX, or TXT files."
+            )
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error extracting text from file: {str(e)}")
+    
+    # Check if we extracted any text
+    if not extracted_text or len(extracted_text.strip()) == 0:
+        raise HTTPException(status_code=400, detail="No text could be extracted from the file. Please ensure the file contains readable text.")
+    
+    # Truncate to 10,000 characters if needed
+    original_length = len(extracted_text)
+    if original_length > 10000:
+        extracted_text = extracted_text[:10000] + "..."
+    
+    # Parse bias_types from JSON string
+    import json
+    try:
+        bias_types_list = json.loads(bias_types)
+    except:
+        bias_types_list = ["gender", "race", "age", "disability", "culture", "political", "religion", "lgbtq", "socioeconomic", "intersectional"]
+    
+    # Run bias detection
+    doc = nlp(extracted_text)
+    text_lower = extracted_text.lower()
+    
+    all_issues = []
+    
+    if "gender" in bias_types_list:
+        all_issues.extend(detect_gender_bias(doc, text_lower))
+    
+    if "race" in bias_types_list:
+        all_issues.extend(detect_race_bias(text_lower))
+    
+    if "age" in bias_types_list:
+        all_issues.extend(detect_age_bias(text_lower))
+    
+    if "disability" in bias_types_list:
+        all_issues.extend(detect_disability_bias(text_lower))
+    
+    if "culture" in bias_types_list:
+        all_issues.extend(detect_cultural_bias(text_lower))
+    
+    if "political" in bias_types_list:
+        all_issues.extend(detect_political_bias(text_lower))
+    
+    if "religion" in bias_types_list:
+        all_issues.extend(detect_religion_bias(text_lower))
+    
+    if "lgbtq" in bias_types_list:
+        all_issues.extend(detect_lgbtq_bias(text_lower))
+    
+    if "socioeconomic" in bias_types_list:
+        all_issues.extend(detect_socioeconomic_bias(text_lower))
+    
+    if "intersectional" in bias_types_list and len(all_issues) > 1:
+        all_issues.extend(detect_intersectional_bias(all_issues))
+    
+    score = calculate_bias_score(all_issues)
+    severity = get_severity_label(score)
+    heatmap = create_heatmap(extracted_text, all_issues)
+    
+    bias_type_counts = {}
+    for issue in all_issues:
+        bias_type_counts[issue.bias_type] = bias_type_counts.get(issue.bias_type, 0) + 1
+    
+    if all_issues:
+        summary = f"Found {len(all_issues)} potential bias issue(s) in uploaded file: " + ", ".join(
+            f"{count} {bias_type}" for bias_type, count in bias_type_counts.items()
+        )
+    else:
+        summary = "No significant biases detected in uploaded file. Great job!"
+    
+    return UploadScanResponse(
+        score=score,
+        severity=severity,
+        issues=all_issues,
+        heatmap=heatmap,
+        summary=summary,
+        original_file_name=filename,
+        extracted_text=extracted_text[:500] + "..." if len(extracted_text) > 500 else extracted_text  # Return first 500 chars for preview
+    )
 
 if __name__ == "__main__":
     import uvicorn

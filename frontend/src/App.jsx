@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
+import { useDropzone } from 'react-dropzone'
 import './App.css'
 
 const API_URL = import.meta.env.VITE_API_URL || (
@@ -11,18 +12,24 @@ const API_URL = import.meta.env.VITE_API_URL || (
 
 function App() {
   const [text, setText] = useState('')
-  const [biasTypes, setBiasTypes] = useState(['gender', 'race', 'age', 'disability', 'culture'])
+  const [biasTypes, setBiasTypes] = useState(['gender', 'race', 'age', 'disability', 'culture', 'political', 'religion', 'lgbtq', 'socioeconomic', 'intersectional'])
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState(null)
   const [fixedText, setFixedText] = useState(null)
   const [fixLoading, setFixLoading] = useState(false)
+  const [uploadedFileName, setUploadedFileName] = useState(null)
 
   const allBiasTypes = [
     { id: 'gender', label: 'Gender', description: 'Detects gender stereotypes and biased language' },
     { id: 'race', label: 'Race', description: 'Identifies racial bias and problematic terms' },
     { id: 'age', label: 'Age', description: 'Finds age-related discrimination' },
     { id: 'disability', label: 'Disability', description: 'Catches ableist language' },
-    { id: 'culture', label: 'Culture', description: 'Detects cultural bias and Western-centric views' }
+    { id: 'culture', label: 'Culture', description: 'Detects cultural bias and Western-centric views' },
+    { id: 'political', label: 'Political/Ideological', description: 'Detects partisan slants and ideological assumptions' },
+    { id: 'religion', label: 'Religion', description: 'Identifies faith-based stereotypes and discrimination' },
+    { id: 'lgbtq', label: 'LGBTQ+', description: 'Catches biases related to sexual orientation and gender identity' },
+    { id: 'socioeconomic', label: 'Socioeconomic/Class', description: 'Spots assumptions about income and economic status' },
+    { id: 'intersectional', label: 'Intersectional', description: 'Analyzes combined biases for overlapping discrimination' }
   ]
 
   const handleBiasTypeToggle = (typeId) => {
@@ -88,6 +95,77 @@ function App() {
     }
   }
 
+  const handleFileUpload = async (acceptedFiles) => {
+    if (acceptedFiles.length === 0) return
+
+    const file = acceptedFiles[0]
+    
+    // Check file size (5MB limit)
+    const maxSize = 5 * 1024 * 1024 // 5MB in bytes
+    if (file.size > maxSize) {
+      toast.error(`File too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum size is 5MB.`)
+      return
+    }
+
+    // Check file type
+    const validTypes = ['.pdf', '.doc', '.docx', '.txt']
+    const fileExt = '.' + file.name.split('.').pop().toLowerCase()
+    if (!validTypes.includes(fileExt)) {
+      toast.error('Invalid file type. Please upload PDF, DOC, DOCX, or TXT files.')
+      return
+    }
+
+    setLoading(true)
+    setResults(null)
+    setFixedText(null)
+
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('bias_types', JSON.stringify(biasTypes))
+
+      const response = await axios.post(`${API_URL}/upload-and-scan`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+
+      // Set the extracted text in the textarea
+      setText(response.data.extracted_text)
+      setUploadedFileName(response.data.original_file_name)
+      
+      // Set the results
+      setResults(response.data)
+
+      if (response.data.score === 0) {
+        toast.success(`File "${file.name}" scanned - No biases detected!`)
+      } else {
+        toast.success(`File "${file.name}" scanned successfully!`)
+      }
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error(error.response?.data?.detail || 'Failed to process file. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const onDrop = useCallback((acceptedFiles) => {
+    handleFileUpload(acceptedFiles)
+  }, [biasTypes])
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      'application/pdf': ['.pdf'],
+      'application/msword': ['.doc'],
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+      'text/plain': ['.txt']
+    },
+    maxFiles: 1,
+    multiple: false
+  })
+
   const getSeverityColor = (severity) => {
     switch (severity) {
       case 'high': return 'bg-red-100 text-red-800 border-red-300'
@@ -115,7 +193,12 @@ function App() {
       race: 'bg-orange-100 text-orange-700',
       age: 'bg-blue-100 text-blue-700',
       disability: 'bg-green-100 text-green-700',
-      culture: 'bg-pink-100 text-pink-700'
+      culture: 'bg-pink-100 text-pink-700',
+      political: 'bg-red-100 text-red-700',
+      religion: 'bg-indigo-100 text-indigo-700',
+      lgbtq: 'bg-fuchsia-100 text-fuchsia-700',
+      socioeconomic: 'bg-teal-100 text-teal-700',
+      intersectional: 'bg-slate-100 text-slate-700'
     }
     return colors[biasType] || 'bg-gray-100 text-gray-700'
   }
@@ -131,11 +214,16 @@ function App() {
       
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <header className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600 mb-4">
-            BiasRadar.ai
-          </h1>
+          <div className="inline-flex items-center justify-center mb-4">
+            <div className="relative">
+              <h1 className="text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 drop-shadow-sm">
+                BiasRadar
+              </h1>
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 via-purple-400 to-green-400 rounded-lg blur opacity-20"></div>
+            </div>
+          </div>
           <p className="text-xl text-gray-600 mb-2">
-            Scan AI for hidden bias in 5 seconds
+            Detect hidden bias across 10 dimensions in seconds
           </p>
           <p className="text-sm text-gray-500">
             Free • No login required • Powered by AI
@@ -153,10 +241,65 @@ function App() {
                 onChange={(e) => setText(e.target.value)}
                 placeholder="E.g., 'The best engineers are aggressive, dominant, and work 80-hour weeks.'"
                 className="w-full h-48 p-4 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all resize-none"
-                maxLength={5000}
+                maxLength={10000}
               />
-              <div className="text-right text-sm text-gray-500 mt-2">
-                {text.length}/5000 characters
+              <div className={`text-right text-sm mt-2 font-medium ${
+                text.length >= 9500 ? 'text-red-600' : 
+                text.length >= 8000 ? 'text-yellow-600' : 
+                'text-gray-500'
+              }`}>
+                {text.length}/10,000 characters
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-gray-200">
+                <div
+                  {...getRootProps()}
+                  className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
+                    isDragActive
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
+                  }`}
+                >
+                  <input {...getInputProps()} />
+                  <div className="flex flex-col items-center">
+                    <svg className="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    {isDragActive ? (
+                      <p className="text-blue-600 font-semibold">Drop your file here...</p>
+                    ) : (
+                      <>
+                        <p className="text-gray-600 font-medium mb-1">
+                          Drag & drop a file here, or click to browse
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Supports PDF, DOC, DOCX, TXT (max 5MB)
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </div>
+                {uploadedFileName && (
+                  <div className="mt-3 flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-sm text-green-800 font-medium">File loaded: {uploadedFileName}</span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setText('')
+                        setUploadedFileName(null)
+                        setResults(null)
+                        setFixedText(null)
+                      }}
+                      className="text-xs text-green-600 hover:text-green-700 underline"
+                    >
+                      Clear
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
