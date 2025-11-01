@@ -49,6 +49,16 @@ This application is built on Replit and uses:
 - Backend on port 8000
 - Frontend on port 5000
 
+### Environment Configuration
+
+The frontend requires the `VITE_API_URL` environment variable to connect to the backend API. This is automatically configured in `frontend/.env`:
+
+```
+VITE_API_URL=https://[your-replit-domain]:8000
+```
+
+If you're running this locally, the frontend will automatically fall back to `http://localhost:8000`.
+
 ## Credits
 
 Built with ❤️ using Replit, FastAPI, and React

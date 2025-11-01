@@ -3,7 +3,11 @@ import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
 import './App.css'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API_URL = import.meta.env.VITE_API_URL || (
+  typeof window !== 'undefined' && window.location.hostname.includes('replit')
+    ? window.location.origin.replace(/:\d+/, ':8000')
+    : 'http://localhost:8000'
+)
 
 function App() {
   const [text, setText] = useState('')
