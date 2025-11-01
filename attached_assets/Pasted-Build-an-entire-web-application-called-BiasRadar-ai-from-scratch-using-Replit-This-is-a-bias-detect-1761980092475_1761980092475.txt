@@ -1,0 +1,60 @@
+Build an entire web application called BiasRadar.ai from scratch using Replit. This is a bias detection tool where users can paste text (like AI-generated content, job ads, or song lyrics) and scan for biases such as gender, race, age, disability, or culture. Make it beautiful, user-friendly, intuitive, and fully functional with a modern design. Use React for the frontend, FastAPI for the backend, and integrate necessary libraries for bias detection. Host it on Replit and ensure it’s deployable with a public URL.
+Project Structure
+•  Set up a new Replit project with Python for backend and Node.js for frontend (use a multi-language repl if needed).
+•  Folders:
+	•  /frontend: React app.
+	•  /backend: FastAPI server.
+•  Install all dependencies automatically via requirements.txt for backend and package.json for frontend.
+•  Use CORS to allow frontend-backend communication.
+•  For deployment: Use Replit’s web hosting, expose the backend on port 8000 and frontend on 3000, and set up a proxy if needed.
+Frontend (React)
+•  Use Create React App or Vite for setup.
+•  Dependencies: react, react-dom, axios (for API calls), tailwindcss (for styling), react-hot-toast (for notifications).
+•  Pages/Components:
+	•  Landing Page: Clean hero section with logo “BiasRadar”, tagline “Scan AI for hidden bias in 5 seconds”.
+		•  Large textarea for pasting text.
+		•  Checkboxes for bias types: Gender, Race, Age, Disability, Culture (all selected by default).
+		•  Big “Scan Now” button (free, no login required).
+		•  Below: Example scans or testimonials.
+	•  Results Section: After scan, show inline or in a modal:
+		•  Bias Score: e.g., “78/100 (High Risk)” with a progress bar or color-coded (green low, red high).
+		•  Detected Issues: Bullet list, e.g., “Gender: ‘aggressive’ 3.2x more male-associated”.
+		•  Visual Heatmap: Highlight biased words in the original text (use spans with background colors).
+		•  “Fix This” button: Calls API to generate a debiased version.
+		•  Share buttons: Copy link, Download PDF (use jsPDF), Tweet.
+	•  Pro Features: Simple login/signup (use local storage or Firebase if easy; otherwise mock it).
+		•  Dashboard for saved scans.
+	•  Design: Modern, responsive (mobile-first), use Tailwind for blues/greens, sans-serif fonts, animations on buttons.
+	•  Handle loading states, errors gracefully.
+Backend (FastAPI)
+•  Dependencies: fastapi, uvicorn, spacy, fairlearn, numpy, scikit-learn, transformers (from Hugging Face for BERT embeddings), pydantic.
+•  Download spacy model: en_core_web_sm.
+•  Endpoints:
+	•  POST /scan: Input {text: str, bias_types: list[str]}.
+		•  Preprocess: Tokenize with spacy.
+		•  Detect Biases:
+			•  Linguistic: Check pronouns, adjectives against bias word lists (e.g., gendered words like “aggressive” -> male).
+			•  Demographic: Use fairlearn metrics or simple classifiers (train a quick one on sample data for parity).
+			•  Cultural: Basic checks for Western-centric terms.
+			•  Score: Aggregate 0-100 based on flags.
+			•  Use BERT for word associations (e.g., cosine similarity for gender bias).
+		•  Return: {score: int, issues: list[dict], heatmap: list[{word: str, bias: str}]}
+	•  POST /fix: Input {text: str}. Use a simple rule-based rewrite or Hugging Face pipeline (e.g., text-generation with prompt “Rewrite without bias:”).
+	•  For explanations: Use a local LLM if possible (e.g., via transformers) or placeholder text.
+•  Run with uvicorn on 0.0.0.0:8000.
+Integration & Functionality
+•  Frontend calls backend via axios (e.g., http://localhost:8000/scan).
+•  Make it real-time: Scan in <5 seconds.
+•  Example Flow:
+	•  User pastes: “The best engineers are aggressive, dominant, and work 80-hour weeks.”
+	•  Select biases.
+	•  Scan: Returns score 78, issues on gender/age, heatmap highlights.
+	•  Fix: “Top engineers are dedicated, proactive, and thrive in fast-paced environments.”
+•  Handle edge cases: Empty text, long text (limit 1000 chars), errors.
+•  Security: Basic input sanitization.
+Deployment & Testing
+•  Auto-deploy: Set up Replit to run backend and frontend simultaneously.
+•  Provide a public URL.
+•  Test thoroughly: Run sample scans, ensure UI is beautiful and works on mobile/desktop.
+•  Add README.md with instructions.
+Build this step-by-step, confirm each part works, and output the final URL when done. Use best practices for code quality.
