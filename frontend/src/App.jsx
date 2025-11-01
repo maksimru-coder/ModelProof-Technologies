@@ -493,7 +493,7 @@ function App() {
                         }}
                         className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors"
                       >
-                        🔄 Use This Version
+                        🔄 Replace Original Text
                       </button>
                     </div>
                   </div>
