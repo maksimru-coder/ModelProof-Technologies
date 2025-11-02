@@ -12,7 +12,7 @@ const API_URL = import.meta.env.VITE_API_URL || (
 
 function App() {
   const [text, setText] = useState('')
-  const [biasTypes, setBiasTypes] = useState(['gender', 'race', 'age', 'disability', 'culture', 'political', 'religion', 'lgbtq', 'socioeconomic', 'intersectional'])
+  const [biasTypes, setBiasTypes] = useState(['gender', 'race', 'age', 'disability', 'culture', 'political', 'religion', 'lgbtq', 'socioeconomic', 'intersectional', 'truth_seeking', 'ideological_neutrality'])
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState(null)
   const [fixedText, setFixedText] = useState(null)
@@ -29,7 +29,9 @@ function App() {
     { id: 'religion', label: 'Religion', description: 'Identifies faith-based stereotypes and discrimination' },
     { id: 'lgbtq', label: 'LGBTQ+', description: 'Catches biases related to sexual orientation and gender identity' },
     { id: 'socioeconomic', label: 'Socioeconomic/Class', description: 'Spots assumptions about income and economic status' },
-    { id: 'intersectional', label: 'Intersectional', description: 'Analyzes combined biases for overlapping discrimination' }
+    { id: 'intersectional', label: 'Intersectional', description: 'Analyzes combined biases for overlapping discrimination' },
+    { id: 'truth_seeking', label: 'Truth-Seeking', description: 'Detects deviations from factual accuracy, unsubstantiated claims, or non-truthful language' },
+    { id: 'ideological_neutrality', label: 'Ideological Neutrality', description: 'Identifies partisan slants, ideological dogmas, or non-neutral framing' }
   ]
 
   const handleBiasTypeToggle = (typeId) => {
@@ -198,7 +200,9 @@ function App() {
       religion: 'bg-indigo-100 text-indigo-700',
       lgbtq: 'bg-fuchsia-100 text-fuchsia-700',
       socioeconomic: 'bg-teal-100 text-teal-700',
-      intersectional: 'bg-slate-100 text-slate-700'
+      intersectional: 'bg-slate-100 text-slate-700',
+      truth_seeking: 'bg-cyan-100 text-cyan-700',
+      ideological_neutrality: 'bg-amber-100 text-amber-700'
     }
     return colors[biasType] || 'bg-gray-100 text-gray-700'
   }
@@ -223,7 +227,7 @@ function App() {
             </div>
           </div>
           <p className="text-xl text-gray-600 mb-2">
-            Detect hidden bias across 10 dimensions in seconds
+            Detect hidden bias across 12 dimensions in seconds
           </p>
           <p className="text-sm text-gray-500">
             Free • No login required • Powered by AI

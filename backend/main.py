@@ -101,9 +101,32 @@ SOCIOECONOMIC_BIAS_WORDS = {
                     "trust fund baby", "silver spoon", "entitled", "lazy poor"]
 }
 
+TRUTH_SEEKING_WORDS = {
+    "unsubstantiated": ["it's a fact that", "undeniable truth", "without a doubt",
+                        "proven fact", "experts all agree", "scientists all agree",
+                        "the truth is", "impossible to deny", "irrefutable fact",
+                        "indisputable fact", "beyond question", "absolute truth", "undeniable fact"],
+    "overgeneralization": ["always wrong", "never works", "nobody believes",
+                           "100% guaranteed", "completely impossible", "totally false",
+                           "entirely untrue", "perfectly clear that", "obviously true", "obviously false"]
+}
+
+IDEOLOGICAL_NEUTRALITY_WORDS = {
+    "non_neutral_framing": ["the establishment", "the elite", "the system",
+                            "big tech", "big pharma", "globalist agenda",
+                            "controlled opposition", "power structure", "ruling class"],
+    "dismissive_framing": ["so-called experts", "so-called science",
+                           "official narrative", "they want you to believe", "they're lying to you",
+                           "don't be fooled", "wake up people", "open your eyes people",
+                           "do your own research", "question everything they say"],
+    "absolutist_framing": ["the only solution", "the real problem", "what's really happening",
+                           "the real agenda", "the hidden truth", "what they won't tell you",
+                           "the actual facts", "the only answer"]
+}
+
 class ScanRequest(BaseModel):
     text: str
-    bias_types: List[str] = ["gender", "race", "age", "disability", "culture", "political", "religion", "lgbtq", "socioeconomic", "intersectional"]
+    bias_types: List[str] = ["gender", "race", "age", "disability", "culture", "political", "religion", "lgbtq", "socioeconomic", "intersectional", "truth_seeking", "ideological_neutrality"]
 
 class FixRequest(BaseModel):
     text: str
@@ -422,6 +445,99 @@ def detect_intersectional_bias(all_issues: List[BiasIssue]) -> List[BiasIssue]:
     
     return intersectional_issues
 
+def detect_truth_seeking_bias(text_lower: str) -> List[BiasIssue]:
+    """Detect deviations from factual accuracy and unsubstantiated claims"""
+    issues = []
+    
+    # Check for unsubstantiated claims - these are multi-word phrases that signal overconfidence
+    for phrase in TRUTH_SEEKING_WORDS["unsubstantiated"]:
+        pattern = re.escape(phrase)
+        for match in re.finditer(pattern, text_lower, re.IGNORECASE):
+            position = match.start()
+            actual_phrase = text_lower[position:match.end()]
+            
+            severity = "high" if phrase in ["proven fact", "irrefutable fact", "indisputable fact", "absolute truth", "undeniable fact"] else "medium"
+            
+            issues.append(BiasIssue(
+                word=actual_phrase,
+                bias_type="truth_seeking",
+                severity=severity,
+                explanation=f"'{actual_phrase}' signals an overconfident assertion that may not be backed by sufficient evidence",
+                position=position
+            ))
+    
+    # Check for overgeneralizations - multi-word phrases that make absolute claims
+    for phrase in TRUTH_SEEKING_WORDS["overgeneralization"]:
+        pattern = re.escape(phrase)
+        for match in re.finditer(pattern, text_lower, re.IGNORECASE):
+            position = match.start()
+            actual_phrase = text_lower[position:match.end()]
+            
+            issues.append(BiasIssue(
+                word=actual_phrase,
+                bias_type="truth_seeking",
+                severity="medium",
+                explanation=f"'{actual_phrase}' is an overgeneralization that oversimplifies complex realities",
+                position=position
+            ))
+    
+    return issues
+
+def detect_ideological_neutrality_bias(text_lower: str) -> List[BiasIssue]:
+    """Detect non-neutral framing and ideological presentation"""
+    issues = []
+    
+    # Check for non-neutral framing (institutional/systemic framing)
+    for phrase in IDEOLOGICAL_NEUTRALITY_WORDS["non_neutral_framing"]:
+        pattern = re.escape(phrase)
+        for match in re.finditer(pattern, text_lower, re.IGNORECASE):
+            position = match.start()
+            actual_phrase = text_lower[position:match.end()]
+            
+            severity = "high" if phrase in ["the deep state", "globalist agenda", "right-wing extremists", "left-wing radicals"] else "medium"
+            
+            issues.append(BiasIssue(
+                word=actual_phrase,
+                bias_type="ideological_neutrality",
+                severity=severity,
+                explanation=f"'{actual_phrase}' uses non-neutral framing that assumes a particular ideological stance",
+                position=position
+            ))
+    
+    # Check for dismissive framing (undermining expertise/authority)
+    for phrase in IDEOLOGICAL_NEUTRALITY_WORDS["dismissive_framing"]:
+        pattern = re.escape(phrase)
+        for match in re.finditer(pattern, text_lower, re.IGNORECASE):
+            position = match.start()
+            actual_phrase = text_lower[position:match.end()]
+            
+            issues.append(BiasIssue(
+                word=actual_phrase,
+                bias_type="ideological_neutrality",
+                severity="high",
+                explanation=f"'{actual_phrase}' dismissively frames information to push a particular narrative",
+                position=position
+            ))
+    
+    # Check for absolutist framing (claiming sole truth)
+    for phrase in IDEOLOGICAL_NEUTRALITY_WORDS["absolutist_framing"]:
+        pattern = re.escape(phrase)
+        for match in re.finditer(pattern, text_lower, re.IGNORECASE):
+            position = match.start()
+            actual_phrase = text_lower[position:match.end()]
+            
+            severity = "high" if phrase in ["the only solution", "the only answer", "what they won't tell you"] else "medium"
+            
+            issues.append(BiasIssue(
+                word=actual_phrase,
+                bias_type="ideological_neutrality",
+                severity=severity,
+                explanation=f"'{actual_phrase}' presents claims in absolutist terms that discourage alternative perspectives",
+                position=position
+            ))
+    
+    return issues
+
 def create_heatmap(text: str, issues: List[BiasIssue]) -> List[Dict]:
     heatmap = []
     words = text.split()
@@ -509,6 +625,12 @@ async def scan_text(request: ScanRequest):
     
     if "socioeconomic" in request.bias_types:
         all_issues.extend(detect_socioeconomic_bias(text_lower))
+    
+    if "truth_seeking" in request.bias_types:
+        all_issues.extend(detect_truth_seeking_bias(text_lower))
+    
+    if "ideological_neutrality" in request.bias_types:
+        all_issues.extend(detect_ideological_neutrality_bias(text_lower))
     
     # Detect intersectional bias if requested
     if "intersectional" in request.bias_types and len(all_issues) > 1:
