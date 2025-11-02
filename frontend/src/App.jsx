@@ -227,7 +227,7 @@ function App() {
             </div>
           </div>
           <p className="text-xl text-gray-600 mb-2">
-            Detect hidden bias across 12 dimensions in seconds
+            Detect and fix potential bias across 12 dimensions in seconds
           </p>
           <p className="text-sm text-gray-500">
             Free • No login required • Powered by AI
@@ -544,8 +544,7 @@ function App() {
         </div>
 
         <footer className="mt-12 text-center text-gray-600 text-sm">
-          <p>Built with ❤️ using Replit, FastAPI, and React</p>
-          <p className="mt-2">Helping create more inclusive and fair content</p>
+          <p>Built by ModelProof Technologies. Helping create more neutral and bias-free content.</p>
         </footer>
       </div>
     </div>
