@@ -87,6 +87,7 @@ export function Hero() {
             <Link href="/products">
               <Button
                 size="lg"
+                onClick={() => window.scrollTo(0, 0)}
                 className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg border-2 border-white/20 hover:border-white/40"
                 data-testid="button-view-products"
               >
@@ -96,6 +97,7 @@ export function Hero() {
             <Link href="/services">
               <Button
                 size="lg"
+                onClick={() => window.scrollTo(0, 0)}
                 className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg border-2 border-white/20 hover:border-white/40"
                 data-testid="button-view-services"
               >
@@ -105,6 +107,7 @@ export function Hero() {
             <Link href="/methodology">
               <Button
                 size="lg"
+                onClick={() => window.scrollTo(0, 0)}
                 className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg border-2 border-white/20 hover:border-white/40"
                 data-testid="button-learn-methodology"
               >
