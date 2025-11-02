@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { ArrowRight, Radar, ShieldCheck } from "lucide-react";
+import { ArrowRight, Radar } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -76,44 +76,6 @@ export default function Products() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <Card className="transition-all duration-300 hover:shadow-lg opacity-75">
-            <CardHeader>
-              <div className="w-16 h-16 mb-6 flex items-center justify-center">
-                <ShieldCheck 
-                  className="h-12 w-12 stroke-[1.5] text-muted-foreground" 
-                  style={{
-                    filter: "drop-shadow(0 0 8px rgba(150, 150, 150, 0.2))"
-                  }}
-                />
-              </div>
-              <CardTitle className="text-2xl mb-2">ModelProof Validator</CardTitle>
-              <CardDescription className="text-lg font-medium text-muted-foreground mb-4">
-                Comprehensive AI model testing and compliance scoring suite
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="mb-6 text-muted-foreground">
-                Comprehensive AI model testing and compliance scoring suite for enterprise and government.
-              </p>
-              <div className="flex items-center justify-center gap-2">
-                <Button 
-                  disabled
-                  className="px-8 py-2"
-                  data-testid="button-modelproof-validator-disabled"
-                >
-                  Coming Soon
-                </Button>
-                <span className="text-sm text-muted-foreground">(Learn More)</span>
               </div>
             </CardContent>
           </Card>
