@@ -4,7 +4,25 @@ export function Footer() {
   return (
     <footer className="border-t">
       <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          {/* Products Section */}
+          <div>
+            <h3 className="text-xl font-semibold mb-6 text-foreground">Products</h3>
+            <ul className="space-y-4">
+              <li>
+                <Link href="/biasradar">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                    data-testid="footer-link-biasradar"
+                  >
+                    BiasRadar™
+                  </span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+
           {/* Services Section */}
           <div>
             <h3 className="text-xl font-semibold mb-6 text-foreground">Services</h3>
