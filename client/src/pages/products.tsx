@@ -36,7 +36,7 @@ export default function Products() {
         className="max-w-4xl mx-auto mb-12"
       >
         <p className="text-center text-muted-foreground">
-          Explore our growing suite of AI validation and bias detection tools. Each product is designed to help enterprises, developers, and government organizations deploy AI responsibly and transparently.
+          Explore our growing suite of AI validation and bias detection tools. Each product is designed to help enterprises, developers, government organizations, and any company deploy AI responsibly, transparently, and neutrally—free from bias, while enabling broader business neutrality and fairness.
         </p>
       </motion.div>
 
@@ -58,12 +58,12 @@ export default function Products() {
               </div>
               <CardTitle className="text-2xl mb-2">BiasRadar™ — AI Bias Detection Engine</CardTitle>
               <CardDescription className="text-lg font-medium text-primary/80 mb-4">
-                Detect and remove bias in text, documents, and datasets
+                Detect and mitigate bias in text, documents, and datasets
               </CardDescription>
             </CardHeader>
             <CardContent>
               <p className="mb-6 text-muted-foreground">
-                Detects and removes bias in text, documents, and datasets across multiple categories — including gender, race, age, disability, and more.
+                Detect, analyze, and fix bias in text, documents, and datasets across gender, race, age, disability, culture, and more. With real-time analysis, document uploads, and API integration, ensure neutral, compliant AI outputs, content, and operations aligned with current regulations—enabling any company to stay bias-free and neutral across all business aspects.
               </p>
               <div className="flex justify-center">
                 <Link href="/biasradar">

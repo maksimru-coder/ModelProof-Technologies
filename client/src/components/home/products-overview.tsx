@@ -56,7 +56,7 @@ export function ProductsOverview() {
                   <p className="text-lg font-medium text-primary/80">AI Bias Detection Engine</p>
                 </div>
                 <CardDescription className="text-sm text-muted-foreground">
-                  Scan text or documents for potential bias across gender, race, age, and more. Ensure your AI systems and communications remain fair, inclusive, and compliant.
+                  Scan text or documents for potential bias across gender, race, age, disability, culture, and more. Detect, analyze, and fix biases to ensure your AI systems, communications, content, and operations remain fair, neutral, bias-free, and compliant with current regulations—ideal for any company prioritizing neutrality and fairness in all aspects of business.
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto pt-6">
