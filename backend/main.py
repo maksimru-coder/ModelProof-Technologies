@@ -126,7 +126,7 @@ IDEOLOGICAL_NEUTRALITY_WORDS = {
 
 class ScanRequest(BaseModel):
     text: str
-    bias_types: List[str] = ["gender", "race", "age", "disability", "culture", "political", "religion", "lgbtq", "socioeconomic", "intersectional", "truth_seeking", "ideological_neutrality"]
+    bias_types: List[str] = ["gender", "race", "age", "disability", "lgbtq", "religion", "socioeconomic", "culture", "intersectional", "political", "ideological_neutrality", "truth_seeking"]
 
 class FixRequest(BaseModel):
     text: str

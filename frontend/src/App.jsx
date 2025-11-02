@@ -12,7 +12,7 @@ const API_URL = import.meta.env.VITE_API_URL || (
 
 function App() {
   const [text, setText] = useState('')
-  const [biasTypes, setBiasTypes] = useState(['gender', 'race', 'age', 'disability', 'culture', 'political', 'religion', 'lgbtq', 'socioeconomic', 'intersectional', 'truth_seeking', 'ideological_neutrality'])
+  const [biasTypes, setBiasTypes] = useState(['gender', 'race', 'age', 'disability', 'lgbtq', 'religion', 'socioeconomic', 'culture', 'intersectional', 'political', 'ideological_neutrality', 'truth_seeking'])
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState(null)
   const [fixedText, setFixedText] = useState(null)
@@ -24,14 +24,14 @@ function App() {
     { id: 'race', label: 'Race', description: 'Identifies racial bias and problematic terms' },
     { id: 'age', label: 'Age', description: 'Finds age-related discrimination' },
     { id: 'disability', label: 'Disability', description: 'Catches ableist language' },
-    { id: 'culture', label: 'Culture', description: 'Detects cultural bias and Western-centric views' },
-    { id: 'political', label: 'Political/Ideological', description: 'Detects partisan slants and ideological assumptions' },
-    { id: 'religion', label: 'Religion', description: 'Identifies faith-based stereotypes and discrimination' },
-    { id: 'lgbtq', label: 'LGBTQ+', description: 'Catches biases related to sexual orientation and gender identity' },
-    { id: 'socioeconomic', label: 'Socioeconomic/Class', description: 'Spots assumptions about income and economic status' },
-    { id: 'intersectional', label: 'Intersectional', description: 'Analyzes combined biases for overlapping discrimination' },
-    { id: 'truth_seeking', label: 'Truth-Seeking', description: 'Detects deviations from factual accuracy, unsubstantiated claims, or non-truthful language' },
-    { id: 'ideological_neutrality', label: 'Ideological Neutrality', description: 'Identifies partisan slants, ideological dogmas, or non-neutral framing' }
+    { id: 'lgbtq', label: 'Sexual Orientation/Gender Identity', description: 'Catches biases related to LGBTQ+ communities or non-binary identities' },
+    { id: 'religion', label: 'Religion', description: 'Identifies faith-based stereotypes' },
+    { id: 'socioeconomic', label: 'Socioeconomic/Class', description: 'Spots assumptions about income, class, or economic status' },
+    { id: 'culture', label: 'Culture', description: 'Spots cultural insensitivities or Western-centric assumptions' },
+    { id: 'intersectional', label: 'Intersectional', description: 'Analyzes combined biases (e.g., race + gender) for overlapping discriminations' },
+    { id: 'political', label: 'Political/Ideological', description: 'Detects partisan slants or ideological assumptions' },
+    { id: 'ideological_neutrality', label: 'Ideological Neutrality', description: 'Identifies partisan slants, ideological dogmas, or non-neutral framing' },
+    { id: 'truth_seeking', label: 'Truth-Seeking', description: 'Detects deviations from factual accuracy, unsubstantiated claims, or non-truthful language' }
   ]
 
   const handleBiasTypeToggle = (typeId) => {
