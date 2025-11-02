@@ -59,24 +59,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            From enterprise-grade model validation to custom AI assistants, we help companies deploy reliable, compliant, and high-performing AI systems
-          </motion.p>
-          <motion.p
-            className="mt-6 text-base md:text-lg leading-relaxed text-white/70 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-          >
-            Powered by innovations like{" "}
-            <Link href="/biasradar">
-              <span 
-                className="font-bold text-white hover:text-white/90 cursor-pointer underline decoration-white/40 hover:decoration-white/70 transition-all"
-                data-testid="hero-link-biasradar"
-              >
-                BiasRadar™
-              </span>
-            </Link>
-            , our proprietary bias detection engine that ensures fairness across AI models, data, and content
+            We help companies deploy reliable, compliant, and bias-free AI systems through enterprise-grade validation and custom AI development
           </motion.p>
           <motion.div
             className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6"
