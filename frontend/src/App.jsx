@@ -544,7 +544,9 @@ function App() {
         </div>
 
         <footer className="mt-12 text-center text-gray-600 text-sm">
-          <p>Built by ModelProof Technologies. Helping create more neutral and bias-free content.</p>
+          <p>
+            Built by <a href="https://modelproof.ai" target="_blank" rel="noopener noreferrer" className="font-bold text-gray-700 hover:text-blue-600 transition-colors">ModelProof Technologies</a>. Helping create more neutral and bias-free content.
+          </p>
         </footer>
       </div>
     </div>
