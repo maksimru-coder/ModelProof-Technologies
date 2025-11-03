@@ -1,17 +1,6 @@
 # Shared bias detection logic for BiasRadar
-import spacy
 import re
 from typing import List, Dict, Any
-
-# Load spaCy model (must be pre-installed for serverless deployment)
-try:
-    nlp = spacy.load("en_core_web_sm")
-except OSError:
-    raise RuntimeError(
-        "spaCy model 'en_core_web_sm' not found. "
-        "For Vercel deployment, add 'en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl' "
-        "to requirements.txt"
-    )
 
 # Bias word dictionaries
 GENDER_BIAS_WORDS = {
@@ -109,7 +98,7 @@ def find_word_in_text(text_lower: str, word: str) -> int:
     return match.start() if match else -1
 
 
-def detect_gender_bias(doc, text_lower: str) -> List[Dict[str, Any]]:
+def detect_gender_bias(text_lower: str) -> List[Dict[str, Any]]:
     """Detect gender bias in text"""
     issues = []
     for category, words in GENDER_BIAS_WORDS.items():

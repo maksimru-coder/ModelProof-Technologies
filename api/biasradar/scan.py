@@ -7,7 +7,7 @@ sys.path.append(os.path.dirname(__file__))
 
 try:
     from _bias_detection import (
-        nlp, detect_gender_bias, detect_race_bias, detect_age_bias,
+        detect_gender_bias, detect_race_bias, detect_age_bias,
         detect_disability_bias, detect_cultural_bias, detect_political_bias,
         detect_religion_bias, detect_lgbtq_bias, detect_socioeconomic_bias,
         detect_truth_seeking_bias, detect_ideological_neutrality_bias,
@@ -16,7 +16,7 @@ try:
     )
 except ImportError:
     from api.biasradar._bias_detection import (
-        nlp, detect_gender_bias, detect_race_bias, detect_age_bias,
+        detect_gender_bias, detect_race_bias, detect_age_bias,
         detect_disability_bias, detect_cultural_bias, detect_political_bias,
         detect_religion_bias, detect_lgbtq_bias, detect_socioeconomic_bias,
         detect_truth_seeking_bias, detect_ideological_neutrality_bias,
@@ -50,14 +50,13 @@ class handler(BaseHTTPRequestHandler):
                 return
             
             # Process text
-            doc = nlp(text)
             text_lower = text.lower()
             
             all_issues = []
             
             # Detect biases based on requested types
             if "gender" in bias_types:
-                all_issues.extend(detect_gender_bias(doc, text_lower))
+                all_issues.extend(detect_gender_bias(text_lower))
             
             if "race" in bias_types:
                 all_issues.extend(detect_race_bias(text_lower))
