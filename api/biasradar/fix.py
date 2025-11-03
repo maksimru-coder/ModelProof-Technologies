@@ -1,24 +1,55 @@
 from http.server import BaseHTTPRequestHandler
 import json
 import os
-from openai import OpenAI
+import urllib.request
+import urllib.error
 
 
-# Initialize OpenAI client - supports both Vercel and Replit environments
+# Get OpenAI API key from environment
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY") or os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY")
-OPENAI_BASE_URL = os.environ.get("OPENAI_BASE_URL") or os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL")
+OPENAI_BASE_URL = os.environ.get("OPENAI_BASE_URL") or os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL") or "https://api.openai.com/v1"
 
-client = OpenAI(
-    api_key=OPENAI_API_KEY,
-    base_url=OPENAI_BASE_URL if OPENAI_BASE_URL else None
-) if OPENAI_API_KEY else None
+
+def call_openai(messages, temperature=0.7, max_tokens=500):
+    """Call OpenAI API using pure Python urllib (no dependencies)"""
+    if not OPENAI_API_KEY:
+        raise ValueError("OpenAI API key not configured")
+    
+    headers = {
+        "Authorization": f"Bearer {OPENAI_API_KEY}",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {
+        "model": "gpt-4o-mini",
+        "messages": messages,
+        "temperature": temperature,
+        "max_tokens": max_tokens
+    }
+    
+    req = urllib.request.Request(
+        f"{OPENAI_BASE_URL}/chat/completions",
+        data=json.dumps(payload).encode('utf-8'),
+        headers=headers,
+        method='POST'
+    )
+    
+    try:
+        with urllib.request.urlopen(req, timeout=30) as response:
+            result = json.loads(response.read().decode('utf-8'))
+            return result['choices'][0]['message']['content'].strip()
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode('utf-8')
+        raise Exception(f"OpenAI API error: {e.code} - {error_body}")
+    except Exception as e:
+        raise Exception(f"Failed to call OpenAI: {str(e)}")
 
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
-            # Check if OpenAI client is available
-            if not client:
+            # Check if OpenAI API key is available
+            if not OPENAI_API_KEY:
                 self.send_error(500, "AI service not configured")
                 return
             
@@ -35,8 +66,7 @@ class handler(BaseHTTPRequestHandler):
                 return
             
             # Generate fixed text using OpenAI
-            response = client.chat.completions.create(
-                model="gpt-4o-mini",
+            fixed_text = call_openai(
                 messages=[
                     {
                         "role": "system",
@@ -51,11 +81,8 @@ class handler(BaseHTTPRequestHandler):
                 max_tokens=500
             )
             
-            fixed_text = (response.choices[0].message.content or "").strip()
-            
             # Generate improvements list
-            improvements_response = client.chat.completions.create(
-                model="gpt-4o-mini",
+            improvements_text = call_openai(
                 messages=[
                     {
                         "role": "system",
@@ -70,7 +97,6 @@ class handler(BaseHTTPRequestHandler):
                 max_tokens=200
             )
             
-            improvements_text = (improvements_response.choices[0].message.content or "").strip()
             improvements = [imp.strip() for imp in improvements_text.split('\n') if imp.strip() and not imp.strip().startswith('#')]
             improvements = [imp.lstrip('•-*123456789. ') for imp in improvements if imp][:5]
             

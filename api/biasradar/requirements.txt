@@ -1,1 +1,1 @@
-openai==1.12.0
+# No external dependencies needed - using Python stdlib only
