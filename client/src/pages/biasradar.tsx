@@ -467,7 +467,7 @@ export default function BiasRadar() {
                 <Button 
                   onClick={handleScan}
                   disabled={loading || !text.trim()}
-                  className="flex-1"
+                  className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
                   size="lg"
                 >
                   {loading ? (
@@ -485,7 +485,7 @@ export default function BiasRadar() {
                 <Button 
                   onClick={handleFix}
                   disabled={fixLoading || !text.trim()}
-                  variant="outline"
+                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
                   size="lg"
                 >
                   {fixLoading ? (
