@@ -279,6 +279,7 @@ export default function BiasRadar() {
                     <Button
                       variant="ghost"
                       size="sm"
+                      className="no-underline"
                       onClick={() => {
                         setText('');
                         setResults(null);
