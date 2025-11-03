@@ -1,13 +1,28 @@
 from http.server import BaseHTTPRequestHandler
 import json
-from _bias_detection import (
-    nlp, detect_gender_bias, detect_race_bias, detect_age_bias,
-    detect_disability_bias, detect_cultural_bias, detect_political_bias,
-    detect_religion_bias, detect_lgbtq_bias, detect_socioeconomic_bias,
-    detect_truth_seeking_bias, detect_ideological_neutrality_bias,
-    detect_intersectional_bias, calculate_bias_score, get_severity_label,
-    create_heatmap
-)
+import sys
+import os
+
+sys.path.append(os.path.dirname(__file__))
+
+try:
+    from _bias_detection import (
+        nlp, detect_gender_bias, detect_race_bias, detect_age_bias,
+        detect_disability_bias, detect_cultural_bias, detect_political_bias,
+        detect_religion_bias, detect_lgbtq_bias, detect_socioeconomic_bias,
+        detect_truth_seeking_bias, detect_ideological_neutrality_bias,
+        detect_intersectional_bias, calculate_bias_score, get_severity_label,
+        create_heatmap
+    )
+except ImportError:
+    from api.biasradar._bias_detection import (
+        nlp, detect_gender_bias, detect_race_bias, detect_age_bias,
+        detect_disability_bias, detect_cultural_bias, detect_political_bias,
+        detect_religion_bias, detect_lgbtq_bias, detect_socioeconomic_bias,
+        detect_truth_seeking_bias, detect_ideological_neutrality_bias,
+        detect_intersectional_bias, calculate_bias_score, get_severity_label,
+        create_heatmap
+    )
 
 
 class handler(BaseHTTPRequestHandler):
