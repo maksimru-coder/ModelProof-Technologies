@@ -1,0 +1,38 @@
+15:20:34.056 Running build in Washington, D.C., USA (East) – iad1
+15:20:34.057 Build machine configuration: 2 cores, 8 GB
+15:20:34.547 Cloning github.com/maksimru-coder/ModelProof-Technologies (Branch: main, Commit: 1c4c6e9)
+15:20:36.202 Cloning completed: 1.654s
+15:20:36.685 Restored build cache from previous deployment (DjizVmzFKcRKLPQG6Dm5dxW6Krjz)
+15:20:37.395 Running "vercel build"
+15:20:37.828 Vercel CLI 48.8.0
+15:20:38.614 Installing dependencies...
+15:20:41.825 
+15:20:41.826 added 40 packages in 3s
+15:20:41.826 
+15:20:41.826 76 packages are looking for funding
+15:20:41.826   run `npm fund` for details
+15:20:42.012 
+15:20:42.013 > rest-express@1.0.0 build
+15:20:42.013 > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+15:20:42.013 
+15:20:42.407 [36mvite v5.4.10 [32mbuilding for production...[36m[39m
+15:20:42.466 transforming...
+15:20:42.815 Browserslist: browsers data (caniuse-lite) is 13 months old. Please run:
+15:20:42.816   npx update-browserslist-db@latest
+15:20:42.816   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+15:20:43.031 [32m✓[39m 34 modules transformed.
+15:20:43.037 [31mx[39m Build failed in 604ms
+15:20:43.038 [31merror during build:
+15:20:43.038 [31m[vite]: Rollup failed to resolve import "react-dropzone" from "/vercel/path0/client/src/pages/biasradar.tsx".
+15:20:43.038 This is most likely unintended because it can break your application at runtime.
+15:20:43.038 If you do want to externalize this module explicitly add it to
+15:20:43.038 `build.rollupOptions.external`[31m
+15:20:43.038     at viteWarn (file:///vercel/path0/node_modules/vite/dist/node/chunks/dep-BWSbWtLw.js:65589:17)
+15:20:43.039     at onwarn (file:///vercel/path0/node_modules/@vitejs/plugin-react/dist/index.mjs:280:9)
+15:20:43.039     at onRollupWarning (file:///vercel/path0/node_modules/vite/dist/node/chunks/dep-BWSbWtLw.js:65619:5)
+15:20:43.039     at onwarn (file:///vercel/path0/node_modules/vite/dist/node/chunks/dep-BWSbWtLw.js:65284:7)
+15:20:43.039     at file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:19452:13
+15:20:43.039     at Object.logger [as onLog] (file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:21178:9)
+15:20:43.039     at ModuleLoader.handleInvalidResolvedId (file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:20067:26)
+15:20:43.040     at file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:20025:26[39m
+15:20:43.057 Error: Command "npm run build" exited with 1
