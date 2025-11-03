@@ -130,17 +130,14 @@ export default function BiasRadar() {
 
       if (file.type === 'application/pdf') {
         extractedText = await extractTextFromPDF(file);
-      } else if (
-        file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
-        file.type === 'application/msword'
-      ) {
+      } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
         extractedText = await extractTextFromDOC(file);
       } else if (file.type === 'text/plain') {
         extractedText = await file.text();
       } else {
         toast({
           title: "Unsupported file type",
-          description: "Please upload a PDF, DOC, DOCX, or TXT file",
+          description: "Please upload a PDF, DOCX, or TXT file. Legacy .doc files are not supported.",
           variant: "destructive",
         });
         return;
@@ -178,8 +175,7 @@ export default function BiasRadar() {
     accept: {
       'text/plain': ['.txt'],
       'application/pdf': ['.pdf'],
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
-      'application/msword': ['.doc']
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx']
     },
     maxFiles: 1,
     multiple: false
@@ -400,7 +396,7 @@ export default function BiasRadar() {
                     ) : (
                       <>
                         <p className="text-sm font-medium mb-1">Drag & drop a file here, or click to browse</p>
-                        <p className="text-xs text-muted-foreground">Supports: PDF, DOC, DOCX, TXT (max 10MB)</p>
+                        <p className="text-xs text-muted-foreground">Supports: PDF, DOCX, TXT (max 10MB)</p>
                       </>
                     )}
                   </div>
@@ -530,6 +526,49 @@ export default function BiasRadar() {
                         </div>
                         <p className="text-sm text-muted-foreground mt-2">{results.summary}</p>
                       </div>
+
+                      {results.heatmap && results.heatmap.length > 0 && (
+                        <div className="mb-6">
+                          <h3 className="font-semibold text-sm mb-3">Text Heatmap:</h3>
+                          <div className="p-4 bg-gray-50 rounded-lg border">
+                            <div className="flex flex-wrap gap-1 text-sm leading-relaxed">
+                              {results.heatmap.map((item, idx) => {
+                                const bgColor = item.biased 
+                                  ? item.severity === 'high' 
+                                    ? 'bg-red-200 hover:bg-red-300' 
+                                    : item.severity === 'medium'
+                                    ? 'bg-yellow-200 hover:bg-yellow-300'
+                                    : 'bg-blue-100 hover:bg-blue-200'
+                                  : '';
+                                
+                                return (
+                                  <span
+                                    key={idx}
+                                    className={`${bgColor} ${item.biased ? 'px-1 rounded cursor-help font-medium' : ''} transition-colors`}
+                                    title={item.biased ? `Bias types: ${item.bias_types.join(', ')}` : ''}
+                                  >
+                                    {item.word}
+                                  </span>
+                                );
+                              })}
+                            </div>
+                            <div className="flex gap-4 mt-4 pt-4 border-t text-xs">
+                              <div className="flex items-center gap-2">
+                                <div className="w-4 h-4 bg-red-200 rounded"></div>
+                                <span>High Severity</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <div className="w-4 h-4 bg-yellow-200 rounded"></div>
+                                <span>Medium Severity</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <div className="w-4 h-4 bg-blue-100 rounded"></div>
+                                <span>Low Severity</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
 
                       {results.issues.length > 0 && (
                         <div className="space-y-3 max-h-96 overflow-y-auto">
