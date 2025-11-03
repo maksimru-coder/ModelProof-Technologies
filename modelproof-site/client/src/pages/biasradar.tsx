@@ -1,13 +1,73 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Radar, ChevronDown } from "lucide-react";
+import { Radar, ChevronDown, Upload, Loader2, Copy, CheckCircle2, AlertCircle } from "lucide-react";
 import {
   Card,
   CardContent,
+  CardHeader,
+  CardTitle
 } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
+import { useDropzone } from "react-dropzone";
+
+// Types
+interface BiasIssue {
+  word: string;
+  bias_type: string;
+  severity: string;
+  explanation: string;
+  position: number;
+}
+
+interface ScanResponse {
+  score: number;
+  severity: string;
+  issues: BiasIssue[];
+  heatmap: {
+    word: string;
+    biased: boolean;
+    severity: string;
+    bias_types: string[];
+  }[];
+  summary: string;
+}
+
+interface FixResponse {
+  original_text: string;
+  fixed_text: string;
+  improvements: string[];
+}
+
+const allBiasTypes = [
+  { id: 'gender', label: 'Gender', description: 'Detects gender stereotypes and biased language' },
+  { id: 'race', label: 'Race', description: 'Identifies racial bias and problematic terms' },
+  { id: 'age', label: 'Age', description: 'Finds age-related discrimination' },
+  { id: 'disability', label: 'Disability', description: 'Catches ableist language' },
+  { id: 'lgbtq', label: 'Sexual Orientation/Gender Identity', description: 'Catches biases related to LGBTQ+ communities or non-binary identities' },
+  { id: 'religion', label: 'Religion', description: 'Identifies faith-based stereotypes' },
+  { id: 'socioeconomic', label: 'Socioeconomic/Class', description: 'Spots assumptions about income, class, or economic status' },
+  { id: 'culture', label: 'Culture', description: 'Spots cultural insensitivities or Western-centric assumptions' },
+  { id: 'intersectional', label: 'Intersectional', description: 'Analyzes combined biases (e.g., race + gender) for overlapping discriminations' },
+  { id: 'political', label: 'Political/Ideological', description: 'Detects partisan slants or ideological assumptions' },
+  { id: 'ideological_neutrality', label: 'Ideological Neutrality', description: 'Identifies partisan slants, ideological dogmas, or non-neutral framing' },
+  { id: 'truth_seeking', label: 'Truth-Seeking', description: 'Detects deviations from factual accuracy, unsubstantiated claims, or non-truthful language' }
+];
 
 export default function BiasRadar() {
+  const [text, setText] = useState("");
+  const [biasTypes, setBiasTypes] = useState<string[]>([
+    'gender', 'race', 'age', 'disability', 'lgbtq', 'religion',
+    'socioeconomic', 'culture', 'intersectional', 'political',
+    'ideological_neutrality', 'truth_seeking'
+  ]);
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState<ScanResponse | null>(null);
+  const [fixedText, setFixedText] = useState<FixResponse | null>(null);
+  const [fixLoading, setFixLoading] = useState(false);
+  const { toast } = useToast();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -17,6 +77,148 @@ export default function BiasRadar() {
     if (toolSection) {
       toolSection.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+  };
+
+  const handleBiasTypeToggle = (typeId: string) => {
+    if (biasTypes.includes(typeId)) {
+      setBiasTypes(biasTypes.filter(t => t !== typeId));
+    } else {
+      setBiasTypes([...biasTypes, typeId]);
+    }
+  };
+
+  const handleScan = async () => {
+    if (!text.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter some text to scan",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (biasTypes.length === 0) {
+      toast({
+        title: "Error",
+        description: "Please select at least one bias type",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setLoading(true);
+    setResults(null);
+    setFixedText(null);
+
+    try {
+      const response = await axios.post<ScanResponse>('/api/biasradar/scan', {
+        text: text,
+        bias_types: biasTypes
+      });
+      setResults(response.data);
+
+      if (response.data.score === 0) {
+        toast({
+          title: "Success",
+          description: "Great! No significant biases detected"
+        });
+      } else if (response.data.score < 30) {
+        toast({
+          title: "Scan Complete",
+          description: "Low risk detected"
+        });
+      } else if (response.data.score < 60) {
+        toast({
+          title: "Scan Complete",
+          description: "Medium risk detected"
+        });
+      } else {
+        toast({
+          title: "Scan Complete",
+          description: "High risk detected",
+          variant: "destructive"
+        });
+      }
+    } catch (error: any) {
+      console.error('Scan error:', error);
+      toast({
+        title: "Error",
+        description: error.response?.data?.detail || 'Failed to scan text. Please try again.',
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFix = async () => {
+    setFixLoading(true);
+    try {
+      const response = await axios.post<FixResponse>('/api/biasradar/fix', {
+        text: text
+      });
+      setFixedText(response.data);
+      toast({
+        title: "Success",
+        description: "Text has been rewritten to remove bias!"
+      });
+    } catch (error: any) {
+      console.error('Fix error:', error);
+      toast({
+        title: "Error",
+        description: error.response?.data?.detail || 'Failed to fix text. Please try again.',
+        variant: "destructive"
+      });
+    } finally {
+      setFixLoading(false);
+    }
+  };
+
+  const getSeverityColor = (severity: string) => {
+    switch (severity) {
+      case 'high': return 'bg-red-100 text-red-800 border-red-300';
+      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+      case 'low': return 'bg-blue-100 text-blue-800 border-blue-300';
+      default: return 'bg-gray-100 text-gray-800 border-gray-300';
+    }
+  };
+
+  const getScoreColor = (score: number) => {
+    if (score < 30) return 'text-green-600';
+    if (score < 60) return 'text-yellow-600';
+    return 'text-red-600';
+  };
+
+  const getProgressBarColor = (score: number) => {
+    if (score < 30) return 'bg-green-500';
+    if (score < 60) return 'bg-yellow-500';
+    return 'bg-red-500';
+  };
+
+  const getBiasTypeColor = (biasType: string) => {
+    const colors: Record<string, string> = {
+      gender: 'bg-purple-100 text-purple-700',
+      race: 'bg-orange-100 text-orange-700',
+      age: 'bg-blue-100 text-blue-700',
+      disability: 'bg-green-100 text-green-700',
+      culture: 'bg-pink-100 text-pink-700',
+      political: 'bg-red-100 text-red-700',
+      religion: 'bg-indigo-100 text-indigo-700',
+      lgbtq: 'bg-fuchsia-100 text-fuchsia-700',
+      socioeconomic: 'bg-teal-100 text-teal-700',
+      intersectional: 'bg-slate-100 text-slate-700',
+      truth_seeking: 'bg-cyan-100 text-cyan-700',
+      ideological_neutrality: 'bg-amber-100 text-amber-700'
+    };
+    return colors[biasType] || 'bg-gray-100 text-gray-700';
+  };
+
+  const copyToClipboard = (textToCopy: string) => {
+    navigator.clipboard.writeText(textToCopy);
+    toast({
+      title: "Copied!",
+      description: "Text copied to clipboard"
+    });
   };
 
   return (
@@ -57,34 +259,232 @@ export default function BiasRadar() {
       </div>
 
       <div id="biasradar-tool" className="py-16 bg-muted/30">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="max-w-6xl mx-auto"
-          >
-            <Card className="shadow-lg">
-              <CardContent className="p-12">
-                <div className="text-center py-20">
-                  <Radar className="h-24 w-24 text-primary mx-auto mb-6 opacity-50" />
-                  <h2 className="text-2xl font-bold mb-4 text-muted-foreground">
-                    BiasRadar Tool Integration Area
-                  </h2>
-                  <p className="text-muted-foreground max-w-2xl mx-auto">
-                    This section is ready for the BiasRadar application to be integrated.
-                    Once the BiasRadar folder is uploaded to the repository, the tool will be seamlessly embedded here.
-                  </p>
-                  <div className="mt-8 p-6 bg-muted/50 rounded-lg max-w-xl mx-auto">
-                    <p className="text-sm text-muted-foreground">
-                      <strong>Next Steps:</strong> Upload the BiasRadar application files to the repository, 
-                      and this area will automatically display the fully functional bias detection interface.
-                    </p>
+        <div className="container max-w-6xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Left Column - Input */}
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Paste your text here</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <textarea
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    placeholder="E.g., 'The best engineers are aggressive, dominant, and work 80-hour weeks.'"
+                    className="w-full h-48 p-4 border-2 rounded-lg focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none"
+                    maxLength={10000}
+                  />
+                  <div className="flex items-center justify-between mt-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setText('');
+                        setResults(null);
+                        setFixedText(null);
+                        toast({ title: "Cleared", description: "All text and results cleared" });
+                      }}
+                    >
+                      🗑️ Clear All
+                    </Button>
+                    <div className={`text-sm font-medium ${
+                      text.length >= 9500 ? 'text-red-600' : 
+                      text.length >= 8000 ? 'text-yellow-600' : 
+                      'text-muted-foreground'
+                    }`}>
+                      {text.length}/10,000 characters
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Select bias types to scan</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {allBiasTypes.map((type) => (
+                      <label
+                        key={type.id}
+                        className={`flex items-start p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                          biasTypes.includes(type.id)
+                            ? 'border-primary bg-primary/5'
+                            : 'border-border hover:border-primary/50'
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={biasTypes.includes(type.id)}
+                          onChange={() => handleBiasTypeToggle(type.id)}
+                          className="mt-1 mr-3"
+                        />
+                        <div className="flex-1">
+                          <div className="font-semibold text-sm">{type.label}</div>
+                          <div className="text-xs text-muted-foreground mt-1">{type.description}</div>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="flex gap-4">
+                <Button 
+                  onClick={handleScan}
+                  disabled={loading || !text.trim()}
+                  className="flex-1"
+                  size="lg"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Scanning...
+                    </>
+                  ) : (
+                    <>
+                      <Radar className="mr-2 h-5 w-5" />
+                      Scan Now
+                    </>
+                  )}
+                </Button>
+                <Button 
+                  onClick={handleFix}
+                  disabled={fixLoading || !text.trim()}
+                  variant="outline"
+                  size="lg"
+                >
+                  {fixLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Fixing...
+                    </>
+                  ) : (
+                    'Fix Text'
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            {/* Right Column - Results */}
+            <div className="space-y-6">
+              {results && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-between">
+                        <span>Bias Analysis Results</span>
+                        <span className={`text-3xl font-bold ${getScoreColor(results.score)}`}>
+                          {results.score}/100
+                        </span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="mb-4">
+                        <div className="w-full bg-gray-200 rounded-full h-3">
+                          <div 
+                            className={`h-3 rounded-full transition-all ${getProgressBarColor(results.score)}`}
+                            style={{ width: `${results.score}%` }}
+                          />
+                        </div>
+                        <p className="text-sm text-muted-foreground mt-2">{results.summary}</p>
+                      </div>
+
+                      {results.issues.length > 0 && (
+                        <div className="space-y-3 max-h-96 overflow-y-auto">
+                          <h3 className="font-semibold text-sm">Issues Detected ({results.issues.length}):</h3>
+                          {results.issues.map((issue, idx) => (
+                            <div key={idx} className={`p-3 rounded-lg border ${getSeverityColor(issue.severity)}`}>
+                              <div className="flex items-start justify-between mb-1">
+                                <span className="font-semibold text-sm">"{issue.word}"</span>
+                                <span className={`text-xs px-2 py-0.5 rounded ${getBiasTypeColor(issue.bias_type)}`}>
+                                  {issue.bias_type}
+                                </span>
+                              </div>
+                              <p className="text-xs">{issue.explanation}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )}
+
+              {fixedText && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-between">
+                        <span>AI-Fixed Text</span>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => copyToClipboard(fixedText.fixed_text)}
+                        >
+                          <Copy className="h-4 w-4" />
+                        </Button>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="p-4 bg-green-50 border border-green-200 rounded-lg mb-4">
+                        <p className="text-sm">{fixedText.fixed_text}</p>
+                      </div>
+                      <div className="mb-4">
+                        <h4 className="font-semibold text-sm mb-2">Improvements Made:</h4>
+                        <ul className="space-y-1">
+                          {fixedText.improvements.map((imp, idx) => (
+                            <li key={idx} className="text-sm flex items-start">
+                              <CheckCircle2 className="h-4 w-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                              <span>{imp}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <Button
+                        onClick={() => setText(fixedText.fixed_text)}
+                        variant="outline"
+                        size="sm"
+                        className="w-full"
+                      >
+                        Replace Original Text
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )}
+
+              {!results && !fixedText && (
+                <Card>
+                  <CardContent className="p-12 text-center">
+                    <Radar className="h-24 w-24 text-muted-foreground mx-auto mb-4 opacity-50" />
+                    <h3 className="text-xl font-semibold mb-2 text-muted-foreground">
+                      Ready to scan for bias
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Enter your text and click "Scan Now" to detect hidden biases
+                    </p>
+                    <div className="mt-8 pt-8 border-t">
+                      <h4 className="font-semibold mb-3">Try an example:</h4>
+                      <Button
+                        variant="link"
+                        onClick={() => setText("The best engineers are aggressive, dominant, and work 80-hour weeks. We need young digital natives who can handle the fast-paced environment.")}
+                      >
+                        Load sample biased text
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -121,9 +521,9 @@ export default function BiasRadar() {
                 transition={{ delay: 0.6 }}
                 className="p-6 border rounded-lg hover:shadow-md transition-shadow"
               >
-                <h3 className="text-xl font-semibold mb-3">Document Upload Support</h3>
+                <h3 className="text-xl font-semibold mb-3">AI-Powered Text Fixing</h3>
                 <p className="text-muted-foreground">
-                  Analyze entire documents including PDFs, Word files, and text files for comprehensive bias assessment.
+                  Automatically rewrite your text to remove detected biases while preserving your core message and intent.
                 </p>
               </motion.div>
               <motion.div
