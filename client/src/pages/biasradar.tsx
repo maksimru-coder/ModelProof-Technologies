@@ -68,6 +68,31 @@ export default function BiasRadar() {
   const [fixLoading, setFixLoading] = useState(false);
   const { toast } = useToast();
 
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const content = e.target?.result as string;
+      setText(content);
+      toast({
+        title: "File loaded",
+        description: `${file.name} has been loaded successfully`
+      });
+    };
+    reader.readAsText(file);
+  }, [toast]);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      'text/plain': ['.txt']
+    },
+    maxFiles: 1,
+    multiple: false
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -265,9 +290,28 @@ export default function BiasRadar() {
             <div className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Paste your text here</CardTitle>
+                  <CardTitle>Enter or upload your text</CardTitle>
                 </CardHeader>
                 <CardContent>
+                  <div 
+                    {...getRootProps()} 
+                    className={`mb-4 p-6 border-2 border-dashed rounded-lg text-center cursor-pointer transition-all ${
+                      isDragActive 
+                        ? 'border-primary bg-primary/5' 
+                        : 'border-border hover:border-primary/50 hover:bg-muted/30'
+                    }`}
+                  >
+                    <input {...getInputProps()} />
+                    <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                    {isDragActive ? (
+                      <p className="text-sm text-primary font-medium">Drop your file here...</p>
+                    ) : (
+                      <>
+                        <p className="text-sm font-medium mb-1">Drag & drop a file here, or click to browse</p>
+                        <p className="text-xs text-muted-foreground">Supports: TXT files</p>
+                      </>
+                    )}
+                  </div>
                   <textarea
                     value={text}
                     onChange={(e) => setText(e.target.value)}
@@ -435,8 +479,16 @@ export default function BiasRadar() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="p-4 bg-green-50 border border-green-200 rounded-lg mb-4">
+                      <div className="p-4 bg-green-50 border border-green-200 rounded-lg mb-4 relative">
                         <p className="text-sm">{fixedText.fixed_text}</p>
+                        <Button
+                          onClick={() => copyToClipboard(fixedText.fixed_text)}
+                          variant="ghost"
+                          size="sm"
+                          className="absolute top-2 right-2"
+                        >
+                          <Copy className="h-4 w-4" />
+                        </Button>
                       </div>
                       <div className="mb-4">
                         <h4 className="font-semibold text-sm mb-2">Improvements Made:</h4>
@@ -449,14 +501,25 @@ export default function BiasRadar() {
                           ))}
                         </ul>
                       </div>
-                      <Button
-                        onClick={() => setText(fixedText.fixed_text)}
-                        variant="outline"
-                        size="sm"
-                        className="w-full"
-                      >
-                        Replace Original Text
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={() => setText(fixedText.fixed_text)}
+                          variant="outline"
+                          size="sm"
+                          className="flex-1"
+                        >
+                          Replace Original Text
+                        </Button>
+                        <Button
+                          onClick={() => copyToClipboard(fixedText.fixed_text)}
+                          variant="outline"
+                          size="sm"
+                          className="flex-1"
+                        >
+                          <Copy className="h-4 w-4 mr-2" />
+                          Copy Fixed Text
+                        </Button>
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -475,7 +538,8 @@ export default function BiasRadar() {
                     <div className="mt-8 pt-8 border-t">
                       <h4 className="font-semibold mb-3">Try an example:</h4>
                       <Button
-                        variant="link"
+                        variant="outline"
+                        className="text-primary hover:bg-primary/10"
                         onClick={() => setText("The best engineers are aggressive, dominant, and work 80-hour weeks. We need young digital natives who can handle the fast-paced environment.")}
                       >
                         Load sample biased text

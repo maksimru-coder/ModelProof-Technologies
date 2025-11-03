@@ -22,6 +22,10 @@ export function Header() {
     { href: "/services/ai-chat-assistant", label: "AI Chat Assistant Services" },
   ];
 
+  const productLinks = [
+    { href: "/biasradar", label: "BiasRadar" },
+  ];
+
   const links = [
     { href: "/methodology", label: "Methodology" },
     { href: "/about", label: "About" },
@@ -67,6 +71,40 @@ export function Header() {
                             onClick={() => window.scrollTo(0, 0)}
                           >
                             {service.label}
+                          </div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            {/* Products Dropdown */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                <Link href="/products">
+                  <span onClick={() => window.scrollTo(0, 0)}>Products</span>
+                </Link>
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[300px] gap-3 p-4">
+                  {productLinks.map((product) => (
+                    <li key={product.href}>
+                      <NavigationMenuLink
+                        asChild
+                        className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${
+                          location === product.href
+                            ? "bg-accent text-accent-foreground"
+                            : ""
+                        }`}
+                      >
+                        <Link href={product.href}>
+                          <div 
+                            className="text-sm font-medium leading-none"
+                            onClick={() => window.scrollTo(0, 0)}
+                          >
+                            {product.label}
                           </div>
                         </Link>
                       </NavigationMenuLink>
