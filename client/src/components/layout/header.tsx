@@ -29,7 +29,6 @@ export function Header() {
   const links = [
     { href: "/methodology", label: "Methodology" },
     { href: "/about", label: "About" },
-    { href: "/services/ai-chat-assistant", label: "AI Assistants" },
   ];
 
   return (
@@ -46,40 +45,6 @@ export function Header() {
         </Link>
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
-            {/* Services Dropdown */}
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>
-                <Link href="/services">
-                  <span onClick={() => window.scrollTo(0, 0)}>Services</span>
-                </Link>
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4">
-                  {serviceLinks.map((service) => (
-                    <li key={service.href}>
-                      <NavigationMenuLink
-                        asChild
-                        className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${
-                          location === service.href
-                            ? "bg-accent text-accent-foreground"
-                            : ""
-                        }`}
-                      >
-                        <Link href={service.href}>
-                          <div 
-                            className="text-sm font-medium leading-none"
-                            onClick={() => window.scrollTo(0, 0)}
-                          >
-                            {service.label}
-                          </div>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
             {/* Products Dropdown */}
             <NavigationMenuItem>
               <NavigationMenuTrigger>
@@ -105,6 +70,40 @@ export function Header() {
                             onClick={() => window.scrollTo(0, 0)}
                           >
                             {product.label}
+                          </div>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            {/* Services Dropdown */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                <Link href="/services">
+                  <span onClick={() => window.scrollTo(0, 0)}>Services</span>
+                </Link>
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[400px] gap-3 p-4">
+                  {serviceLinks.map((service) => (
+                    <li key={service.href}>
+                      <NavigationMenuLink
+                        asChild
+                        className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground ${
+                          location === service.href
+                            ? "bg-accent text-accent-foreground"
+                            : ""
+                        }`}
+                      >
+                        <Link href={service.href}>
+                          <div 
+                            className="text-sm font-medium leading-none"
+                            onClick={() => window.scrollTo(0, 0)}
+                          >
+                            {service.label}
                           </div>
                         </Link>
                       </NavigationMenuLink>

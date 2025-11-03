@@ -11,6 +11,12 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
+import * as pdfjsLib from 'pdfjs-dist';
+import mammoth from 'mammoth';
+import sanitizeHtml from 'sanitize-html';
+
+// Configure PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 // Types
 interface BiasIssue {
@@ -68,26 +74,112 @@ export default function BiasRadar() {
   const [fixLoading, setFixLoading] = useState(false);
   const { toast } = useToast();
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const extractTextFromPDF = async (file: File): Promise<string> => {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    let fullText = '';
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const textContent = await page.getTextContent();
+      const pageText = textContent.items.map((item: any) => item.str).join(' ');
+      fullText += pageText + '\n';
+    }
+
+    return fullText;
+  };
+
+  const extractTextFromDOC = async (file: File): Promise<string> => {
+    const arrayBuffer = await file.arrayBuffer();
+    const result = await mammoth.extractRawText({ arrayBuffer });
+    return result.value;
+  };
+
+  const sanitizeText = (text: string): string => {
+    // Remove any HTML tags and scripts
+    const sanitized = sanitizeHtml(text, {
+      allowedTags: [],
+      allowedAttributes: {},
+    });
+    
+    // Remove any potential script-like content
+    return sanitized
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/javascript:/gi, '')
+      .replace(/on\w+\s*=/gi, '')
+      .trim();
+  };
+
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const content = e.target?.result as string;
-      setText(content);
+    // Security check: validate file size (max 10MB)
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSize) {
       toast({
-        title: "File loaded",
-        description: `${file.name} has been loaded successfully`
+        title: "File too large",
+        description: "Please upload a file smaller than 10MB",
+        variant: "destructive",
       });
-    };
-    reader.readAsText(file);
+      return;
+    }
+
+    try {
+      let extractedText = '';
+
+      if (file.type === 'application/pdf') {
+        extractedText = await extractTextFromPDF(file);
+      } else if (
+        file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+        file.type === 'application/msword'
+      ) {
+        extractedText = await extractTextFromDOC(file);
+      } else if (file.type === 'text/plain') {
+        extractedText = await file.text();
+      } else {
+        toast({
+          title: "Unsupported file type",
+          description: "Please upload a PDF, DOC, DOCX, or TXT file",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Sanitize the extracted text
+      const sanitizedText = sanitizeText(extractedText);
+
+      if (!sanitizedText || sanitizedText.length === 0) {
+        toast({
+          title: "No text found",
+          description: "The file appears to be empty or contains no readable text",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      setText(sanitizedText);
+      toast({
+        title: "File uploaded successfully",
+        description: `Loaded ${file.name}`,
+      });
+    } catch (error) {
+      console.error('File processing error:', error);
+      toast({
+        title: "Error processing file",
+        description: "Failed to extract text from the file. Please try a different file.",
+        variant: "destructive",
+      });
+    }
   }, [toast]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'text/plain': ['.txt']
+      'text/plain': ['.txt'],
+      'application/pdf': ['.pdf'],
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
+      'application/msword': ['.doc']
     },
     maxFiles: 1,
     multiple: false
@@ -308,7 +400,7 @@ export default function BiasRadar() {
                     ) : (
                       <>
                         <p className="text-sm font-medium mb-1">Drag & drop a file here, or click to browse</p>
-                        <p className="text-xs text-muted-foreground">Supports: TXT files</p>
+                        <p className="text-xs text-muted-foreground">Supports: PDF, DOC, DOCX, TXT (max 10MB)</p>
                       </>
                     )}
                   </div>
