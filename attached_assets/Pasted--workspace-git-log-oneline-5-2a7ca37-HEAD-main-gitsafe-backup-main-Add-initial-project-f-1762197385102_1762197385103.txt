@@ -1,0 +1,37 @@
+~/workspace$ git log --oneline -5
+2a7ca37 (HEAD -> main, gitsafe-backup/main) Add initial project files and structure for bias detection application
+90b4403 Integrate project with BiasRadar by updating gitignore and pushing changes
+106aabc Add asset for bias detection application
+65828d2 Remove underline from the clear all button for text input
+653ee2a Improve the way the application detects various types of biases in text
+~/workspace$ git log origin/main..HEAD --oneline
+2a7ca37 (HEAD -> main, gitsafe-backup/main) Add initial project files and structure for bias detection application
+90b4403 Integrate project with BiasRadar by updating gitignore and pushing changes
+106aabc Add asset for bias detection application
+65828d2 Remove underline from the clear all button for text input
+653ee2a Improve the way the application detects various types of biases in text
+d163fe9 Introduce enhanced text analysis capabilities for detecting various forms of bias
+8485bd1 Adapt bias detection for serverless deployment and improve API key handling
+71c26e1 Improve bias detection module import paths for better project structure
+ee785e5 Add bias detection and correction features to the website
+10f3aa2 Add bias detection and correction functionality to the application
+af1bad5 Integrate email services and update website content and structure
+ff556b9 Add BiasRadar tool page with introductory content and scroll functionality
+85b583e Update footer to link to ModelProof Technologies website
+9524ab1 Update footer to link ModelProof Technologies to its website
+326d1bf Update header and footer text with new branding and messaging
+174c80f Reorder bias detection types to match specified priority and descriptions
+d37d105 Add truth-seeking and ideological neutrality bias detection
+2e7ecff Add new bias detection categories to the application
+fb813dd Add a button to clear all input and detection results
+ba838b6 Update button text to clarify its functionality
+62aa910 Expand bias detection to include political, religious, and socioeconomic factors
+04eb69f Expand bias detection capabilities and improve file handling
+6560123 Add ability to upload and analyze text files for bias
+0bc7a5b Allow preview requests from the specified host
+d9b8e65 Allow access from external hosts to the web application
+fdae11e Initialize the main application entry point and print a welcome message
+c8a237a Update project documentation and frontend API configuration
+2a356b3 Update project to use Tailwind CSS for styling
+a595e7d Configure OpenAI client with environment variables for API key and base URL
+:
