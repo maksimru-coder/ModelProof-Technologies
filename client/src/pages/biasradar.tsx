@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
-import { useDropzone } from "react-dropzone";
+import { useDropzone } from 'react-dropzone';
 import * as pdfjsLib from 'pdfjs-dist';
 import mammoth from 'mammoth';
 import sanitizeHtml from 'sanitize-html';
@@ -75,18 +75,24 @@ export default function BiasRadar() {
   const { toast } = useToast();
 
   const extractTextFromPDF = async (file: File): Promise<string> => {
-    const arrayBuffer = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-    let fullText = '';
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+      const pdf = await loadingTask.promise;
+      let fullText = '';
 
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
-      const textContent = await page.getTextContent();
-      const pageText = textContent.items.map((item: any) => item.str).join(' ');
-      fullText += pageText + '\n';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items.map((item: any) => item.str).join(' ');
+        fullText += pageText + '\n';
+      }
+
+      return fullText.trim();
+    } catch (error) {
+      console.error('PDF parsing error:', error);
+      throw new Error(`Failed to parse PDF: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
-
-    return fullText;
   };
 
   const extractTextFromDOC = async (file: File): Promise<string> => {
@@ -162,9 +168,10 @@ export default function BiasRadar() {
       });
     } catch (error) {
       console.error('File processing error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to extract text from the file';
       toast({
         title: "Error processing file",
-        description: "Failed to extract text from the file. Please try a different file.",
+        description: errorMessage,
         variant: "destructive",
       });
     }
@@ -396,7 +403,7 @@ export default function BiasRadar() {
                     ) : (
                       <>
                         <p className="text-sm font-medium mb-1">Drag & drop a file here, or click to browse</p>
-                        <p className="text-xs text-muted-foreground">Supports: PDF, DOCX, TXT (max 10MB)</p>
+                        <p className="text-xs text-muted-foreground">Supports: PDF, DOCX, TXT (max 10MB, legacy .doc not supported)</p>
                       </>
                     )}
                   </div>
