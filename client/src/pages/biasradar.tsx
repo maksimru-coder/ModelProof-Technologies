@@ -482,21 +482,23 @@ export default function BiasRadar() {
                     </>
                   )}
                 </Button>
-                <Button 
-                  onClick={handleFix}
-                  disabled={fixLoading || !text.trim()}
-                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
-                  size="lg"
-                >
-                  {fixLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Fixing...
-                    </>
-                  ) : (
-                    'Fix Text'
-                  )}
-                </Button>
+                {results && (
+                  <Button 
+                    onClick={handleFix}
+                    disabled={fixLoading || !text.trim()}
+                    className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
+                    size="lg"
+                  >
+                    {fixLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Fixing...
+                      </>
+                    ) : (
+                      'Fix Text'
+                    )}
+                  </Button>
+                )}
               </div>
             </div>
 
@@ -635,17 +637,15 @@ export default function BiasRadar() {
                       <div className="flex gap-2">
                         <Button
                           onClick={() => setText(fixedText.fixed_text)}
-                          variant="outline"
                           size="sm"
-                          className="flex-1"
+                          className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all"
                         >
                           Replace Original Text
                         </Button>
                         <Button
                           onClick={() => copyToClipboard(fixedText.fixed_text)}
-                          variant="outline"
                           size="sm"
-                          className="flex-1"
+                          className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-md hover:shadow-lg transition-all"
                         >
                           <Copy className="h-4 w-4 mr-2" />
                           Copy Fixed Text
@@ -668,13 +668,12 @@ export default function BiasRadar() {
                     </p>
                     <div className="mt-8 pt-8 border-t">
                       <h4 className="font-semibold mb-3">Try an example:</h4>
-                      <Button
-                        variant="outline"
-                        className="text-primary hover:bg-primary/10"
+                      <button
+                        className="text-blue-600 hover:text-blue-700 underline decoration-2 underline-offset-4 hover:decoration-blue-700 font-medium transition-all"
                         onClick={() => setText("The best engineers are aggressive, dominant, and work 80-hour weeks. We need young digital natives who can handle the fast-paced environment.")}
                       >
                         Load sample biased text
-                      </Button>
+                      </button>
                     </div>
                   </CardContent>
                 </Card>
