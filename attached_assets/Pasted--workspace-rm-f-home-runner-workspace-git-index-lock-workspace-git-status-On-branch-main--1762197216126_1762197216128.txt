@@ -1,0 +1,143 @@
+~/workspace$ rm -f /home/runner/workspace/.git/index.lock
+~/workspace$ git status
+On branch main
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Changes to be committed:
+    new file:   .env.example
+    modified:   .replit
+    new file:   EMAIL_SETUP.md
+    new file:   api/careers.js
+    new file:   api/contact.js
+    new file:   api/index.js
+    new file:   api/test.js
+    new file:   attached_assets/IMG_5038_1755911533852.jpeg
+    new file:   attached_assets/IMG_5073_1756170810031.jpeg
+    new file:   attached_assets/IMG_5077_1756237362953.jpeg
+    new file:   attached_assets/IMG_5078_1756242307054.jpeg
+    new file:   attached_assets/Pasted--ModelProof-AI-Focused-Color-Scheme-Update-Primary-Color-Palette-Core-Blues-Primary-1739468199415.txt
+    new file:   attached_assets/Pasted--ModelProof-Website-Updates-Color-Scheme-Updates-Replace-current-colors-with-Primary-De-1739406715679.txt
+    new file:   attached_assets/Pasted--Privacy-Policy-Last-updated-July-10-2025-Introduction-ModelProof-Technologies-LLC-we-1752134345596_1752134345597.txt
+    new file:   attached_assets/Pasted--Terms-of-Service-Last-updated-July-10-2025-1-Agreement-to-Terms-By-accessing-or-using-1752134925915_1752134925916.txt
+    new file:   attached_assets/Pasted-1-Essential-Assessment-Price-10-000-15-000-Duration-2-3-weeks-Description-The-Essential--1739505273898.txt
+    new file:   attached_assets/Pasted-AI-Chat-Assistant-Services-24-7-Lead-Generation-Support-Powered-by-Custom-AI-Transform-your-we-1752108961527_1752108961528.txt
+    new file:   attached_assets/Pasted-Essential-Assessment-Description-Uncover-the-hidden-potential-of-your-AI-Our-Essential-Assessme-1739497889554.txt
+    new file:   attached_assets/Pasted-I-m-planning-to-build-the-following-site-is-this-enough-info-and-here-about-the-company-Okay-let-s-1739405547765.txt
+    new file:   attached_assets/Pasted-ModelProof-Website-Visual-and-Content-Specification-Logo-Design-Primary-Logo-Design-Style-Modern--1739405930017.txt
+    new file:   attached_assets/Pasted-Okay-after-careful-consideration-here-s-the-finalized-text-for-your-service-descriptions-and-bulle-1739495235933.txt
+    new file:   attached_assets/Pasted-Our-Methodology-The-ModelProof-Framework-At-ModelProof-Technologies-we-utilize-a-proprietary--1739508337993.txt
+    new file:   attached_assets/image_1756166109872.png
+    new file:   attached_assets/image_1756166271849.png
+    new file:   attached_assets/image_1756166381836.png
+    new file:   client/index.html
+    new file:   client/public/favicon.svg
+    new file:   client/src/App.tsx
+    new file:   client/src/components/contact/contact-form.tsx
+    new file:   client/src/components/framework/quality-score.tsx
+    new file:   client/src/components/home/hero.tsx
+    new file:   client/src/components/home/products-overview.tsx
+    new file:   client/src/components/home/services-overview.tsx
+    new file:   client/src/components/layout/footer.tsx
+    new file:   client/src/components/layout/header.tsx
+    new file:   client/src/components/layout/logo.tsx
+    new file:   client/src/components/services/comparison-matrix.tsx
+    new file:   client/src/components/ui/accordion.tsx
+    new file:   client/src/components/ui/alert-dialog.tsx
+    new file:   client/src/components/ui/alert.tsx
+    new file:   client/src/components/ui/aspect-ratio.tsx
+    new file:   client/src/components/ui/avatar.tsx
+    new file:   client/src/components/ui/badge.tsx
+    new file:   client/src/components/ui/breadcrumb.tsx
+    new file:   client/src/components/ui/button.tsx
+    new file:   client/src/components/ui/calendar.tsx
+    new file:   client/src/components/ui/card.tsx
+    new file:   client/src/components/ui/carousel.tsx
+    new file:   client/src/components/ui/chart.tsx
+    new file:   client/src/components/ui/checkbox.tsx
+    new file:   client/src/components/ui/collapsible.tsx
+    new file:   client/src/components/ui/command.tsx
+    new file:   client/src/components/ui/context-menu.tsx
+    new file:   client/src/components/ui/dialog.tsx
+    new file:   client/src/components/ui/drawer.tsx
+    new file:   client/src/components/ui/dropdown-menu.tsx
+    new file:   client/src/components/ui/form.tsx
+    new file:   client/src/components/ui/hover-card.tsx
+    new file:   client/src/components/ui/input-otp.tsx
+    new file:   client/src/components/ui/input.tsx
+    new file:   client/src/components/ui/label.tsx
+    new file:   client/src/components/ui/logo.tsx
+    new file:   client/src/components/ui/menubar.tsx
+    new file:   client/src/components/ui/navigation-menu.tsx
+    new file:   client/src/components/ui/pagination.tsx
+    new file:   client/src/components/ui/popover.tsx
+    new file:   client/src/components/ui/progress.tsx
+    new file:   client/src/components/ui/radio-group.tsx
+    new file:   client/src/components/ui/resizable.tsx
+    new file:   client/src/components/ui/scroll-area.tsx
+    new file:   client/src/components/ui/select.tsx
+    new file:   client/src/components/ui/separator.tsx
+    new file:   client/src/components/ui/sheet.tsx
+    new file:   client/src/components/ui/sidebar.tsx
+    new file:   client/src/components/ui/skeleton.tsx
+    new file:   client/src/components/ui/slider.tsx
+    new file:   client/src/components/ui/switch.tsx
+    new file:   client/src/components/ui/table.tsx
+    new file:   client/src/components/ui/tabs.tsx
+    new file:   client/src/components/ui/textarea.tsx
+    new file:   client/src/components/ui/toast.tsx
+    new file:   client/src/components/ui/toaster.tsx
+    new file:   client/src/components/ui/toggle-group.tsx
+    new file:   client/src/components/ui/toggle.tsx
+    new file:   client/src/components/ui/tooltip.tsx
+    new file:   client/src/hooks/use-mobile.tsx
+    new file:   client/src/hooks/use-toast.ts
+    new file:   client/src/index.css
+    new file:   client/src/lib/queryClient.ts
+    new file:   client/src/lib/utils.ts
+    new file:   client/src/main.tsx
+    new file:   client/src/pages/about.tsx
+    new file:   client/src/pages/biasradar.tsx
+    new file:   client/src/pages/careers.tsx
+    new file:   client/src/pages/contact.tsx
+    new file:   client/src/pages/home.tsx
+    new file:   client/src/pages/methodology.tsx
+    new file:   client/src/pages/not-found.tsx
+    new file:   client/src/pages/privacy.tsx
+    new file:   client/src/pages/products.tsx
+    new file:   client/src/pages/services.tsx
+    new file:   client/src/pages/services/ai-chat-assistant.tsx
+    new file:   client/src/pages/services/custom-ai-solutions.tsx
+    new file:   client/src/pages/services/enterprise-solution.tsx
+    new file:   client/src/pages/services/essential-assessment.tsx
+    new file:   client/src/pages/services/professional-validation.tsx
+    new file:   client/src/pages/services/retainer-services.tsx
+    new file:   client/src/pages/terms.tsx
+    new file:   design_guidelines.md
+    new file:   drizzle.config.ts
+    new file:   generated-icon.png
+    new file:   package-lock.json
+    new file:   package.json
+    new file:   postcss.config.js
+    new file:   server/contact-api.ts
+    new file:   server/index.ts
+    new file:   server/routes.ts
+    new file:   server/storage.ts
+    new file:   server/vite.ts
+    new file:   shared/schema.ts
+    new file:   tailwind.config.ts
+    new file:   theme.json
+    new file:   tsconfig.json
+    new file:   vercel.json
+    new file:   vite.config.ts
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+    both added:      .gitignore
+    both added:      replit.md
+
+~/workspace$ git add .gitignore replit.md
+~/workspace$ git commit -m "Merge remote changes with BiasRadar integration"
+On branch main
+nothing to commit, working tree clean
