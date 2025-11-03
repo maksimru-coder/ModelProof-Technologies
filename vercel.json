@@ -1,6 +1,11 @@
 {
   "buildCommand": "cd client && npm run build",
   "outputDirectory": "dist/public",
+  "functions": {
+    "api/biasradar/*.py": {
+      "runtime": "python3.9"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
