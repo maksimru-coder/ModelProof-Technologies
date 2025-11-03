@@ -4,14 +4,14 @@ import os
 from openai import OpenAI
 
 
-# Initialize OpenAI client with Replit AI Integrations
-AI_INTEGRATIONS_OPENAI_API_KEY = os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY")
-AI_INTEGRATIONS_OPENAI_BASE_URL = os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL")
+# Initialize OpenAI client - supports both Vercel and Replit environments
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY") or os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY")
+OPENAI_BASE_URL = os.environ.get("OPENAI_BASE_URL") or os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL")
 
 client = OpenAI(
-    api_key=AI_INTEGRATIONS_OPENAI_API_KEY,
-    base_url=AI_INTEGRATIONS_OPENAI_BASE_URL
-) if AI_INTEGRATIONS_OPENAI_API_KEY else None
+    api_key=OPENAI_API_KEY,
+    base_url=OPENAI_BASE_URL if OPENAI_BASE_URL else None
+) if OPENAI_API_KEY else None
 
 
 class handler(BaseHTTPRequestHandler):

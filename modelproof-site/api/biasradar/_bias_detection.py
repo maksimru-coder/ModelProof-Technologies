@@ -3,13 +3,15 @@ import spacy
 import re
 from typing import List, Dict, Any
 
-# Load spaCy model
+# Load spaCy model (must be pre-installed for serverless deployment)
 try:
     nlp = spacy.load("en_core_web_sm")
 except OSError:
-    import subprocess
-    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
-    nlp = spacy.load("en_core_web_sm")
+    raise RuntimeError(
+        "spaCy model 'en_core_web_sm' not found. "
+        "For Vercel deployment, add 'en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl' "
+        "to requirements.txt"
+    )
 
 # Bias word dictionaries
 GENDER_BIAS_WORDS = {
