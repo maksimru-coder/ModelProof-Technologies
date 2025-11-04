@@ -227,7 +227,7 @@ function App() {
             </div>
           </div>
           <p className="text-xl text-gray-600 mb-2">
-            Detect and fix potential bias across 12 dimensions in seconds
+            Detect and fix potential bias across 13 dimensions in seconds
           </p>
           <p className="text-sm text-gray-500">
             Free • No login required • Powered by AI

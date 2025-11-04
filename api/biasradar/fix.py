@@ -79,11 +79,11 @@ class handler(BaseHTTPRequestHandler):
                 messages=[
                     {
                         "role": "system",
-                        "content": "You are a bias detection and correction expert. Your job is to rewrite text to remove all forms of bias including gender, racial, age, disability, cultural, political, religious, LGBTQ+, socioeconomic, and intersectional bias. Maintain the core message but use inclusive, neutral language. Be concise and professional."
+                        "content": "You are a bias detection and correction expert. Your job is to rewrite text to remove all forms of bias including gender, racial, age, disability, cultural, political, religious, LGBTQ+, socioeconomic, intersectional bias, and offensive language & tone (profanity, slurs, hate speech, unprofessional language). Maintain the core message but use inclusive, neutral, and professional language. Be concise and professional."
                     },
                     {
                         "role": "user",
-                        "content": f"Rewrite this text to remove all biases while preserving the core message:\n\n{text}"
+                        "content": f"Rewrite this text to remove all biases and offensive language while preserving the core message:\n\n{text}"
                     }
                 ],
                 temperature=0.7,

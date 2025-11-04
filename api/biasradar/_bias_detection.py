@@ -2,6 +2,14 @@
 import re
 from typing import List, Dict, Any
 
+# Import profanity detection
+try:
+    from better_profanity import profanity
+    profanity.load_censor_words()
+    PROFANITY_AVAILABLE = True
+except ImportError:
+    PROFANITY_AVAILABLE = False
+
 # Bias word dictionaries
 GENDER_BIAS_WORDS = {
     "male": ["aggressive", "dominant", "assertive", "competitive", "ambitious", "decisive", 
@@ -88,6 +96,17 @@ IDEOLOGICAL_NEUTRALITY_WORDS = {
     "absolutist_framing": ["the only solution", "the real problem", "what's really happening",
                            "the real agenda", "the hidden truth", "what they won't tell you",
                            "the actual facts", "the only answer"]
+}
+
+LANGUAGE_TONE_WORDS = {
+    "slurs_high": ["retard", "retarded", "nigger", "faggot", "tranny", "cunt", 
+                   "whore", "slut", "bitch", "bastard", "asshole"],
+    "profanity_medium": ["fuck", "fucking", "shit", "damn", "hell", "ass", "dick",
+                         "piss", "cock", "pussy", "bollocks", "bloody hell"],
+    "hate_speech_high": ["kill yourself", "go to hell", "die", "kys", "subhuman",
+                         "inferior race", "master race", "race war", "ethnic cleansing"],
+    "unprofessional_low": ["sucks", "crap", "crappy", "pissed off", "screwed up",
+                           "messed up", "bullcrap", "idiotic", "moronic", "stupid"]
 }
 
 
@@ -282,6 +301,115 @@ def detect_ideological_neutrality_bias(text_lower: str) -> List[Dict[str, Any]]:
                     "explanation": f"'{phrase}' indicates non-neutral framing or ideological bias",
                     "position": pos
                 })
+    return issues
+
+
+def detect_language_tone_bias(text_lower: str) -> List[Dict[str, Any]]:
+    """Detect profanity, slurs, hate speech, and unprofessional tone"""
+    issues = []
+    detected_positions = set()  # Track positions to prevent duplicates
+    
+    # Check against custom word lists with severity levels
+    for category, words in LANGUAGE_TONE_WORDS.items():
+        for word in words:
+            if find_word_in_text(text_lower, word) != -1:
+                pos = find_word_in_text(text_lower, word)
+                
+                # Skip if already detected at this position
+                if pos in detected_positions:
+                    continue
+                
+                # Determine severity based on category
+                if "high" in category:
+                    severity = "high"
+                    if "slur" in category:
+                        explanation = f"Contains prohibited slur: '{word}'"
+                    else:
+                        explanation = f"Contains hate speech: '{word}'"
+                elif "medium" in category:
+                    severity = "medium"
+                    explanation = f"Contains profanity: '{word}'"
+                else:
+                    severity = "low"
+                    explanation = f"Unprofessional tone detected: '{word}'"
+                
+                issues.append({
+                    "word": word,
+                    "bias_type": "language_tone",
+                    "severity": severity,
+                    "explanation": explanation,
+                    "position": pos
+                })
+                detected_positions.add(pos)
+    
+    # Detect censored/masked profanity (e.g., "f***", "f***ing", "sh*t", "f**king")
+    # Patterns match common censored forms with *, -, or _ replacements
+    censored_patterns = [
+        (r'\bf[\*\-\_]{2,}k(?:ing)?', 'fuck/fucking', 'medium', 'Contains censored profanity'),  # f**k, f**king
+        (r'\bf[\*\-\_]{2,}(?:ing)?', 'fuck/fucking', 'medium', 'Contains censored profanity'),  # f***, f***ing
+        (r'\bsh[\*\-\_]+t', 'shit', 'medium', 'Contains censored profanity'),  # sh*t, sh**
+        (r'\bd[\*\-\_]+n', 'damn', 'medium', 'Contains censored profanity'),  # d*mn, d**n
+        (r'\bass[\*\-\_]+', 'ass', 'medium', 'Contains censored profanity'),  # a**, a***
+        (r'\bb[\*\-\_]+ch', 'bitch', 'medium', 'Contains censored profanity'),  # b*tch, b**ch
+        (r'\bc[\*\-\_]+t', 'cunt', 'high', 'Contains censored slur'),  # c**t, c***
+        (r'\bh[\*\-\_]+l', 'hell', 'medium', 'Contains censored profanity'),  # h*ll, h**l
+        (r'\bd[\*\-\_]+k', 'dick', 'medium', 'Contains censored profanity'),  # d*ck, d**k
+    ]
+    
+    for pattern, word_name, severity, explanation in censored_patterns:
+        matches = re.finditer(pattern, text_lower)
+        for match in matches:
+            # Skip if already detected at this position
+            if match.start() in detected_positions:
+                continue
+            
+            issues.append({
+                "word": match.group(),
+                "bias_type": "language_tone",
+                "severity": severity,
+                "explanation": f"{explanation}: '{match.group()}'",
+                "position": match.start()
+            })
+            detected_positions.add(match.start())
+    
+    # Additional check with better-profanity if available
+    if PROFANITY_AVAILABLE:
+        words = text_lower.split()
+        current_pos = 0
+        for word in words:
+            # First check the raw word (with punctuation) for profanity
+            if profanity.contains_profanity(word):
+                word_pos = text_lower.find(word, current_pos)
+                # Skip if already detected at this position
+                if word_pos not in detected_positions:
+                    issues.append({
+                        "word": word,
+                        "bias_type": "language_tone",
+                        "severity": "medium",
+                        "explanation": f"Contains profanity: '{word}'",
+                        "position": word_pos if word_pos != -1 else 0
+                    })
+                    if word_pos != -1:
+                        detected_positions.add(word_pos)
+            else:
+                # Then check cleaned word (without punctuation)
+                clean_word = re.sub(r'[^\w\s]', '', word)
+                if clean_word and profanity.contains_profanity(clean_word):
+                    word_pos = text_lower.find(clean_word, current_pos)
+                    # Skip if already detected at this position
+                    if word_pos not in detected_positions:
+                        issues.append({
+                            "word": clean_word,
+                            "bias_type": "language_tone",
+                            "severity": "medium",
+                            "explanation": f"Contains profanity: '{clean_word}'",
+                            "position": word_pos if word_pos != -1 else 0
+                        })
+                        if word_pos != -1:
+                            detected_positions.add(word_pos)
+            
+            current_pos = text_lower.find(word, current_pos) + len(word)
+    
     return issues
 
 

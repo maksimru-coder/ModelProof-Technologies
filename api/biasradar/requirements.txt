@@ -1,1 +1,2 @@
-# No external dependencies needed - using Python stdlib only
+# Dependencies for BiasRadar
+better-profanity==0.7.0

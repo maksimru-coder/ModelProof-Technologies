@@ -59,6 +59,7 @@ const allBiasTypes = [
   { id: 'intersectional', label: 'Intersectional', description: 'Analyzes combined biases (e.g., race + gender) for overlapping discriminations' },
   { id: 'political', label: 'Political/Ideological', description: 'Detects partisan slants or ideological assumptions' },
   { id: 'ideological_neutrality', label: 'Ideological Neutrality', description: 'Identifies partisan slants, ideological dogmas, or non-neutral framing' },
+  { id: 'language_tone', label: 'Language & Tone', description: 'Detects profanity, slurs, hate speech, and unprofessional tone' },
   { id: 'truth_seeking', label: 'Truth-Seeking', description: 'Detects deviations from factual accuracy, unsubstantiated claims, or non-truthful language' }
 ];
 
@@ -67,7 +68,7 @@ export default function BiasRadar() {
   const [biasTypes, setBiasTypes] = useState<string[]>([
     'gender', 'race', 'age', 'disability', 'lgbtq', 'religion',
     'socioeconomic', 'culture', 'intersectional', 'political',
-    'ideological_neutrality', 'truth_seeking'
+    'ideological_neutrality', 'language_tone', 'truth_seeking'
   ]);
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<ScanResponse | null>(null);
@@ -329,7 +330,8 @@ export default function BiasRadar() {
       socioeconomic: 'bg-teal-100 text-teal-700',
       intersectional: 'bg-slate-100 text-slate-700',
       truth_seeking: 'bg-cyan-100 text-cyan-700',
-      ideological_neutrality: 'bg-amber-100 text-amber-700'
+      ideological_neutrality: 'bg-amber-100 text-amber-700',
+      language_tone: 'bg-rose-100 text-rose-700'
     };
     return colors[biasType] || 'bg-gray-100 text-gray-700';
   };
@@ -706,7 +708,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">Multi-Category Bias Detection</h3>
                 <p className="text-muted-foreground">
-                  Identifies bias across 12 dimensions: gender, race, age, disability, culture, political/ideological, religion, sexual orientation, socioeconomic status, intersectional, truth-seeking, and ideological neutrality.
+                  Identifies bias across 13 dimensions: gender, race, age, disability, culture, political/ideological, religion, sexual orientation, socioeconomic status, intersectional, truth-seeking, ideological neutrality, and language & tone.
                 </p>
               </motion.div>
               <motion.div

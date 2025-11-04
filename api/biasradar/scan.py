@@ -12,8 +12,8 @@ try:
         detect_disability_bias, detect_cultural_bias, detect_political_bias,
         detect_religion_bias, detect_lgbtq_bias, detect_socioeconomic_bias,
         detect_truth_seeking_bias, detect_ideological_neutrality_bias,
-        detect_intersectional_bias, calculate_bias_score, get_severity_label,
-        create_heatmap
+        detect_language_tone_bias, detect_intersectional_bias, 
+        calculate_bias_score, get_severity_label, create_heatmap
     )
 except ImportError:
     from api.biasradar._bias_detection import (
@@ -21,8 +21,8 @@ except ImportError:
         detect_disability_bias, detect_cultural_bias, detect_political_bias,
         detect_religion_bias, detect_lgbtq_bias, detect_socioeconomic_bias,
         detect_truth_seeking_bias, detect_ideological_neutrality_bias,
-        detect_intersectional_bias, calculate_bias_score, get_severity_label,
-        create_heatmap
+        detect_language_tone_bias, detect_intersectional_bias,
+        calculate_bias_score, get_severity_label, create_heatmap
     )
 
 
@@ -43,7 +43,7 @@ class handler(BaseHTTPRequestHandler):
             bias_types = data.get('bias_types', [
                 "gender", "race", "age", "disability", "lgbtq", "religion",
                 "socioeconomic", "culture", "intersectional", "political",
-                "ideological_neutrality", "truth_seeking"
+                "ideological_neutrality", "language_tone", "truth_seeking"
             ])
             
             # Log the scan request
@@ -96,6 +96,9 @@ class handler(BaseHTTPRequestHandler):
             
             if "ideological_neutrality" in bias_types:
                 all_issues.extend(detect_ideological_neutrality_bias(text_lower))
+            
+            if "language_tone" in bias_types:
+                all_issues.extend(detect_language_tone_bias(text_lower))
             
             # Detect intersectional bias if requested
             if "intersectional" in bias_types and len(all_issues) > 1:
