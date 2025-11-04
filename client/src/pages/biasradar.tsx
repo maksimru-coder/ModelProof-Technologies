@@ -667,7 +667,12 @@ export default function BiasRadar() {
               {!results && !fixedText && (
                 <Card>
                   <CardContent className="p-12 text-center">
-                    <Radar className="h-24 w-24 text-muted-foreground mx-auto mb-4 opacity-50" />
+                    <div className="inline-block mb-6">
+                      <div className="bg-gradient-to-br from-blue-500 via-purple-600 to-green-500 rounded-full p-8 shadow-xl relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-green-400 rounded-full opacity-50 animate-pulse"></div>
+                        <Radar className="h-20 w-20 text-white relative z-10" strokeWidth={2.5} />
+                      </div>
+                    </div>
                     <h3 className="text-xl font-semibold mb-2 text-muted-foreground">
                       Ready to scan for bias
                     </h3>
