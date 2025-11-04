@@ -10,7 +10,7 @@ export function Logo() {
         <span className="font-montserrat font-bold text-xl text-primary leading-tight">
           ModelProof
         </span>
-        <span className="font-montserrat text-xs text-muted-foreground leading-tight">
+        <span className="font-montserrat text-xs font-medium leading-tight" style={{ color: '#00D4FF' }}>
           – AI Validation & Development
         </span>
       </div>
