@@ -6,9 +6,14 @@ export function Logo() {
       <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
         <span className="text-white font-montserrat font-bold text-xl">MP</span>
       </div>
-      <span className="font-montserrat font-bold text-xl text-primary">
-        ModelProof
-      </span>
+      <div className="flex flex-col">
+        <span className="font-montserrat font-bold text-xl text-primary leading-tight">
+          ModelProof
+        </span>
+        <span className="font-montserrat text-xs text-muted-foreground leading-tight">
+          – AI Validation & Development
+        </span>
+      </div>
     </div>
   );
 }
