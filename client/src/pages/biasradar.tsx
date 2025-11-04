@@ -12,12 +12,11 @@ import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import { useDropzone } from 'react-dropzone';
 import * as pdfjsLib from 'pdfjs-dist';
-import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.js?url';
 import mammoth from 'mammoth';
 import sanitizeHtml from 'sanitize-html';
 
-// Configure PDF.js worker - use local worker to avoid CDN issues
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
+// Configure PDF.js worker - use local worker from public directory
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 // Types
 interface BiasIssue {

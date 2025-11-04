@@ -62,3 +62,6 @@ __pycache__/
 *$py.class
 venv/
 .Python
+
+# PDF.js worker (generated during build)
+client/public/pdf.worker.min.js
