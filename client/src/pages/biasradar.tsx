@@ -608,28 +608,11 @@ export default function BiasRadar() {
                 >
                   <Card>
                     <CardHeader>
-                      <CardTitle className="flex items-center justify-between">
-                        <span>AI-Fixed Text</span>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => copyToClipboard(fixedText.fixed_text)}
-                        >
-                          <Copy className="h-4 w-4" />
-                        </Button>
-                      </CardTitle>
+                      <CardTitle>AI-Fixed Text</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="p-4 bg-green-50 border border-green-200 rounded-lg mb-4 relative">
+                      <div className="p-4 bg-green-50 border border-green-200 rounded-lg mb-4">
                         <p className="text-sm">{fixedText.fixed_text}</p>
-                        <Button
-                          onClick={() => copyToClipboard(fixedText.fixed_text)}
-                          variant="ghost"
-                          size="sm"
-                          className="absolute top-2 right-2"
-                        >
-                          <Copy className="h-4 w-4" />
-                        </Button>
                       </div>
                       <div className="mb-4">
                         <h4 className="font-semibold text-sm mb-2">Improvements Made:</h4>
