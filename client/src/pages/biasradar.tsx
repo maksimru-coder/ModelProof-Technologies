@@ -12,11 +12,12 @@ import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import { useDropzone } from 'react-dropzone';
 import * as pdfjsLib from 'pdfjs-dist';
+import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.js?url';
 import mammoth from 'mammoth';
 import sanitizeHtml from 'sanitize-html';
 
-// Configure PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+// Configure PDF.js worker - use local worker to avoid CDN issues
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 // Types
 interface BiasIssue {
@@ -677,7 +678,13 @@ export default function BiasRadar() {
                       <h4 className="font-semibold mb-3">Try an example:</h4>
                       <button
                         className="text-blue-600 hover:text-blue-700 underline decoration-2 underline-offset-4 hover:decoration-blue-700 font-medium transition-all"
-                        onClick={() => setText("The best engineers are aggressive, dominant, and work 80-hour weeks. We need young digital natives who can handle the fast-paced environment.")}
+                        onClick={() => {
+                          setText("The best engineers are aggressive, dominant, and work 80-hour weeks. We need young digital natives who can handle the fast-paced environment.");
+                          toast({
+                            title: "Sample text loaded",
+                            description: "Ready to scan for bias!"
+                          });
+                        }}
                       >
                         Load sample biased text
                       </button>
@@ -690,7 +697,7 @@ export default function BiasRadar() {
         </div>
       </div>
 
-      <div className="py-16 bg-white">
+      <div className="py-16 bg-white border-t-4 border-primary/20">
         <div className="container">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-8 text-center">Key Features</h2>

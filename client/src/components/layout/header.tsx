@@ -23,7 +23,7 @@ export function Header() {
   ];
 
   const productLinks = [
-    { href: "/biasradar", label: "BiasRadar" },
+    { href: "/biasradar", label: "BiasRadar™", description: "AI Bias Detection Tool" },
   ];
 
   const links = [
@@ -65,11 +65,15 @@ export function Header() {
                         }`}
                       >
                         <Link href={product.href}>
-                          <div 
-                            className="text-sm font-medium leading-none"
-                            onClick={() => window.scrollTo(0, 0)}
-                          >
-                            {product.label}
+                          <div onClick={() => window.scrollTo(0, 0)}>
+                            <div className="text-sm font-medium leading-none mb-1">
+                              {product.label}
+                            </div>
+                            {product.description && (
+                              <p className="text-xs text-muted-foreground leading-snug">
+                                {product.description}
+                              </p>
+                            )}
                           </div>
                         </Link>
                       </NavigationMenuLink>
