@@ -12,7 +12,7 @@ export default function Privacy() {
         
         <div className="prose prose-slate max-w-none">
           <p className="text-muted-foreground font-medium">
-            Last updated: July 10, 2025
+            Last updated: November 4, 2024
           </p>
 
           <section className="mt-8">
@@ -49,6 +49,25 @@ export default function Privacy() {
               <li>Referring website information</li>
               <li>Cookies and similar tracking technologies</li>
             </ul>
+          </section>
+
+          <section className="mt-8">
+            <h2 className="text-2xl font-bold mb-4">BiasRadar Analytics and Usage Data</h2>
+            <p className="text-muted-foreground mb-4">
+              When you use our BiasRadar tool, we collect and process certain technical and usage information to monitor service performance, improve functionality, and ensure the security and integrity of our platform. This includes:
+            </p>
+            <ul className="list-disc list-inside mt-4 space-y-2 text-muted-foreground">
+              <li><strong>IP Address:</strong> We automatically log the IP address of each request to detect fraudulent activity, prevent abuse, analyze geographic usage patterns, and maintain service security</li>
+              <li><strong>Timestamp Data:</strong> The date and time of each interaction with BiasRadar features (scan, fix) for usage analytics and performance monitoring</li>
+              <li><strong>Technical Metadata:</strong> Browser type, operating system, device information, and user agent strings for compatibility testing and service optimization</li>
+              <li><strong>Usage Metrics:</strong> Feature interaction data (e.g., bias categories selected, text length analyzed) in aggregated, anonymized form for product improvement</li>
+            </ul>
+            <p className="text-muted-foreground mt-4">
+              <strong>Data Minimization and Retention:</strong> We do not collect or store the actual text content you analyze using BiasRadar. IP addresses and usage logs are retained for a maximum of 30 days for operational purposes and are then automatically purged from our systems. All analytics data is processed in accordance with industry-standard security practices and applicable data protection regulations, including GDPR and CCPA.
+            </p>
+            <p className="text-muted-foreground mt-4">
+              <strong>Legitimate Interest:</strong> We collect this information based on our legitimate interest in maintaining a secure, functional, and continuously improving service, detecting unauthorized use, and understanding how our tools serve diverse user populations across different geographic regions.
+            </p>
           </section>
 
           <section className="mt-8">
