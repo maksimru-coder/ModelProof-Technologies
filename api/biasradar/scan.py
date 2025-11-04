@@ -2,6 +2,7 @@ from http.server import BaseHTTPRequestHandler
 import json
 import sys
 import os
+from datetime import datetime
 
 sys.path.append(os.path.dirname(__file__))
 
@@ -28,6 +29,11 @@ except ImportError:
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
+            # Get request metadata for logging
+            ip_address = self.headers.get('X-Forwarded-For', self.client_address[0])
+            user_agent = self.headers.get('User-Agent', 'Unknown')
+            timestamp = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')
+            
             # Parse request body
             content_length = int(self.headers['Content-Length'])
             body = self.rfile.read(content_length)
@@ -39,6 +45,9 @@ class handler(BaseHTTPRequestHandler):
                 "socioeconomic", "culture", "intersectional", "political",
                 "ideological_neutrality", "truth_seeking"
             ])
+            
+            # Log the scan request
+            print(f"[BIASRADAR SCAN] {timestamp} | IP: {ip_address} | User-Agent: {user_agent} | Text Length: {len(text)} chars | Bias Types: {', '.join(bias_types)}")
             
             # Validation
             if not text or len(text.strip()) == 0:

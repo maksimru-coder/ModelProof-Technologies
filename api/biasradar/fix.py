@@ -3,6 +3,7 @@ import json
 import os
 import urllib.request
 import urllib.error
+from datetime import datetime
 
 
 # Get OpenAI API key from environment
@@ -48,6 +49,11 @@ def call_openai(messages, temperature=0.7, max_tokens=500):
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
+            # Get request metadata for logging
+            ip_address = self.headers.get('X-Forwarded-For', self.client_address[0])
+            user_agent = self.headers.get('User-Agent', 'Unknown')
+            timestamp = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')
+            
             # Check if OpenAI API key is available
             if not OPENAI_API_KEY:
                 self.send_error(500, "AI service not configured")
@@ -59,6 +65,9 @@ class handler(BaseHTTPRequestHandler):
             data = json.loads(body.decode('utf-8'))
             
             text = data.get('text', '')
+            
+            # Log the fix request
+            print(f"[BIASRADAR FIX] {timestamp} | IP: {ip_address} | User-Agent: {user_agent} | Text Length: {len(text)} chars")
             
             # Validation
             if not text or len(text.strip()) == 0:
