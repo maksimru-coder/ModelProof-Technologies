@@ -14,6 +14,7 @@ import { useDropzone } from 'react-dropzone';
 import * as pdfjsLib from 'pdfjs-dist';
 import mammoth from 'mammoth';
 import sanitizeHtml from 'sanitize-html';
+import { Link } from "wouter";
 
 // Configure PDF.js worker - use local worker from public directory
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
@@ -709,7 +710,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">Multi-Category Bias Detection</h3>
                 <p className="text-muted-foreground">
-                  Identifies bias across gender, race, age, disability, culture, political/ideological leanings, and more in your text and documents.
+                  Identifies bias across 12 dimensions: gender, race, age, disability, culture, political/ideological, religion, sexual orientation, socioeconomic status, intersectional, truth-seeking, and ideological neutrality.
                 </p>
               </motion.div>
               <motion.div
@@ -720,7 +721,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">Real-Time Analysis</h3>
                 <p className="text-muted-foreground">
-                  Get instant feedback on potential bias in your content with detailed explanations and suggestions.
+                  Get instant feedback with detailed explanations, risk scores, and visual heatmaps highlighting biased language.
                 </p>
               </motion.div>
               <motion.div
@@ -731,7 +732,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">AI-Powered Text Fixing</h3>
                 <p className="text-muted-foreground">
-                  Automatically rewrite your text to remove detected biases while preserving your core message and intent.
+                  Automatically rewrite content to remove bias while preserving tone, intent, and meaning.
                 </p>
               </motion.div>
               <motion.div
@@ -740,12 +741,60 @@ export default function BiasRadar() {
                 transition={{ delay: 0.7 }}
                 className="p-6 border rounded-lg hover:shadow-md transition-shadow"
               >
+                <h3 className="text-xl font-semibold mb-3">API Integration (Pro)</h3>
+                <p className="text-muted-foreground">
+                  Embed BiasRadar into your apps, CMS, or compliance tools with secure API access for automated, scalable bias audits.
+                </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
+                className="p-6 border rounded-lg hover:shadow-md transition-shadow"
+              >
+                <h3 className="text-xl font-semibold mb-3">Document Upload Support</h3>
+                <p className="text-muted-foreground">
+                  Upload PDFs, Word docs, and text files for full-document bias scanning — no copy-paste needed.
+                </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.9 }}
+                className="p-6 border rounded-lg hover:shadow-md transition-shadow"
+              >
                 <h3 className="text-xl font-semibold mb-3">Compliance Ready</h3>
                 <p className="text-muted-foreground">
-                  Ensure your content meets ethical AI standards and regulatory requirements for fairness and inclusivity.
+                  Aligns with US state bias audit laws, NIST AI RMF, and federal neutrality mandates — ideal for regulated industries and government use.
                 </p>
               </motion.div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="py-16 bg-gradient-to-br from-blue-50 to-purple-50">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0 }}
+            >
+              <h2 className="text-3xl font-bold mb-4">Ready to learn more?</h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                Discover how BiasRadar can help your organization achieve compliance and build fairer AI systems.
+              </p>
+              <Link href="/contact">
+                <Button 
+                  size="lg"
+                  className="cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all"
+                  onClick={() => window.scrollTo(0, 0)}
+                >
+                  Request Demo Now
+                </Button>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </div>
