@@ -62,9 +62,9 @@ export default function Contact() {
                 <div>
                   <p className="font-medium">Office</p>
                   <p className="text-sm text-muted-foreground">
-                    San Francisco Bay Area
+                    Danville, California 94526
                     <br />
-                    California, United States
+                    United States
                   </p>
                 </div>
               </div>
