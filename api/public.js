@@ -113,6 +113,9 @@ export default async function handler(req, res) {
         : `${baseUrl}/api/biasradar/scan`;
 
       const axios = (await import('axios')).default;
+      
+      console.log('[DEBUG] Calling Python endpoint:', endpoint);
+      
       const pythonResponse = await axios.post(endpoint, {
         text: sanitizedText,
         bias_types: bias_types || [
@@ -145,10 +148,15 @@ export default async function handler(req, res) {
   } catch (error) {
     console.error('API error:', error);
     
-    if (error.response?.data) {
+    if (error.response) {
       return res.status(500).json({ 
         error: 'Bias detection service error',
-        details: error.response.data.error || error.message
+        details: `Request failed with status code ${error.response.status}`,
+        debug: {
+          status: error.response.status,
+          url: error.config?.url,
+          data: error.response.data
+        }
       });
     }
     
