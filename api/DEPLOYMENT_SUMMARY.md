@@ -53,9 +53,9 @@ model Organization {
 
 ### 4. API Endpoints
 
-#### Public API (`/api/public`)
-- ✅ Scan for bias: `POST /api/public`
-- ✅ Fix biased text: `POST /api/public/fix`
+#### Public API
+- ✅ Scan for bias: `POST /api/scan`
+- ✅ Fix biased text: `POST /api/fix`
 - ✅ Bearer token authentication
 - ✅ Rate limiting by plan type
 - ✅ Demo expiration checking
@@ -161,13 +161,13 @@ model Organization {
 
 ```bash
 # Scan for bias
-curl -X POST https://modelproof.ai/api/public \
+curl -X POST https://www.modelproof.ai/api/scan \
   -H "Authorization: Bearer bdr_a1b2c3d4..." \
   -H "Content-Type: application/json" \
   -d '{"text": "Sample text to analyze"}'
 
 # Fix biased text
-curl -X POST https://modelproof.ai/api/public/fix \
+curl -X POST https://www.modelproof.ai/api/fix \
   -H "Authorization: Bearer bdr_a1b2c3d4..." \
   -H "Content-Type: application/json" \
   -d '{"text": "Sample text to fix"}'

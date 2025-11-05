@@ -42,7 +42,7 @@ npm run dev
 
 ### Public Endpoints (Require API Key)
 
-#### POST `/api/v1/scan`
+#### POST `/api/scan`
 Scan text for bias across 13 dimensions.
 
 **Headers:**
@@ -59,7 +59,15 @@ Content-Type: application/json
 }
 ```
 
-#### POST `/api/v1/fix`
+**Example:**
+```bash
+curl -X POST https://www.modelproof.ai/api/scan \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Your text here"}'
+```
+
+#### POST `/api/fix`
 Fix biased text using AI.
 
 **Headers:**
@@ -73,6 +81,14 @@ Content-Type: application/json
 {
   "text": "The chairman should ensure all employees are treated fairly."
 }
+```
+
+**Example:**
+```bash
+curl -X POST https://www.modelproof.ai/api/fix \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Your text here"}'
 ```
 
 ### Admin Endpoints (Require Admin Passcode)

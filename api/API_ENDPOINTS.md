@@ -5,7 +5,7 @@
 We've consolidated all endpoints to use only **6 serverless functions**:
 
 ### Serverless Functions Count:
-- **JavaScript**: 4 functions (admin.js, public.js, dashboard.js, docs.js)
+- **JavaScript**: 4 functions (admin.js, scan.js, fix.js, dashboard.js, docs.js)
 - **Python**: 2 functions (scan.py, fix.py from biasradar/)
 - **Total**: 6 functions ✅ (well under 12 limit)
 
@@ -14,7 +14,7 @@ We've consolidated all endpoints to use only **6 serverless functions**:
 ## Public API Endpoints
 
 ### 1. Scan for Bias
-**Endpoint**: `POST /api/public`
+**Endpoint**: `POST /api/scan`
 
 **Description**: Analyze text for bias across 13 dimensions
 
@@ -22,7 +22,7 @@ We've consolidated all endpoints to use only **6 serverless functions**:
 
 **Example**:
 ```bash
-curl -X POST https://modelproof.ai/api/public \
+curl -X POST https://www.modelproof.ai/api/scan \
   -H "Authorization: Bearer bdr_xxxxxxxxxxxxxxxxxxxxx" \
   -H "Content-Type: application/json" \
   -d '{
@@ -31,7 +31,7 @@ curl -X POST https://modelproof.ai/api/public \
 ```
 
 ### 2. Fix Biased Text
-**Endpoint**: `POST /api/public/fix`
+**Endpoint**: `POST /api/fix`
 
 **Description**: Automatically fix biased text using AI
 
@@ -39,7 +39,7 @@ curl -X POST https://modelproof.ai/api/public \
 
 **Example**:
 ```bash
-curl -X POST https://modelproof.ai/api/public/fix \
+curl -X POST https://www.modelproof.ai/api/fix \
   -H "Authorization: Bearer bdr_xxxxxxxxxxxxxxxxxxxxx" \
   -H "Content-Type: application/json" \
   -d '{
@@ -142,8 +142,8 @@ curl -X POST https://modelproof.ai/api/admin \
 
 | What You Want | Endpoint | Method | Auth |
 |---------------|----------|--------|------|
-| Scan text for bias | `/api/public` | POST | Bearer token |
-| Fix biased text | `/api/public/fix` | POST | Bearer token |
+| Scan text for bias | `/api/scan` | POST | Bearer token |
+| Fix biased text | `/api/fix` | POST | Bearer token |
 | View docs | `/api/docs` | GET | None |
 | List customers | `/api/admin` | GET | X-Admin-Passcode |
 | Register customer | `/api/admin` | POST | X-Admin-Passcode |

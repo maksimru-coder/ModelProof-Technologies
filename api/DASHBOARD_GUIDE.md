@@ -172,7 +172,7 @@ These stats update automatically when you create, upgrade, or revoke organizatio
 
 4. **Send to customer**:
    ```bash
-   curl -X POST https://modelproof.ai/api/public \
+   curl -X POST https://www.modelproof.ai/api/scan \
      -H "Authorization: Bearer bdr_a1b2c3d4e5f6..." \
      -H "Content-Type: application/json" \
      -d '{"text": "Sample text to scan"}'
@@ -275,7 +275,7 @@ Once you've created an organization and shared their API key, they can use:
 
 ### Scan for Bias:
 ```bash
-curl -X POST https://modelproof.ai/api/public \
+curl -X POST https://www.modelproof.ai/api/scan \
   -H "Authorization: Bearer API_KEY_HERE" \
   -H "Content-Type: application/json" \
   -d '{"text": "Your text here"}'
@@ -283,7 +283,7 @@ curl -X POST https://modelproof.ai/api/public \
 
 ### Fix Biased Text:
 ```bash
-curl -X POST https://modelproof.ai/api/public/fix \
+curl -X POST https://www.modelproof.ai/api/fix \
   -H "Authorization: Bearer API_KEY_HERE" \
   -H "Content-Type: application/json" \
   -d '{"text": "Your text here"}'

@@ -88,10 +88,10 @@ export default async function handler(req, res) {
         },
         "security": [{ "BearerAuth": [] }],
         "paths": {
-          "/public": {
+          "/scan": {
             "post": {
               "summary": "Scan text for bias",
-              "description": "Analyze text for bias across 13 dimensions including gender, race, age, disability, culture, political, religious, LGBTQ+, socioeconomic, truth-seeking, ideological neutrality, intersectional, and language & tone. This endpoint handles both scan and fix operations - use the URL path to determine action.",
+              "description": "Analyze text for bias across 13 dimensions including gender, race, age, disability, culture, political, religious, LGBTQ+, socioeconomic, truth-seeking, ideological neutrality, intersectional, and language & tone.",
               "tags": ["Bias Detection"],
               "security": [{ "BearerAuth": [] }],
               "requestBody": {
@@ -111,10 +111,10 @@ export default async function handler(req, res) {
               }
             }
           },
-          "/public/fix": {
+          "/fix": {
             "post": {
               "summary": "Fix biased text using AI",
-              "description": "Automatically remove bias from text using OpenAI GPT-4. Same endpoint as /public but for fixing text.",
+              "description": "Automatically remove bias from text using AI-powered debiasing.",
               "tags": ["Bias Fixing"],
               "security": [{ "BearerAuth": [] }],
               "requestBody": {
