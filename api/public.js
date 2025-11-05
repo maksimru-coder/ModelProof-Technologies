@@ -15,7 +15,13 @@ export default async function handler(req, res) {
     const authHeader = req.headers.authorization;
     
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: 'Missing or invalid Authorization header' });
+      return res.status(401).json({ 
+        error: 'Missing or invalid Authorization header',
+        debug: {
+          headers_received: Object.keys(req.headers),
+          auth_header_value: authHeader ? authHeader.substring(0, 20) + '...' : 'undefined'
+        }
+      });
     }
 
     const apiKey = authHeader.replace('Bearer ', '').trim();
