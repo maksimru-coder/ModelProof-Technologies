@@ -23,7 +23,8 @@ GENDER_BIAS_WORDS = {
                         "manpower", "mankind", "man-made", "man hours", "man-hours",
                         "manmade", "workman", "workmen", "foreman", "foremen",
                         "anchorman", "anchormen", "anchorwoman", "anchorwomen",
-                        "cameraman", "cameramen"],
+                        "cameraman", "cameramen", "man", "men", "woman", "women",
+                        "male", "female", "boy", "girl"],
     "male_stereotypes": ["aggressive", "dominant", "assertive", "competitive", "ambitious", "decisive", 
                          "analytical", "logical", "independent", "confident", "strong", "tough",
                          "arrogant", "charismatic", "leader", "genius", "brilliant", "mastermind"],
@@ -89,7 +90,9 @@ RELIGION_BIAS_WORDS = {
     "problematic": ["infidel", "heathen", "godless", "pagan", "cult", "radical islam", 
                     "fundamentalist", "extremist", "judeo-christian", "christian nation",
                     "backwards religion", "primitive beliefs", "superstitious", "jihadist",
-                    "crusade", "holy war", "religious fanatic"],
+                    "crusade", "holy war", "religious fanatic", "muslim", "muslims", 
+                    "christian", "christians", "jew", "jews", "hindu", "hindus",
+                    "buddhist", "buddhists", "atheist", "atheists"],
     "stereotypes": ["all muslims", "all christians", "all jews", "all hindus", "all buddhists",
                     "all atheists", "muslims are", "christians are", "jews are", "hindus are",
                     "atheists are", "islamist", "terrorist religion", "false prophet",
@@ -131,9 +134,11 @@ TRUTH_SEEKING_WORDS = {
                            "100% guaranteed", "completely impossible", "totally false",
                            "entirely untrue", "perfectly clear that", "obviously true", "obviously false"],
     "misinformation_claims": ["vaccines cause autism", "climate change is a hoax", "climate hoax",
+                              "climate change is a complete hoax", "climate change hoax",
+                              "global warming is a hoax", "global warming hoax",
                               "flat earth", "moon landing was faked", "5g causes cancer",
-                              "covid is a hoax", "microchips in vaccines", "covid vaccine kills",
-                              "election was stolen", "deep state conspiracy", "qanon",
+                              "covid is a hoax", "covid hoax", "microchips in vaccines", "covid vaccine kills",
+                              "election was stolen", "stolen election", "deep state conspiracy", "qanon",
                               "chemtrails", "fluoride mind control", "reptilian", "illuminati controls"],
     "conspiracy_language": ["wake up sheeple", "they don't want you to know", "the truth they hide",
                             "mainstream media lies", "fake science", "government coverup",
@@ -340,15 +345,28 @@ def detect_truth_seeking_bias(text_lower: str) -> List[Dict[str, Any]]:
     issues = []
     for category, phrases in TRUTH_SEEKING_WORDS.items():
         for phrase in phrases:
-            if find_word_in_text(text_lower, phrase) != -1:
-                pos = find_word_in_text(text_lower, phrase)
-                issues.append({
-                    "word": phrase,
-                    "bias_type": "truth_seeking",
-                    "severity": "medium",
-                    "explanation": f"'{phrase}' may indicate unsubstantiated claims or overgeneralizations",
-                    "position": pos
-                })
+            # Use substring matching for misinformation claims (catches partial matches)
+            if category == "misinformation_claims":
+                if phrase in text_lower:
+                    pos = text_lower.find(phrase)
+                    issues.append({
+                        "word": phrase,
+                        "bias_type": "truth_seeking",
+                        "severity": "medium",
+                        "explanation": f"'{phrase}' may indicate unsubstantiated claims or overgeneralizations",
+                        "position": pos
+                    })
+            else:
+                # Use word boundary matching for other categories
+                if find_word_in_text(text_lower, phrase) != -1:
+                    pos = find_word_in_text(text_lower, phrase)
+                    issues.append({
+                        "word": phrase,
+                        "bias_type": "truth_seeking",
+                        "severity": "medium",
+                        "explanation": f"'{phrase}' may indicate unsubstantiated claims or overgeneralizations",
+                        "position": pos
+                    })
     return issues
 
 
