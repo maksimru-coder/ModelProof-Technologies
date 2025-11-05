@@ -258,7 +258,7 @@ export default async function handler(req, res) {
         }
 
         if (res.status === 500 && data.details?.includes('DATABASE_URL')) {
-          alert('Server configuration error: DATABASE_URL not set in Vercel.\n\nPlease add DATABASE_URL to your Vercel environment variables.');
+          alert('Server configuration error: DATABASE_URL not set in Vercel. Please add DATABASE_URL to your Vercel environment variables.');
           passcode = null;
           document.body.innerHTML = '<div style="padding:40px;font-family:sans-serif;"><h1>⚠️ Configuration Error</h1><p>The API is missing the <code>DATABASE_URL</code> environment variable.</p><p><strong>To fix:</strong></p><ol><li>Go to your Vercel project settings</li><li>Navigate to Environment Variables</li><li>Add <code>DATABASE_URL</code> with your Postgres connection string</li><li>Redeploy the application</li></ol></div>';
           return;
