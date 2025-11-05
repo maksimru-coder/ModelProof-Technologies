@@ -54,7 +54,8 @@ AGE_BIAS_WORDS = {
     "youth": ["lazy millennial", "millennials are lazy", "snowflake generation",
               "young people are lazy", "young people are too entitled", "entitled millennials",
               "young workers are lazy", "immature millennials", "gen z are lazy", "zoomers are lazy"],
-    "older": ["workers are too old to learn", "employees are too old to learn",
+    "older": ["old lazy", "lazy old", "old people are", "old workers are", "old employees are",
+              "workers are too old to learn", "employees are too old to learn",
               "he is too old to learn", "she is too old to learn", "they are too old to learn",
               "older people are too old to learn",
               "too old for the job", "older workers are too slow", "older workers cannot learn",
@@ -75,7 +76,7 @@ DISABILITY_BIAS_WORDS = {
                 "broken person", "damaged person", "afflicted with disability",
                 "stricken with disability", "plagued by disability",
                 "disabled people cannot contribute", "disabilities make them incapable",
-                "handicapped people are less capable"]
+                "handicapped people are less capable", "fake disabilities", "faking disability"]
 }
 
 CULTURAL_BIAS_WORDS = {
@@ -85,12 +86,14 @@ CULTURAL_BIAS_WORDS = {
 }
 
 POLITICAL_BIAS_WORDS = {
-    "partisan": ["woke", "snowflake", "libtard", "conservative", "liberal agenda", "far-left", "far-right",
+    "partisan": ["woke", "snowflake", "like snowflakes", "acting like snowflakes",
+                 "libtard", "conservative", "liberal agenda", "far-left", "far-right",
                  "radical left", "alt-right", "social justice warrior", "sjw", "politically correct",
                  "virtue signaling", "cancel culture", "indoctrination", "brainwashed", "sheeple",
-                 "fake news", "mainstream media", "deep state", "communist", "socialist agenda"],
+                 "fake news", "mainstream media", "deep state", "communist", "socialist agenda",
+                 "trump's genius", "trump is genius", "trump's brilliant"],
     "ideological": ["obviously", "clearly", "everyone knows", "common sense", "natural law",
-                    "traditional values", "family values", "real american", "patriotic"],
+                    "traditional values", "family values", "real american", "real americans", "patriotic"],
     "extremist_labels": ["libtards", "conservatards", "trumptards", "democrats want", "republicans want",
                          "liberals are", "conservatives are", "the left wants to destroy",
                          "right-wing extremist", "left-wing extremist", "communist plot",
@@ -118,7 +121,9 @@ RELIGION_BIAS_WORDS = {
 }
 
 LGBTQ_BIAS_WORDS = {
-    "problematic": ["lifestyle choice", "sexual preference", "homosexual agenda", "gay lifestyle",
+    "problematic": ["lazy transgender", "transgender welfare", "transgender people are", "transgenders are", 
+                    "transgender agenda", "transgender ideology",
+                    "lifestyle choice", "sexual preference", "homosexual agenda", "gay lifestyle",
                     "unnatural", "normal", "traditional family", "real man", "real woman",
                     "born male", "born female", "biological male", "biological female",
                     "transvestite", "transsexual", "hermaphrodite", "cross-dresser",
@@ -126,13 +131,14 @@ LGBTQ_BIAS_WORDS = {
 }
 
 SOCIOECONOMIC_BIAS_WORDS = {
-    "class_based": ["low class", "welfare queen", "trailer trash", "ghetto", "hood", "inner-city",
+    "class_based": ["low class", "welfare queen", "welfare queens", "trailer trash", "ghetto", "hood", "inner-city",
                     "underprivileged", "disadvantaged", "less fortunate", "poor people",
                     "uneducated", "blue collar", "working class", "elitist", "privileged",
                     "trust fund baby", "silver spoon", "entitled", "lazy poor"],
     "stereotypes": ["poor people are lazy", "poor are lazy", "rich deserve", "wealthy deserve",
                     "poverty is a choice", "just work harder", "pull yourself up",
-                    "bootstraps", "handout", "freeloader", "moocher", "taker",
+                    "bootstraps", "handout", "on handouts", "living on handouts",
+                    "freeloader", "moocher", "taker",
                     "welfare dependent", "living off government", "government cheese"],
     "dehumanizing": ["low-income people", "the poors", "peasant", "pleb", "redneck",
                      "white trash", "hillbilly", "country bumpkin", "unwashed masses",
@@ -147,7 +153,7 @@ TRUTH_SEEKING_WORDS = {
     "overgeneralization": ["always wrong", "never works", "nobody believes",
                            "100% guaranteed", "completely impossible", "totally false",
                            "entirely untrue", "perfectly clear that", "obviously true", "obviously false"],
-    "misinformation_claims": ["vaccines cause autism", "climate change is a hoax", "climate hoax",
+    "misinformation_claims": ["spread lies", "spreading lies", "vaccines cause autism", "climate change is a hoax", "climate hoax",
                               "climate change is a complete hoax", "climate change hoax",
                               "global warming is a hoax", "global warming hoax",
                               "flat earth", "moon landing was faked", "5g causes cancer",
