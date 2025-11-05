@@ -41,12 +41,14 @@ export function ProductsOverview() {
           >
             <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:border-primary/50">
               <CardHeader className="space-y-6">
-                <IconWrapper>
-                  <div className="bg-gradient-to-br from-blue-500 via-purple-600 to-green-500 rounded-full p-5 shadow-xl relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-green-400 rounded-full opacity-40 animate-pulse"></div>
-                    <Radar className="h-14 w-14 text-white relative z-10" strokeWidth={2.5} />
-                  </div>
-                </IconWrapper>
+                <div className="flex justify-center">
+                  <IconWrapper>
+                    <div className="w-24 h-24 bg-gradient-to-br from-blue-500 via-purple-600 to-green-500 rounded-full shadow-xl relative flex items-center justify-center">
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-green-400 rounded-full opacity-40 animate-pulse"></div>
+                      <Radar className="h-14 w-14 text-white relative z-10" strokeWidth={2.5} />
+                    </div>
+                  </IconWrapper>
+                </div>
                 <div>
                   <CardTitle className="text-xl mb-2">BiasRadar™ — Bias Detection for Responsible AI</CardTitle>
                   <p className="text-lg font-medium text-primary/80">AI Bias Detection Engine</p>
