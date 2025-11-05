@@ -8,6 +8,16 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import { useDropzone } from 'react-dropzone';
@@ -63,6 +73,8 @@ const allBiasTypes = [
   { id: 'truth_seeking', label: 'Truth-Seeking', description: 'Detects deviations from factual accuracy, unsubstantiated claims, or non-truthful language' }
 ];
 
+const CHARACTER_LIMIT = 10000;
+
 export default function BiasRadar() {
   const [text, setText] = useState("");
   const [biasTypes, setBiasTypes] = useState<string[]>([
@@ -74,6 +86,8 @@ export default function BiasRadar() {
   const [results, setResults] = useState<ScanResponse | null>(null);
   const [fixedText, setFixedText] = useState<FixResponse | null>(null);
   const [fixLoading, setFixLoading] = useState(false);
+  const [showLimitModal, setShowLimitModal] = useState(false);
+  const [oversizedText, setOversizedText] = useState({ text: "", charCount: 0, fileName: "" });
   const { toast } = useToast();
 
   const extractTextFromPDF = async (file: File): Promise<string> => {
@@ -163,10 +177,21 @@ export default function BiasRadar() {
         return;
       }
 
+      // Check character limit
+      if (sanitizedText.length > CHARACTER_LIMIT) {
+        setOversizedText({
+          text: sanitizedText,
+          charCount: sanitizedText.length,
+          fileName: file.name
+        });
+        setShowLimitModal(true);
+        return;
+      }
+
       setText(sanitizedText);
       toast({
         title: "File uploaded successfully",
-        description: `Loaded ${file.name}`,
+        description: `Loaded ${file.name} (${sanitizedText.length.toLocaleString()} characters)`,
       });
     } catch (error) {
       console.error('File processing error:', error);
@@ -189,6 +214,21 @@ export default function BiasRadar() {
     maxFiles: 1,
     multiple: false
   });
+
+  const handleTruncateText = () => {
+    const truncatedText = oversizedText.text.substring(0, CHARACTER_LIMIT);
+    setText(truncatedText);
+    setShowLimitModal(false);
+    toast({
+      title: "File truncated",
+      description: `Loaded first ${CHARACTER_LIMIT.toLocaleString()} characters from ${oversizedText.fileName}`,
+    });
+  };
+
+  const handleCancelUpload = () => {
+    setShowLimitModal(false);
+    setOversizedText({ text: "", charCount: 0, fileName: "" });
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -346,6 +386,57 @@ export default function BiasRadar() {
 
   return (
     <div className="min-h-screen">
+      {/* Character Limit Modal */}
+      <AlertDialog open={showLimitModal} onOpenChange={setShowLimitModal}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertCircle className="h-5 w-5 text-amber-500" />
+              File Exceeds Character Limit
+            </AlertDialogTitle>
+            <AlertDialogDescription className="space-y-4">
+              <div className="text-base">
+                <p className="font-semibold text-foreground mb-2">
+                  {oversizedText.fileName}
+                </p>
+                <div className="bg-muted p-4 rounded-lg space-y-2">
+                  <div className="flex justify-between">
+                    <span>Extracted characters:</span>
+                    <span className="font-bold text-red-600">
+                      {oversizedText.charCount.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Maximum allowed:</span>
+                    <span className="font-bold text-green-600">
+                      {CHARACTER_LIMIT.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between border-t pt-2 mt-2">
+                    <span>Characters over limit:</span>
+                    <span className="font-bold text-amber-600">
+                      {(oversizedText.charCount - CHARACTER_LIMIT).toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm">
+                To proceed, you can either truncate the text to the first {CHARACTER_LIMIT.toLocaleString()} characters 
+                or cancel and reduce the file size manually.
+              </p>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={handleCancelUpload}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleTruncateText} className="bg-primary">
+              Truncate & Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <div className="relative bg-primary text-white py-20">
         <div className="container">
           <motion.div
