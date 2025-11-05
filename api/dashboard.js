@@ -435,13 +435,12 @@ export default async function handler(req, res) {
     }
 
     // Execute immediately - prompt for passcode as soon as script runs
-    (function() {
-      console.log('🔐 Dashboard script executing, requesting passcode now...');
-      console.log('Document ready state:', document.readyState);
-      
-      // Prompt immediately
-      loadOrganizations();
-    })();
+    console.log('🔐 Dashboard script loaded!');
+    console.log('Document ready state:', document.readyState);
+    console.log('About to call loadOrganizations()...');
+    
+    // Call immediately - no waiting
+    loadOrganizations();
   </script>
 </body>
 </html>
