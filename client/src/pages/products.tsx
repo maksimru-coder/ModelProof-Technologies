@@ -48,13 +48,13 @@ export default function Products() {
         >
           <Card className="transition-all duration-300 hover:shadow-lg hover:border-primary/50">
             <CardHeader>
-              <div className="w-16 h-16 mb-6 flex items-center justify-center">
-                <Radar 
-                  className="h-12 w-12 stroke-[1.5] text-primary" 
-                  style={{
-                    filter: "drop-shadow(0 0 8px rgba(11, 36, 71, 0.2))"
-                  }}
-                />
+              <div className="mb-6 flex items-center justify-center">
+                <div className="relative inline-block">
+                  <div className="bg-gradient-to-br from-blue-500 via-purple-600 to-green-500 rounded-full p-5 shadow-lg relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-green-400 rounded-full opacity-40 animate-pulse"></div>
+                    <Radar className="h-14 w-14 text-white relative z-10" strokeWidth={2.5} />
+                  </div>
+                </div>
               </div>
               <CardTitle className="text-2xl mb-2">BiasRadar™ — AI Bias Detection Engine</CardTitle>
               <CardDescription className="text-lg font-medium text-primary/80 mb-4">

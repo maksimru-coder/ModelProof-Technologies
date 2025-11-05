@@ -14,13 +14,11 @@ import { ArrowRight } from "lucide-react";
 const IconWrapper = ({ children }: { children: React.ReactNode }) => (
   <motion.div
     initial={{ scale: 1 }}
-    whileHover={{ scale: 1.1 }}
-    transition={{ duration: 0.2 }}
-    className="relative"
+    whileHover={{ scale: 1.05 }}
+    transition={{ duration: 0.3, ease: "easeOut" }}
+    className="relative inline-block"
   >
-    <div className="w-16 h-16 flex items-center justify-center">
-      {children}
-    </div>
+    {children}
   </motion.div>
 );
 
@@ -44,12 +42,10 @@ export function ProductsOverview() {
             <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:border-primary/50">
               <CardHeader className="space-y-6">
                 <IconWrapper>
-                  <Radar 
-                    className="h-12 w-12 stroke-[1.5] text-primary" 
-                    style={{
-                      filter: "drop-shadow(0 0 8px rgba(11, 36, 71, 0.2))"
-                    }}
-                  />
+                  <div className="bg-gradient-to-br from-blue-500 via-purple-600 to-green-500 rounded-full p-5 shadow-xl relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-green-400 rounded-full opacity-40 animate-pulse"></div>
+                    <Radar className="h-14 w-14 text-white relative z-10" strokeWidth={2.5} />
+                  </div>
                 </IconWrapper>
                 <div>
                   <CardTitle className="text-xl mb-2">BiasRadar™ — Bias Detection for Responsible AI</CardTitle>
