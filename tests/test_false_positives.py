@@ -28,6 +28,9 @@ neutral_texts = [
     "The snowflakes fell gently on the ground.",
     "Handouts were distributed to all attendees at the conference.",
     "The company provides handouts for the training session.",
+    "He tends to exaggerate his stories when telling them to friends.",
+    "The article about public assistance programs helps families in need.",
+    "Single mothers need affordable childcare options.",
 ]
 
 print("=" * 80)

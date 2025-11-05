@@ -30,7 +30,8 @@ GENDER_BIAS_WORDS = {
                          "arrogant", "charismatic", "leader", "genius", "brilliant", "mastermind"],
     "female_stereotypes": ["nurturing", "supportive", "emotional", "sensitive", "caring", "empathetic",
                            "collaborative", "warm", "gentle", "sympathetic", "compassionate", "sweet",
-                           "bubbly", "ditzy", "bossy", "shrill", "hysterical", "dramatic", "catty"]
+                           "bubbly", "ditzy", "bossy", "shrill", "hysterical", "dramatic", "catty",
+                           "transgender single mothers", "single mothers and"]
 }
 
 RACE_BIAS_WORDS = {
@@ -39,7 +40,8 @@ RACE_BIAS_WORDS = {
                     "well-spoken", "eloquent", "clean-cut", "uppity", "colored", "negro",
                     "illegal alien", "illegal immigrant", "illegals", "aliens",
                     "foreigner", "foreign-looking", "un-american", "go back to",
-                    "you people", "those people", "culturally backward", "third world"],
+                    "you people", "those people", "culturally backward", "third world",
+                    "undocumented residents", "undocumented immigrants"],
     "stereotypes": ["naturally good at math", "good at math", "bad drivers", "poor drivers",
                     "super predator", "welfare queen", "anchor baby", "model minority",
                     "lazy mexicans", "criminal blacks", "terrorist arabs", "sneaky asians",
@@ -63,7 +65,7 @@ AGE_BIAS_WORDS = {
               "elderly cannot learn", "seniors cannot learn", "seniors are too slow",
               "boomers cannot learn", "boomers are outdated", "out of touch boomer",
               "employees past their prime", "older employees are slow", "elderly are too slow",
-              "he is too old for", "she is too old for"]
+              "he is too old for", "she is too old for", "older low-income"]
 }
 
 DISABILITY_BIAS_WORDS = {
@@ -76,13 +78,14 @@ DISABILITY_BIAS_WORDS = {
                 "broken person", "damaged person", "afflicted with disability",
                 "stricken with disability", "plagued by disability",
                 "disabled people cannot contribute", "disabilities make them incapable",
-                "handicapped people are less capable", "fake disabilities", "faking disability"]
+                "handicapped people are less capable", "fake disabilities", "faking disability",
+                "exaggerate health conditions", "exaggerating health conditions"]
 }
 
 CULTURAL_BIAS_WORDS = {
     "western_centric": ["normal", "exotic", "foreign", "alien", "traditional dress",
                         "third world", "developing", "primitive", "backwards", "civilized",
-                        "oriental", "native", "tribal"]
+                        "oriental", "native", "tribal", "outdated traditions"]
 }
 
 POLITICAL_BIAS_WORDS = {
@@ -109,7 +112,8 @@ RELIGION_BIAS_WORDS = {
                     "backwards religion", "primitive beliefs", "superstitious", "jihadist",
                     "crusade", "holy war", "religious fanatic", "muslim", "muslims", 
                     "christian", "christians", "jew", "jews", "hindu", "hindus",
-                    "buddhist", "buddhists", "atheist", "atheists"],
+                    "buddhist", "buddhists", "atheist", "atheists",
+                    "non-mainstream faiths", "non-mainstream religions"],
     "stereotypes": ["all muslims", "all christians", "all jews", "all hindus", "all buddhists",
                     "all atheists", "muslims are", "christians are", "jews are", "hindus are",
                     "atheists are", "islamist", "terrorist religion", "false prophet",
@@ -121,7 +125,8 @@ RELIGION_BIAS_WORDS = {
 }
 
 LGBTQ_BIAS_WORDS = {
-    "problematic": ["lazy transgender", "transgender welfare", "transgender people are", "transgenders are", 
+    "problematic": ["lazy transgender", "transgender welfare", "transgender single mothers",
+                    "low-income transgender", "transgender people are", "transgenders are", 
                     "transgender agenda", "transgender ideology",
                     "lifestyle choice", "sexual preference", "homosexual agenda", "gay lifestyle",
                     "unnatural", "normal", "traditional family", "real man", "real woman",
@@ -138,6 +143,7 @@ SOCIOECONOMIC_BIAS_WORDS = {
     "stereotypes": ["poor people are lazy", "poor are lazy", "rich deserve", "wealthy deserve",
                     "poverty is a choice", "just work harder", "pull yourself up",
                     "bootstraps", "handout", "on handouts", "living on handouts",
+                    "on public assistance are", "on public assistance who",
                     "freeloader", "moocher", "taker",
                     "welfare dependent", "living off government", "government cheese"],
     "dehumanizing": ["low-income people", "the poors", "peasant", "pleb", "redneck",
@@ -181,7 +187,8 @@ IDEOLOGICAL_NEUTRALITY_WORDS = {
     "absolutist_framing": ["the only solution", "the real problem", "what's really happening",
                            "the real agenda", "the hidden truth", "what they won't tell you",
                            "the actual facts", "the only answer", "the truth is obvious",
-                           "clearly wrong about", "obviously stupid to", "totally ignorant of"]
+                           "clearly wrong about", "obviously stupid to", "totally ignorant of"],
+    "exclusionary": ["patriotic citizens", "real citizens", "true patriots"]
 }
 
 LANGUAGE_TONE_WORDS = {
@@ -192,7 +199,8 @@ LANGUAGE_TONE_WORDS = {
     "hate_speech_high": ["kill yourself", "go to hell", "die", "kys", "subhuman",
                          "inferior race", "master race", "race war", "ethnic cleansing"],
     "unprofessional_low": ["sucks", "crap", "crappy", "pissed off", "screwed up",
-                           "messed up", "bullcrap", "idiotic", "moronic", "stupid"]
+                           "messed up", "bullcrap", "idiotic", "moronic", "stupid"],
+    "emotionally_charged": ["emotionally charged social-media", "emotionally charged posts"]
 }
 
 
