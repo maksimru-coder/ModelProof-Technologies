@@ -178,20 +178,27 @@ export default async function handler(req, res) {
 
         if (res.status === 403) {
           passcode = null;
-          alert('Invalid passcode');
+          alert('Invalid passcode. Please try again.');
           return loadOrganizations();
         }
 
         if (!res.ok) {
-          throw new Error('Failed to load organizations');
+          const errorData = await res.json().catch(() => ({ error: 'Unknown error' }));
+          throw new Error(errorData.error || 'Failed to load organizations');
         }
 
         const data = await res.json();
-        organizations = data.organizations;
+        organizations = data.organizations || [];
         renderTable();
         updateStats();
       } catch (error) {
-        alert('Error loading organizations: ' + error.message);
+        console.error('Dashboard error:', error);
+        if (error.message.includes('fetch')) {
+          alert('Cannot connect to API. Please check your deployment.');
+        } else {
+          alert('Error: ' + error.message);
+        }
+        passcode = null;
       }
     }
 
