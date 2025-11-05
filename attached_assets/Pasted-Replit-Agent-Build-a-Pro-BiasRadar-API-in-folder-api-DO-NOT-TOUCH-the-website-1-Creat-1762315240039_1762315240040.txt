@@ -1,0 +1,72 @@
+Replit Agent: Build a **Pro BiasRadar API** in folder /api — **DO NOT TOUCH** the website.
+
+1. Create folder /api (next to website folder)
+2. Inside /api:
+   • Node.js + Express + Prisma + SQLite (biasradar.db)
+   • .env file:
+     DATABASE_URL=sqlite:biasradar.db
+     ADMIN_PASSCODE=changeme123
+     JWT_SECRET=superlongrandomstring1234567890
+   • Prisma schema (exact):
+     datasource db { provider = "sqlite" url = env("DATABASE_URL") }
+     model Organization {
+       id            String   @id @default(uuid())
+       name          String
+       email         String   @unique
+       is_paid       Boolean  @default(false)
+       api_key       String   @unique
+       requests_made Int      @default(0)
+       last_reset    DateTime @default(now())
+       created_at    DateTime @default(now())
+     }
+   • Run: npx prisma generate && npx prisma db push
+
+3. PUBLIC ENDPOINTS (customers see ONLY these):
+   POST /v1/scan   → Bearer <api_key> + {text, bias_types[]} → scan result
+   POST /v1/fix    → Bearer <api_key> + {text} → fixed text
+   → Show ONLY these two in Swagger /docs
+
+4. PRIVATE ENDPOINTS (YOU ONLY — hidden from Swagger & docs):
+   POST /v1/register → you call manually to create orgs
+   POST /v1/revoke   → you call to kill a key
+   → Add security: [] to hide from Swagger
+   → Wrap in adminOnly middleware (checks ADMIN_PASSCODE header)
+
+5. Rate limit: 20/day free → unlimited if is_paid=true
+   Reset daily using last_reset
+
+6. Swagger docs: /api/docs
+   • Dark mode
+   • Authorize button
+   • ONLY scan & fix visible
+
+7. Hidden admin dashboard: /api/dashboard?passcode=changeme123
+   • Table + Revoke / Delete / Mark-Paid buttons
+   • Simple HTML/JS
+
+8. Add vercel.json at project root:
+   {
+     "routes": [
+       { "src": "/api/(.*)", "dest": "/api/server.js" },
+       { "src": "/(.*)", "dest": "/" }
+     ]
+   }
+
+9. Security:
+   • Sanitize text (max 20k chars)
+   • 401 invalid key, 429 rate limit, 403 revoked
+
+10. Test commands (print in console):
+    • curl -X POST https://YOUR.repl.co/api/v1/scan -H "Authorization: Bearer KEY" -d '{"text":"test"}'
+    • Open https://YOUR.repl.co/api/docs → ONLY scan & fix
+    • Open https://YOUR.repl.co/api/dashboard?passcode=changeme123
+
+Final URLs:
+   Website: https://modelproof.ai
+   API:     https://modelproof.ai/api
+   Docs:    https://modelproof.ai/api/docs  (customers see ONLY scan & fix)
+   Admin:   https://modelproof.ai/api/dashboard?passcode=changeme123
+
+**DO NOT modify any file outside /api**
+**Keep public BiasRadar 100% unchanged**
+**Push once → Vercel auto-deploys both**
