@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         "info": {
           "title": "BiasRadar API",
           "version": "1.0.0",
-          "description": "Professional bias detection and text fixing API by ModelProof Technologies. Detect bias across 13 dimensions and automatically fix biased content using AI.",
+          "description": "Professional bias detection and text fixing API by ModelProof Technologies. Detect bias across 13 dimensions and automatically fix biased content using AI.\\n\\n**Character Limits:**\\n- Free/Demo Plans: 10,000 characters per request\\n- Paid Plans: 50,000 characters per request\\n\\n**Rate Limits:**\\n- Free/Demo Plans: 20 requests per day\\n- Paid Plans: Unlimited requests",
           "contact": {
             "name": "ModelProof Technologies",
             "url": "https://modelproof.ai",
@@ -60,7 +60,7 @@ export default async function handler(req, res) {
               "properties": {
                 "text": {
                   "type": "string",
-                  "description": "Text to analyze for bias (max 20,000 characters)",
+                  "description": "Text to analyze for bias (max 10,000 chars for free/demo plans, 50,000 chars for paid plans)",
                   "example": "The chairman should ensure all employees are treated fairly."
                 },
                 "bias_types": {
@@ -79,7 +79,7 @@ export default async function handler(req, res) {
               "properties": {
                 "text": {
                   "type": "string",
-                  "description": "Biased text to fix using AI (max 20,000 characters)",
+                  "description": "Biased text to fix using AI (max 10,000 chars for free/demo plans, 50,000 chars for paid plans)",
                   "example": "The chairman should ensure all employees are treated fairly."
                 }
               }
@@ -104,9 +104,9 @@ export default async function handler(req, res) {
               },
               "responses": {
                 "200": { "description": "Successful scan" },
-                "400": { "description": "Bad request - invalid input" },
+                "400": { "description": "Bad request - invalid input or text exceeds character limit" },
                 "401": { "description": "Unauthorized - invalid API key" },
-                "429": { "description": "Rate limit exceeded (free tier: 20 requests/day)" },
+                "429": { "description": "Rate limit exceeded (free/demo tier: 20 requests/day, paid tier: unlimited)" },
                 "500": { "description": "Internal server error" }
               }
             }

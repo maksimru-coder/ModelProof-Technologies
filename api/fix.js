@@ -96,9 +96,22 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'Text must be a string' });
       }
 
-      if (text.length > 20000) {
+      // Tiered character limits based on plan
+      const characterLimit = (planType === 'paid') ? 50000 : 10000;
+      
+      if (text.length > characterLimit) {
         await prisma.$disconnect();
-        return res.status(400).json({ error: 'Text exceeds maximum length of 20,000 characters' });
+        const limitMessage = planType === 'paid'
+          ? `Text exceeds maximum length of ${characterLimit.toLocaleString()} characters for paid plans`
+          : `Text exceeds maximum length of ${characterLimit.toLocaleString()} characters. Upgrade to a paid plan for 50,000 character limit.`;
+        
+        return res.status(400).json({ 
+          error: limitMessage,
+          current_length: text.length,
+          character_limit: characterLimit,
+          plan: planType,
+          upgrade_info: planType !== 'paid' ? 'Contact support to upgrade for higher limits' : null
+        });
       }
 
       const sanitizedText = text.trim();

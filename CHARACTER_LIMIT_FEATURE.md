@@ -6,17 +6,24 @@ Added user-friendly modal notification when uploaded files exceed the 10,000 cha
 ## Character Limits
 
 ### Website (UI)
-- **Limit:** 10,000 characters
+- **Limit:** 10,000 characters (for all users)
 - **Enforcement:** 
   - Frontend check when files are uploaded
   - Textarea has `maxLength={10000}` attribute
   - Modal notification appears if file exceeds limit
 
-### API (Direct Calls)
-- **Limit:** 10,000 characters (same as website)
-- **Enforcement:** API endpoint `/api/biasradar/scan` returns HTTP 400 error
-- **Error Message:** "Text too long. Maximum 10,000 characters."
-- **Location:** `api/biasradar/scan.py` line 40-42
+### API (Direct Calls) - TIERED LIMITS
+- **Free/Demo Plans:** 10,000 characters per request
+- **Paid Plans:** 50,000 characters per request (5x more!)
+- **Enforcement:** 
+  - Checked at API wrapper layer (`api/scan.js` and `api/fix.js`)
+  - Returns HTTP 400 error with detailed information
+  - Includes upgrade information for free/demo users
+- **Error Response Includes:**
+  - Current character count
+  - Character limit for your plan
+  - Plan type (free/demo/paid)
+  - Upgrade information (if applicable)
 
 ## Features Implemented
 

@@ -37,8 +37,9 @@ class handler(BaseHTTPRequestHandler):
                 self.send_error(400, "Text cannot be empty")
                 return
             
-            if len(text) > 10000:
-                self.send_error(400, "Text too long. Maximum 10,000 characters.")
+            # Accept up to 50,000 characters (tier enforcement happens in scan.js)
+            if len(text) > 50000:
+                self.send_error(400, "Text too long. Maximum 50,000 characters.")
                 return
             
             # Use hybrid detection system

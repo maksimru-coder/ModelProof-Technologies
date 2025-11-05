@@ -130,11 +130,20 @@ curl -X POST https://modelproof.ai/api/admin \
 
 ---
 
-## Rate Limiting
+## Rate Limiting & Character Limits
 
+### Request Limits
 - **Free Tier**: 20 requests per day
+- **Demo Tier**: 20 requests per day (expires after 5 days)
 - **Paid Tier**: Unlimited requests
 - Resets daily at midnight UTC
+
+### Character Limits
+- **Free Tier**: 10,000 characters per request
+- **Demo Tier**: 10,000 characters per request
+- **Paid Tier**: 50,000 characters per request
+
+> 💡 **Note**: Paid plans get 5x more characters per request (50,000 vs 10,000)
 
 ---
 
