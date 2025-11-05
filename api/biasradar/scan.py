@@ -47,7 +47,7 @@ class handler(BaseHTTPRequestHandler):
             ])
             
             # Log the scan request
-            print(f"[BIASRADAR SCAN] {timestamp} | IP: {ip_address} | User-Agent: {user_agent} | Text Length: {len(text)} chars | Bias Types: {', '.join(bias_types)}")
+            print(f"[BIASRADAR SCAN v2] {timestamp} | IP: {ip_address} | User-Agent: {user_agent} | Text Length: {len(text)} chars | Bias Types: {', '.join(bias_types)}")
             
             # Validation
             if not text or len(text.strip()) == 0:

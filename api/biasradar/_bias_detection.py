@@ -12,24 +12,41 @@ except ImportError:
 
 # Bias word dictionaries
 GENDER_BIAS_WORDS = {
-    "male": ["aggressive", "dominant", "assertive", "competitive", "ambitious", "decisive", 
-             "analytical", "logical", "independent", "confident", "strong", "tough", "bossy",
-             "arrogant", "charismatic", "leader", "genius", "brilliant", "mastermind"],
-    "female": ["nurturing", "supportive", "emotional", "sensitive", "caring", "empathetic",
-               "collaborative", "warm", "gentle", "sympathetic", "compassionate", "sweet",
-               "bubbly", "ditzy", "bossy", "shrill", "hysterical", "dramatic"]
+    "gendered_titles": ["chairman", "chairwoman", "salesman", "salesmen", "saleswoman", "saleswomen",
+                        "policeman", "policemen", "policewoman", "policewomen",
+                        "fireman", "firemen", "firewoman", "firewomen",
+                        "businessman", "businessmen", "businesswoman", "businesswomen",
+                        "congressman", "congressmen", "congresswoman", "congresswomen",
+                        "spokesman", "spokesmen", "spokeswoman", "spokeswomen",
+                        "mailman", "mailmen", "postman", "postmen",
+                        "stewardess", "steward", "waitress", "waiter", "actress", "actor",
+                        "manpower", "mankind", "man-made", "man hours", "man-hours",
+                        "manmade", "workman", "workmen", "foreman", "foremen",
+                        "anchorman", "anchormen", "anchorwoman", "anchorwomen",
+                        "cameraman", "cameramen"],
+    "male_stereotypes": ["aggressive", "dominant", "assertive", "competitive", "ambitious", "decisive", 
+                         "analytical", "logical", "independent", "confident", "strong", "tough",
+                         "arrogant", "charismatic", "leader", "genius", "brilliant", "mastermind"],
+    "female_stereotypes": ["nurturing", "supportive", "emotional", "sensitive", "caring", "empathetic",
+                           "collaborative", "warm", "gentle", "sympathetic", "compassionate", "sweet",
+                           "bubbly", "ditzy", "bossy", "shrill", "hysterical", "dramatic", "catty"]
 }
 
 RACE_BIAS_WORDS = {
     "problematic": ["exotic", "articulate", "urban", "inner-city", "ghetto", "thug", 
                     "oriental", "primitive", "tribal", "uncivilized", "savage",
-                    "well-spoken", "eloquent", "clean-cut", "uppity"]
+                    "well-spoken", "eloquent", "clean-cut", "uppity", "colored", "negro",
+                    "illegal alien", "illegal immigrant", "illegals", "aliens",
+                    "foreigner", "foreign-looking", "un-american", "go back to",
+                    "you people", "those people", "culturally backward", "third world"]
 }
 
 AGE_BIAS_WORDS = {
-    "youth": ["energetic", "innovative", "tech-savvy", "fresh", "dynamic", "passionate"],
+    "youth": ["energetic", "innovative", "tech-savvy", "fresh", "dynamic", "passionate", 
+              "lazy millennial", "entitled", "snowflake generation", "kids these days"],
     "older": ["experienced", "traditional", "old-fashioned", "outdated", "slow", "resistant to change",
-              "set in their ways", "elderly", "senior", "retirement", "dinosaur"]
+              "set in their ways", "elderly worker", "senior moment", "retirement age", "dinosaur",
+              "too old", "over the hill", "past their prime", "ancient", "geriatric"]
 }
 
 DISABILITY_BIAS_WORDS = {
@@ -124,11 +141,20 @@ def detect_gender_bias(text_lower: str) -> List[Dict[str, Any]]:
         for word in words:
             if find_word_in_text(text_lower, word) != -1:
                 pos = find_word_in_text(text_lower, word)
+                
+                # Determine severity and explanation based on category
+                if category == "gendered_titles":
+                    severity = "high"
+                    explanation = f"'{word}' is gendered language. Use gender-neutral alternatives instead."
+                else:
+                    severity = "medium"
+                    explanation = f"'{word}' may reinforce gender stereotypes associated with {category.replace('_', ' ')}"
+                
                 issues.append({
                     "word": word,
                     "bias_type": "gender",
-                    "severity": "medium",
-                    "explanation": f"'{word}' may reinforce gender stereotypes associated with {category} traits",
+                    "severity": severity,
+                    "explanation": explanation,
                     "position": pos
                 })
     return issues
