@@ -37,19 +37,23 @@ export default async function handler(req, res) {
       }
 
       if (req.method === 'POST') {
-        const { name, email, action } = req.body;
-
-        if (!name || !email) {
-          await prisma.$disconnect();
-          return res.status(400).json({ error: 'Name and email are required' });
-        }
+        const { name, email, action, plan_type } = req.body;
 
         if (action === 'revoke') {
+          if (!email) {
+            await prisma.$disconnect();
+            return res.status(400).json({ error: 'Email is required for revoke action' });
+          }
           const deleted = await prisma.organization.delete({
             where: { email }
           });
           await prisma.$disconnect();
           return res.json({ success: true, message: 'API key revoked', organization: deleted });
+        }
+
+        if (!name || !email) {
+          await prisma.$disconnect();
+          return res.status(400).json({ error: 'Name and email are required' });
         }
 
         const existingOrg = await prisma.organization.findUnique({
@@ -63,13 +67,24 @@ export default async function handler(req, res) {
 
         const { randomBytes } = await import('crypto');
         const apiKey = 'bdr_' + randomBytes(32).toString('hex');
+        
+        const planTypeValue = plan_type || 'free';
+        const isPaid = planTypeValue === 'paid';
+        
+        const now = new Date();
+        const demoExpiresAt = planTypeValue === 'demo' 
+          ? new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000)
+          : null;
+        
         const organization = await prisma.organization.create({
           data: {
             name,
             email,
             api_key: apiKey,
-            is_paid: false,
-            requests_made: 0
+            is_paid: isPaid,
+            plan_type: planTypeValue,
+            requests_made: 0,
+            demo_expires_at: demoExpiresAt
           }
         });
 
@@ -78,16 +93,39 @@ export default async function handler(req, res) {
       }
 
       if (req.method === 'PATCH') {
-        const { email, is_paid } = req.body;
+        const { email, is_paid, plan_type } = req.body;
 
-        if (!email || typeof is_paid !== 'boolean') {
+        if (!email) {
           await prisma.$disconnect();
-          return res.status(400).json({ error: 'Email and is_paid (boolean) are required' });
+          return res.status(400).json({ error: 'Email is required' });
+        }
+
+        const updateData = {};
+        
+        if (plan_type !== undefined) {
+          updateData.plan_type = plan_type;
+          updateData.is_paid = plan_type === 'paid';
+          
+          if (plan_type === 'paid') {
+            updateData.demo_expires_at = null;
+          }
+        } else if (typeof is_paid === 'boolean') {
+          updateData.is_paid = is_paid;
+          updateData.plan_type = is_paid ? 'paid' : 'free';
+          
+          if (is_paid) {
+            updateData.demo_expires_at = null;
+          }
+        }
+
+        if (Object.keys(updateData).length === 0) {
+          await prisma.$disconnect();
+          return res.status(400).json({ error: 'Either is_paid or plan_type must be provided' });
         }
 
         const updated = await prisma.organization.update({
           where: { email },
-          data: { is_paid }
+          data: updateData
         });
 
         await prisma.$disconnect();

@@ -8,12 +8,14 @@ generator client {
 }
 
 model Organization {
-  id            String   @id @default(uuid())
-  name          String
-  email         String   @unique
-  is_paid       Boolean  @default(false)
-  api_key       String   @unique
-  requests_made Int      @default(0)
-  last_reset    DateTime @default(now())
-  created_at    DateTime @default(now())
+  id              String   @id @default(uuid())
+  name            String
+  email           String   @unique
+  is_paid         Boolean  @default(false)
+  plan_type       String   @default("free")
+  api_key         String   @unique
+  requests_made   Int      @default(0)
+  last_reset      DateTime @default(now())
+  created_at      DateTime @default(now())
+  demo_expires_at DateTime?
 }

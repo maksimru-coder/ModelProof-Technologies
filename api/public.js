@@ -34,6 +34,19 @@ export default async function handler(req, res) {
       }
 
       const now = new Date();
+      const planType = org.plan_type || (org.is_paid ? 'paid' : 'free');
+      
+      if (planType === 'demo' && org.demo_expires_at) {
+        if (now > new Date(org.demo_expires_at)) {
+          await prisma.$disconnect();
+          return res.status(403).json({ 
+            error: 'Demo period expired',
+            message: 'Your 5-day demo has expired. Please contact support to upgrade to a paid plan.',
+            expired_at: org.demo_expires_at
+          });
+        }
+      }
+
       const daysSinceReset = (now - new Date(org.last_reset)) / (1000 * 60 * 60 * 24);
       
       if (daysSinceReset >= 1) {
@@ -44,13 +57,18 @@ export default async function handler(req, res) {
         org.requests_made = 0;
       }
 
-      if (!org.is_paid && org.requests_made >= 20) {
+      if (planType !== 'paid' && org.requests_made >= 20) {
+        const planMessage = planType === 'demo' 
+          ? 'Demo accounts are limited to 20 requests per day. Contact support to upgrade.'
+          : 'Free tier limited to 20 requests per day. Upgrade to paid plan for unlimited access.';
+        
         await prisma.$disconnect();
         return res.status(429).json({ 
           error: 'Rate limit exceeded',
-          message: 'Free tier limited to 20 requests per day. Upgrade to paid plan for unlimited access.',
+          message: planMessage,
           requests_made: org.requests_made,
-          limit: 20
+          limit: 20,
+          plan: planType
         });
       }
 

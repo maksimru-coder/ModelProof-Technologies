@@ -11,9 +11,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const organizations = [];
-
-    const html = `
+  const html = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,6 +58,8 @@ export default async function handler(req, res) {
     }
     .badge-free { background: #94a3b8; color: #0f172a; }
     .badge-paid { background: #10b981; color: white; }
+    .badge-demo { background: #f59e0b; color: white; }
+    .badge-expired { background: #ef4444; color: white; }
     .btn {
       padding: 0.5rem 1rem;
       border: none;
@@ -177,6 +177,15 @@ export default async function handler(req, res) {
           <div class="form-hint">Main contact email for this organization</div>
         </div>
         <div class="form-group">
+          <label for="planType">Plan Type *</label>
+          <select id="planType" required style="width: 100%; padding: 0.75rem; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0; font-size: 1rem;">
+            <option value="demo">Demo (20 req/day for 5 days, then auto-expires)</option>
+            <option value="free">Free (20 req/day, no expiration)</option>
+            <option value="paid">Paid (Unlimited, no expiration)</option>
+          </select>
+          <div class="form-hint">Choose the plan type for this organization</div>
+        </div>
+        <div class="form-group">
           <div class="form-hint">✨ API Key will be automatically generated (format: bdr_xxxxx...)</div>
         </div>
         <button type="submit" class="btn-create">Create Organization</button>
@@ -185,15 +194,15 @@ export default async function handler(req, res) {
     
     <div class="stats">
       <div class="stat-card">
-        <div class="stat-value">${organizations.length}</div>
+        <div class="stat-value" id="stat-total">0</div>
         <div class="stat-label">Total Organizations</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">${organizations.filter(o => o.is_paid).length}</div>
+        <div class="stat-value" id="stat-paid">0</div>
         <div class="stat-label">Paid Customers</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">${organizations.reduce((sum, o) => sum + o.requests_made, 0)}</div>
+        <div class="stat-value" id="stat-requests">0</div>
         <div class="stat-label">Total Requests Today</div>
       </div>
     </div>
@@ -207,26 +216,12 @@ export default async function handler(req, res) {
           <th>Plan</th>
           <th>Requests</th>
           <th>Created</th>
+          <th>Expires</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        ${organizations.map(org => `
-          <tr>
-            <td><strong>${org.name}</strong></td>
-            <td>${org.email}</td>
-            <td><span class="api-key">${org.api_key.substring(0, 20)}...</span></td>
-            <td><span class="badge ${org.is_paid ? 'badge-paid' : 'badge-free'}">${org.is_paid ? 'PAID' : 'FREE'}</span></td>
-            <td>${org.requests_made}${org.is_paid ? '' : ' / 20'}</td>
-            <td>${new Date(org.created_at).toLocaleDateString()}</td>
-            <td>
-              <button class="btn ${org.is_paid ? 'btn-downgrade' : 'btn-upgrade'}" onclick="togglePaid('${org.email}', ${!org.is_paid})">
-                ${org.is_paid ? 'Downgrade' : 'Upgrade'}
-              </button>
-              <button class="btn btn-revoke" onclick="revokeKey('${org.email}', '${org.name}')">Revoke</button>
-            </td>
-          </tr>
-        `).join('')}
+        <tr><td colspan="8" style="text-align: center; padding: 2rem; color: #94a3b8;">Loading organizations...</td></tr>
       </tbody>
     </table>
   </div>
@@ -283,32 +278,62 @@ export default async function handler(req, res) {
 
     function renderTable() {
       const tbody = document.querySelector('tbody');
-      tbody.innerHTML = organizations.map(org => \`
-        <tr>
-          <td><strong>\${org.name}</strong></td>
-          <td>\${org.email}</td>
-          <td><span class="api-key">\${org.api_key.substring(0, 20)}...</span></td>
-          <td><span class="badge \${org.is_paid ? 'badge-paid' : 'badge-free'}">\${org.is_paid ? 'PAID' : 'FREE'}</span></td>
-          <td>\${org.requests_made}\${org.is_paid ? '' : ' / 20'}</td>
-          <td>\${new Date(org.created_at).toLocaleDateString()}</td>
-          <td>
-            <button class="btn \${org.is_paid ? 'btn-downgrade' : 'btn-upgrade'}" onclick="togglePaid('\${org.email}', \${!org.is_paid})">
-              \${org.is_paid ? 'Downgrade' : 'Upgrade'}
-            </button>
-            <button class="btn btn-revoke" onclick="revokeKey('\${org.email}', '\${org.name}')">Revoke</button>
-          </td>
-        </tr>
-      \`).join('');
+      
+      if (organizations.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem; color: #94a3b8;">No organizations yet. Create one above!</td></tr>';
+        return;
+      }
+      
+      tbody.innerHTML = organizations.map(org => {
+        const planType = org.plan_type || (org.is_paid ? 'paid' : 'free');
+        const isExpired = org.demo_expires_at && new Date(org.demo_expires_at) < new Date();
+        const daysLeft = org.demo_expires_at ? Math.ceil((new Date(org.demo_expires_at) - new Date()) / (1000 * 60 * 60 * 24)) : null;
+        
+        let badgeClass = 'badge-free';
+        let badgeText = 'FREE';
+        
+        if (isExpired) {
+          badgeClass = 'badge-expired';
+          badgeText = 'EXPIRED';
+        } else if (planType === 'paid') {
+          badgeClass = 'badge-paid';
+          badgeText = 'PAID';
+        } else if (planType === 'demo') {
+          badgeClass = 'badge-demo';
+          badgeText = \`DEMO (\${daysLeft}d left)\`;
+        }
+        
+        const requestsText = planType === 'paid' ? org.requests_made : \`\${org.requests_made} / 20\`;
+        const expiresText = org.demo_expires_at 
+          ? new Date(org.demo_expires_at).toLocaleDateString() 
+          : '—';
+        
+        return \`
+          <tr>
+            <td><strong>\${org.name}</strong></td>
+            <td>\${org.email}</td>
+            <td><span class="api-key">\${org.api_key.substring(0, 20)}...</span></td>
+            <td><span class="badge \${badgeClass}">\${badgeText}</span></td>
+            <td>\${requestsText}</td>
+            <td>\${new Date(org.created_at).toLocaleDateString()}</td>
+            <td>\${expiresText}</td>
+            <td>
+              \${planType !== 'paid' ? \`<button class="btn btn-upgrade" onclick="upgradeToPaid('\${org.email}')">Upgrade to Paid</button>\` : ''}
+              <button class="btn btn-revoke" onclick="revokeKey('\${org.email}', '\${org.name}')">Revoke</button>
+            </td>
+          </tr>
+        \`;
+      }).join('');
     }
 
     function updateStats() {
-      document.querySelector('.stat-value').textContent = organizations.length;
-      document.querySelectorAll('.stat-value')[1].textContent = organizations.filter(o => o.is_paid).length;
-      document.querySelectorAll('.stat-value')[2].textContent = organizations.reduce((sum, o) => sum + o.requests_made, 0);
+      document.getElementById('stat-total').textContent = organizations.length;
+      document.getElementById('stat-paid').textContent = organizations.filter(o => o.plan_type === 'paid' || o.is_paid).length;
+      document.getElementById('stat-requests').textContent = organizations.reduce((sum, o) => sum + o.requests_made, 0);
     }
 
-    async function togglePaid(email, isPaid) {
-      if (!confirm(\`Are you sure you want to \${isPaid ? 'upgrade' : 'downgrade'} this organization?\`)) return;
+    async function upgradeToPaid(email) {
+      if (!confirm('Are you sure you want to upgrade this organization to PAID (unlimited requests)?')) return;
       
       try {
         const res = await fetch('/api/admin', {
@@ -317,11 +342,11 @@ export default async function handler(req, res) {
             'Content-Type': 'application/json',
             'X-Admin-Passcode': passcode
           },
-          body: JSON.stringify({ email, is_paid: isPaid })
+          body: JSON.stringify({ email, plan_type: 'paid' })
         });
 
         if (res.ok) {
-          alert('Organization updated successfully!');
+          alert('✅ Organization upgraded to PAID successfully!');
           await loadOrganizations();
         } else {
           const error = await res.json();
@@ -362,8 +387,9 @@ export default async function handler(req, res) {
       
       const name = document.getElementById('orgName').value.trim();
       const email = document.getElementById('orgEmail').value.trim();
+      const planType = document.getElementById('planType').value;
       
-      if (!name || !email) {
+      if (!name || !email || !planType) {
         alert('Please fill in all required fields');
         return;
       }
@@ -375,13 +401,27 @@ export default async function handler(req, res) {
             'Content-Type': 'application/json',
             'X-Admin-Passcode': passcode
           },
-          body: JSON.stringify({ name, email })
+          body: JSON.stringify({ name, email, plan_type: planType })
         });
 
         const data = await res.json();
 
         if (res.ok) {
-          alert(\`✅ Organization created successfully!\n\nName: \${data.organization.name}\nEmail: \${data.organization.email}\nAPI Key: \${data.organization.api_key}\n\nThe API key has been generated. Share this with the customer.\`);
+          const org = data.organization;
+          let message = \`✅ Organization created successfully!\n\nName: \${org.name}\nEmail: \${org.email}\nPlan: \${planType.toUpperCase()}\nAPI Key: \${org.api_key}\n\`;
+          
+          if (planType === 'demo') {
+            const expiresDate = new Date(org.demo_expires_at).toLocaleDateString();
+            message += \`\n⏰ Demo expires: \${expiresDate} (5 days)\n20 requests/day limit\`;
+          } else if (planType === 'free') {
+            message += \`\n20 requests/day limit (no expiration)\`;
+          } else {
+            message += \`\n✨ Unlimited requests\`;
+          }
+          
+          message += \`\n\nShare the API key with the customer.\`;
+          
+          alert(message);
           document.getElementById('createForm').reset();
           await loadOrganizations();
         } else {
@@ -392,10 +432,10 @@ export default async function handler(req, res) {
       }
     }
 
-    // Force passcode prompt on page load
-    window.addEventListener('DOMContentLoaded', function() {
+    // Force passcode prompt immediately
+    document.addEventListener('DOMContentLoaded', function() {
       console.log('Dashboard loaded, requesting passcode...');
-      loadOrganizations();
+      setTimeout(loadOrganizations, 100);
     });
   </script>
 </body>
