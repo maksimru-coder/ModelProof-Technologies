@@ -104,9 +104,7 @@ export default async function handler(req, res) {
       const sanitizedText = text.trim();
       const action = req.url.includes('/fix') ? 'fix' : 'scan';
       
-      const baseUrl = process.env.VERCEL_URL 
-        ? `https://${process.env.VERCEL_URL}`
-        : 'https://www.modelproof.ai';
+      const baseUrl = 'https://www.modelproof.ai';
       
       const endpoint = action === 'fix' 
         ? `${baseUrl}/api/biasradar/fix`
