@@ -232,11 +232,13 @@ export default async function handler(req, res) {
 
     async function loadOrganizations() {
       if (!passcode) {
-        passcode = prompt('Enter admin passcode:');
-        if (!passcode) {
-          alert('Admin passcode required');
+        passcode = prompt('🔐 Enter Admin Passcode:');
+        if (!passcode || passcode.trim() === '') {
+          alert('⚠️ Admin passcode is required to access the dashboard.');
+          document.body.innerHTML = '<div style="padding: 40px; font-family: sans-serif; text-align: center;"><h1>🔒 Access Denied</h1><p>Admin passcode is required to access this dashboard.</p><p><a href="/api/dashboard" style="color: #00D4FF;">Refresh to try again</a></p></div>';
           return;
         }
+        passcode = passcode.trim();
       }
 
       try {
@@ -432,11 +434,14 @@ export default async function handler(req, res) {
       }
     }
 
-    // Force passcode prompt immediately
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('Dashboard loaded, requesting passcode...');
-      setTimeout(loadOrganizations, 100);
-    });
+    // Execute immediately - prompt for passcode as soon as script runs
+    (function() {
+      console.log('🔐 Dashboard script executing, requesting passcode now...');
+      console.log('Document ready state:', document.readyState);
+      
+      // Prompt immediately
+      loadOrganizations();
+    })();
   </script>
 </body>
 </html>
