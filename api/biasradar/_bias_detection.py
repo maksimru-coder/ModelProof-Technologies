@@ -51,17 +51,31 @@ RACE_BIAS_WORDS = {
 }
 
 AGE_BIAS_WORDS = {
-    "youth": ["energetic", "innovative", "tech-savvy", "fresh", "dynamic", "passionate", 
-              "lazy millennial", "entitled", "snowflake generation", "kids these days"],
-    "older": ["experienced", "traditional", "old-fashioned", "outdated", "slow", "resistant to change",
-              "set in their ways", "elderly worker", "senior moment", "retirement age", "dinosaur",
-              "too old", "over the hill", "past their prime", "ancient", "geriatric"]
+    "youth": ["lazy millennial", "millennials are lazy", "snowflake generation",
+              "young people are lazy", "young people are too entitled", "entitled millennials",
+              "young workers are lazy", "immature millennials", "gen z are lazy", "zoomers are lazy"],
+    "older": ["workers are too old to learn", "employees are too old to learn",
+              "he is too old to learn", "she is too old to learn", "they are too old to learn",
+              "older people are too old to learn",
+              "too old for the job", "older workers are too slow", "older workers cannot learn",
+              "older workers are outdated", "older workers are set in their ways",
+              "elderly cannot learn", "seniors cannot learn", "seniors are too slow",
+              "boomers cannot learn", "boomers are outdated", "out of touch boomer",
+              "employees past their prime", "older employees are slow", "elderly are too slow",
+              "he is too old for", "she is too old for"]
 }
 
 DISABILITY_BIAS_WORDS = {
     "ableist": ["crazy", "insane", "psycho", "lame", "dumb", "blind to", "deaf to", 
                 "crippled", "handicapped", "retarded", "stupid", "idiotic", "moronic",
-                "wheelchair-bound", "confined to a wheelchair", "suffers from", "victim of"]
+                "wheelchair-bound", "confined to a wheelchair", "suffers from", "victim of",
+                "burden on society", "disabled are a burden", "disabled people are a burden",
+                "disabled cannot contribute", "mentally ill are dangerous", "defective person",
+                "abnormal person", "invalid person", "deformed person",
+                "broken person", "damaged person", "afflicted with disability",
+                "stricken with disability", "plagued by disability",
+                "disabled people cannot contribute", "disabilities make them incapable",
+                "handicapped people are less capable"]
 }
 
 CULTURAL_BIAS_WORDS = {
@@ -153,10 +167,15 @@ IDEOLOGICAL_NEUTRALITY_WORDS = {
     "dismissive_framing": ["so-called experts", "so-called science",
                            "official narrative", "they want you to believe", "they're lying to you",
                            "don't be fooled", "wake up people", "open your eyes people",
-                           "do your own research", "question everything they say"],
+                           "do your own research", "question everything they say",
+                           "anyone who disagrees with", "anyone who thinks differently",
+                           "people who disagree are", "disagrees with my", "my political views",
+                           "views is an idiot", "are idiots", "you're an idiot if",
+                           "idiots who disagree", "stupid people who think"],
     "absolutist_framing": ["the only solution", "the real problem", "what's really happening",
                            "the real agenda", "the hidden truth", "what they won't tell you",
-                           "the actual facts", "the only answer"]
+                           "the actual facts", "the only answer", "the truth is obvious",
+                           "clearly wrong about", "obviously stupid to", "totally ignorant of"]
 }
 
 LANGUAGE_TONE_WORDS = {
