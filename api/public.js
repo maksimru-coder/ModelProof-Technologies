@@ -106,7 +106,7 @@ export default async function handler(req, res) {
       
       const baseUrl = process.env.VERCEL_URL 
         ? `https://${process.env.VERCEL_URL}`
-        : 'https://modelproof.ai';
+        : 'https://www.modelproof.ai';
       
       const endpoint = action === 'fix' 
         ? `${baseUrl}/api/biasradar/fix`
