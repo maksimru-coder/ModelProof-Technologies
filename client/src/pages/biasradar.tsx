@@ -799,7 +799,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">Multi-Category Bias Detection</h3>
                 <p className="text-muted-foreground">
-                  Identifies bias across 13 dimensions: gender, race, age, disability, culture, political/ideological, religion, sexual orientation, socioeconomic status, intersectional, truth-seeking, ideological neutrality, and language & tone.
+                  Detect bias across 13 dimensions: gender, race, age, disability, culture, political/ideological, religion, sexual orientation, socioeconomic status, intersectional, truth-seeking, ideological neutrality, and language & tone.
                 </p>
               </motion.div>
               <motion.div
@@ -810,7 +810,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">Real-Time Analysis</h3>
                 <p className="text-muted-foreground">
-                  Get instant feedback with detailed explanations, risk scores, and visual heatmaps highlighting biased language.
+                  Instantly receive detailed bias insights, risk scores, and visual heatmaps highlighting problematic language.
                 </p>
               </motion.div>
               <motion.div
@@ -821,7 +821,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">AI-Powered Text Fixing</h3>
                 <p className="text-muted-foreground">
-                  Automatically rewrite content to remove bias while preserving tone, intent, and meaning.
+                  Automatically rewrite content to remove bias while preserving tone, context, and meaning.
                 </p>
               </motion.div>
               <motion.div
@@ -832,7 +832,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">API Integration (Pro)</h3>
                 <p className="text-muted-foreground">
-                  Embed BiasRadar into your apps, CMS, or compliance tools with secure API access for automated, scalable bias audits.
+                  Embed BiasRadar into internal apps, CMS platforms, or compliance tools with secure API access for automated, scalable bias audits.
                 </p>
               </motion.div>
               <motion.div
@@ -843,7 +843,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">Document Upload Support</h3>
                 <p className="text-muted-foreground">
-                  Upload PDFs, Word docs, and text files for full-document bias scanning — no copy-paste needed.
+                  Upload and analyze PDFs, Word documents, and text files for full-document scanning — no copy-paste needed.
                 </p>
               </motion.div>
               <motion.div
@@ -854,7 +854,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">Compliance Ready</h3>
                 <p className="text-muted-foreground">
-                  Aligns with US state bias audit laws, NIST AI RMF, and federal neutrality mandates — ideal for regulated industries and government use.
+                  Aligned with U.S. bias audit laws, NIST AI RMF, and federal neutrality mandates — built for regulated industries and government use.
                 </p>
               </motion.div>
             </div>
