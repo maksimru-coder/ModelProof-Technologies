@@ -169,7 +169,8 @@ export default async function handler(req, res) {
       }
 
       try {
-        const res = await fetch('/api/admin/organizations', {
+        const res = await fetch('/api/admin', {
+          method: 'GET',
           headers: {
             'X-Admin-Passcode': passcode
           }
@@ -224,7 +225,7 @@ export default async function handler(req, res) {
       if (!confirm(\`Are you sure you want to \${isPaid ? 'upgrade' : 'downgrade'} this organization?\`)) return;
       
       try {
-        const res = await fetch('/api/v1/upgrade', {
+        const res = await fetch('/api/admin', {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -249,13 +250,13 @@ export default async function handler(req, res) {
       if (!confirm(\`Are you sure you want to REVOKE the API key for \${name}? This action cannot be undone.\`)) return;
       
       try {
-        const res = await fetch('/api/v1/revoke', {
+        const res = await fetch('/api/admin', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'X-Admin-Passcode': passcode
           },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({ email, name, action: 'revoke' })
         });
 
         if (res.ok) {
