@@ -7,23 +7,9 @@ from datetime import datetime
 sys.path.append(os.path.dirname(__file__))
 
 try:
-    from _bias_detection import (
-        detect_gender_bias, detect_race_bias, detect_age_bias,
-        detect_disability_bias, detect_cultural_bias, detect_political_bias,
-        detect_religion_bias, detect_lgbtq_bias, detect_socioeconomic_bias,
-        detect_truth_seeking_bias, detect_ideological_neutrality_bias,
-        detect_language_tone_bias, detect_intersectional_bias, 
-        calculate_bias_score, get_severity_label, create_heatmap
-    )
+    from _bias_detection import hybrid_detect_bias
 except ImportError:
-    from api.biasradar._bias_detection import (
-        detect_gender_bias, detect_race_bias, detect_age_bias,
-        detect_disability_bias, detect_cultural_bias, detect_political_bias,
-        detect_religion_bias, detect_lgbtq_bias, detect_socioeconomic_bias,
-        detect_truth_seeking_bias, detect_ideological_neutrality_bias,
-        detect_language_tone_bias, detect_intersectional_bias,
-        calculate_bias_score, get_severity_label, create_heatmap
-    )
+    from api.biasradar._bias_detection import hybrid_detect_bias
 
 
 class handler(BaseHTTPRequestHandler):
@@ -40,14 +26,11 @@ class handler(BaseHTTPRequestHandler):
             data = json.loads(body.decode('utf-8'))
             
             text = data.get('text', '')
-            bias_types = data.get('bias_types', [
-                "gender", "race", "age", "disability", "lgbtq", "religion",
-                "socioeconomic", "culture", "intersectional", "political",
-                "ideological_neutrality", "language_tone", "truth_seeking"
-            ])
+            enable_ai = data.get('enable_ai', False)  # Feature flag for OpenAI validation
             
             # Log the scan request
-            print(f"[BIASRADAR SCAN v2] {timestamp} | IP: {ip_address} | User-Agent: {user_agent} | Text Length: {len(text)} chars | Bias Types: {', '.join(bias_types)}")
+            detection_mode = "AI-Enhanced" if enable_ai else "Standard (Pattern-Enhanced)"
+            print(f"[BIASRADAR SCAN v3 HYBRID] {timestamp} | IP: {ip_address} | Mode: {detection_mode} | Text Length: {len(text)} chars")
             
             # Validation
             if not text or len(text.strip()) == 0:
@@ -58,64 +41,16 @@ class handler(BaseHTTPRequestHandler):
                 self.send_error(400, "Text too long. Maximum 10,000 characters.")
                 return
             
-            # Process text
-            text_lower = text.lower()
-            
-            all_issues = []
-            
-            # Detect biases based on requested types
-            if "gender" in bias_types:
-                all_issues.extend(detect_gender_bias(text_lower))
-            
-            if "race" in bias_types:
-                all_issues.extend(detect_race_bias(text_lower))
-            
-            if "age" in bias_types:
-                all_issues.extend(detect_age_bias(text_lower))
-            
-            if "disability" in bias_types:
-                all_issues.extend(detect_disability_bias(text_lower))
-            
-            if "culture" in bias_types:
-                all_issues.extend(detect_cultural_bias(text_lower))
-            
-            if "political" in bias_types:
-                all_issues.extend(detect_political_bias(text_lower))
-            
-            if "religion" in bias_types:
-                all_issues.extend(detect_religion_bias(text_lower))
-            
-            if "lgbtq" in bias_types:
-                all_issues.extend(detect_lgbtq_bias(text_lower))
-            
-            if "socioeconomic" in bias_types:
-                all_issues.extend(detect_socioeconomic_bias(text_lower))
-            
-            if "truth_seeking" in bias_types:
-                all_issues.extend(detect_truth_seeking_bias(text_lower))
-            
-            if "ideological_neutrality" in bias_types:
-                all_issues.extend(detect_ideological_neutrality_bias(text_lower))
-            
-            if "language_tone" in bias_types:
-                all_issues.extend(detect_language_tone_bias(text_lower))
-            
-            # Detect intersectional bias if requested
-            if "intersectional" in bias_types and len(all_issues) > 1:
-                all_issues.extend(detect_intersectional_bias(all_issues))
-            
-            # Calculate results
-            score = calculate_bias_score(all_issues)
-            severity = get_severity_label(score)
-            heatmap = create_heatmap(text, all_issues)
+            # Use hybrid detection system
+            result = hybrid_detect_bias(text, enable_ai=enable_ai)
             
             # Create summary
             bias_type_counts = {}
-            for issue in all_issues:
+            for issue in result["issues"]:
                 bias_type_counts[issue["bias_type"]] = bias_type_counts.get(issue["bias_type"], 0) + 1
             
-            if all_issues:
-                summary = f"Found {len(all_issues)} potential bias issue(s): " + ", ".join(
+            if result["issues"]:
+                summary = f"Found {len(result['issues'])} potential bias issue(s): " + ", ".join(
                     f"{count} {bias_type}" for bias_type, count in bias_type_counts.items()
                 )
             else:
@@ -123,11 +58,12 @@ class handler(BaseHTTPRequestHandler):
             
             # Send response
             response = {
-                "score": score,
-                "severity": severity,
-                "issues": all_issues,
-                "heatmap": heatmap,
-                "summary": summary
+                "score": result["score"],
+                "severity": result["severity"],
+                "issues": result["issues"],
+                "heatmap": result["heatmap"],
+                "summary": summary,
+                "detection_method": result["detection_method"]
             }
             
             self.send_response(200)
