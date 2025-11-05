@@ -18,7 +18,7 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Missing or invalid Authorization header' });
     }
 
-    const apiKey = authHeader.replace('Bearer ', '');
+    const apiKey = authHeader.replace('Bearer ', '').trim();
     
     const { PrismaClient } = await import('@prisma/client');
     const prisma = new PrismaClient();
@@ -30,7 +30,13 @@ export default async function handler(req, res) {
 
       if (!org) {
         await prisma.$disconnect();
-        return res.status(401).json({ error: 'Invalid API key' });
+        return res.status(401).json({ 
+          error: 'Invalid API key',
+          debug: {
+            api_key_length: apiKey.length,
+            api_key_prefix: apiKey.substring(0, 10)
+          }
+        });
       }
 
       const now = new Date();
