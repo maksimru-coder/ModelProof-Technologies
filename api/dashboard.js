@@ -101,11 +101,87 @@ export default async function handler(req, res) {
       color: #94a3b8;
       margin-top: 0.5rem;
     }
+    .create-form {
+      background: #1e293b;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      border: 2px solid #00D4FF;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #e2e8f0;
+      font-weight: 500;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: #e2e8f0;
+      font-size: 1rem;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #00D4FF;
+    }
+    .btn-create {
+      background: #00D4FF;
+      color: #0f172a;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-create:hover {
+      opacity: 0.9;
+    }
+    .btn-create:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .form-hint {
+      color: #94a3b8;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    h2 {
+      color: #00D4FF;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🎯 BiasRadar API Admin Dashboard</h1>
+    
+    <div class="create-form">
+      <h2>➕ Create New Organization</h2>
+      <form id="createForm" onsubmit="createOrganization(event)">
+        <div class="form-group">
+          <label for="orgName">Organization Name *</label>
+          <input type="text" id="orgName" required placeholder="e.g., Acme Corporation">
+          <div class="form-hint">The company or organization name</div>
+        </div>
+        <div class="form-group">
+          <label for="orgEmail">Contact Email *</label>
+          <input type="email" id="orgEmail" required placeholder="e.g., contact@acme.com">
+          <div class="form-hint">Main contact email for this organization</div>
+        </div>
+        <div class="form-group">
+          <div class="form-hint">✨ API Key will be automatically generated (format: bdr_xxxxx...)</div>
+        </div>
+        <button type="submit" class="btn-create">Create Organization</button>
+      </form>
+    </div>
     
     <div class="stats">
       <div class="stat-card">
@@ -281,7 +357,46 @@ export default async function handler(req, res) {
       }
     }
 
-    loadOrganizations();
+    async function createOrganization(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('orgName').value.trim();
+      const email = document.getElementById('orgEmail').value.trim();
+      
+      if (!name || !email) {
+        alert('Please fill in all required fields');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/admin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Passcode': passcode
+          },
+          body: JSON.stringify({ name, email })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert(\`✅ Organization created successfully!\n\nName: \${data.organization.name}\nEmail: \${data.organization.email}\nAPI Key: \${data.organization.api_key}\n\nThe API key has been generated. Share this with the customer.\`);
+          document.getElementById('createForm').reset();
+          await loadOrganizations();
+        } else {
+          alert('Error: ' + (data.error || 'Failed to create organization'));
+        }
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    // Force passcode prompt on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      console.log('Dashboard loaded, requesting passcode...');
+      loadOrganizations();
+    });
   </script>
 </body>
 </html>
