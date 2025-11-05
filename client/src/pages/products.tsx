@@ -62,9 +62,15 @@ export default function Products() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="mb-6 text-muted-foreground">
-                Detect, analyze, and fix bias in text, documents, and datasets across gender, race, age, disability, culture, and more. With real-time analysis, document uploads, and API integration, ensure neutral, compliant AI outputs, content, and operations aligned with current regulations—enabling any company to stay bias-free and neutral across all business aspects.
-              </p>
+              <div className="mb-6 text-muted-foreground space-y-3">
+                <p>
+                  BiasRadar™ identifies and corrects potential bias across gender, race, age, disability, culture, and more — in real time.
+                  Upload documents, analyze datasets, or integrate the BiasRadar API for automated bias detection and mitigation.
+                </p>
+                <p>
+                  Ensure your AI models, content, and operations remain fair, compliant, and neutral with evolving regulations — helping your organization maintain ethical transparency and trust at every level.
+                </p>
+              </div>
               <div className="flex justify-center">
                 <Link href="/biasradar">
                   <Button 

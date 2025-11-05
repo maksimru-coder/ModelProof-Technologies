@@ -457,7 +457,7 @@ export default function BiasRadar() {
               AI Bias Detection Tool by ModelProof Technologies
             </p>
             <p className="text-lg mb-10 text-white/80 max-w-3xl mx-auto">
-              Analyze your text or document for bias across multiple categories — gender, race, age, disability, culture, and more. Detect, analyze, and fix biases to ensure your content, AI outputs, communications, and business operations are fair, neutral, bias-free, and compliant with ethical standards and current regulations—empowering any company to maintain neutrality and fairness across all operations.
+              Analyze text or documents for bias across gender, race, age, disability, culture, and more. Detect, analyze, and fix biases to ensure your content, AI outputs, and communications remain fair, neutral, and compliant with ethical standards and emerging regulations—empowering organizations to maintain transparency and trust in all operations.
             </p>
             <Button 
               size="lg"

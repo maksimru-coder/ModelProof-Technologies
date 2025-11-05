@@ -50,11 +50,20 @@ export function ProductsOverview() {
                   </IconWrapper>
                 </div>
                 <div>
-                  <CardTitle className="text-xl mb-2">BiasRadar™ — Bias Detection for Responsible AI</CardTitle>
-                  <p className="text-lg font-medium text-primary/80">AI Bias Detection Engine</p>
+                  <CardTitle className="text-xl mb-2">BiasRadar™ — AI Bias Detection Engine</CardTitle>
+                  <p className="text-lg font-medium text-primary/80">Now available via API and Web Dashboard</p>
                 </div>
-                <CardDescription className="text-sm text-muted-foreground">
-                  Scan text or documents for potential bias across gender, race, age, disability, culture, and more. Detect, analyze, and fix biases to ensure your AI systems, communications, content, and operations remain fair, neutral, bias-free, and compliant with current regulations—ideal for any company prioritizing neutrality and fairness in all aspects of business.
+                <CardDescription className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="mb-3">
+                    Detect, analyze, and fix bias across gender, race, age, disability, culture, and more.
+                    BiasRadar™ empowers organizations to ensure their AI systems, content, and communications remain fair, neutral, and compliant with emerging regulations.
+                  </p>
+                  <p>
+                    Use the web dashboard to scan text or documents manually, or integrate the BiasRadar API directly into your workflows for automated, real-time bias analysis and remediation.
+                  </p>
+                  <p className="mt-3 font-medium">
+                    Ideal for companies, researchers, government agencies, and anyone committed to responsible AI and ethical transparency.
+                  </p>
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto pt-6">
