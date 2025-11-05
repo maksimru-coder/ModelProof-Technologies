@@ -72,6 +72,7 @@ export default async function handler(req, res) {
     .btn-upgrade { background: #10b981; color: white; }
     .btn-downgrade { background: #f59e0b; color: white; }
     .btn-revoke { background: #ef4444; color: white; }
+    .btn-copy { background: #3b82f6; color: white; font-size: 0.875rem; padding: 0.35rem 0.75rem; margin-left: 0.5rem; }
     .btn:hover { opacity: 0.8; }
     .api-key {
       font-family: monospace;
@@ -314,7 +315,10 @@ export default async function handler(req, res) {
           <tr>
             <td><strong>\${org.name}</strong></td>
             <td>\${org.email}</td>
-            <td><span class="api-key">\${org.api_key.substring(0, 20)}...</span></td>
+            <td>
+              <span class="api-key">\${org.api_key.substring(0, 20)}...</span>
+              <button class="btn btn-copy" onclick="copyApiKey('\${org.api_key}')" title="Copy full API key">📋 Copy</button>
+            </td>
             <td><span class="badge \${badgeClass}">\${badgeText}</span></td>
             <td>\${requestsText}</td>
             <td>\${new Date(org.created_at).toLocaleDateString()}</td>
@@ -332,6 +336,20 @@ export default async function handler(req, res) {
       document.getElementById('stat-total').textContent = organizations.length;
       document.getElementById('stat-paid').textContent = organizations.filter(o => o.plan_type === 'paid' || o.is_paid).length;
       document.getElementById('stat-requests').textContent = organizations.reduce((sum, o) => sum + o.requests_made, 0);
+    }
+
+    function copyApiKey(apiKey) {
+      navigator.clipboard.writeText(apiKey).then(() => {
+        alert('✅ API key copied to clipboard!\n\n' + apiKey);
+      }).catch(err => {
+        const textarea = document.createElement('textarea');
+        textarea.value = apiKey;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('✅ API key copied to clipboard!\n\n' + apiKey);
+      });
     }
 
     async function upgradeToPaid(email) {
