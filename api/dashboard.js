@@ -340,7 +340,7 @@ export default async function handler(req, res) {
 
     function copyApiKey(apiKey) {
       navigator.clipboard.writeText(apiKey).then(() => {
-        alert('✅ API key copied to clipboard!\n\n' + apiKey);
+        alert('✅ API key copied to clipboard! ' + apiKey);
       }).catch(err => {
         const textarea = document.createElement('textarea');
         textarea.value = apiKey;
@@ -348,7 +348,7 @@ export default async function handler(req, res) {
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-        alert('✅ API key copied to clipboard!\n\n' + apiKey);
+        alert('✅ API key copied to clipboard! ' + apiKey);
       });
     }
 
