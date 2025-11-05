@@ -38,7 +38,15 @@ RACE_BIAS_WORDS = {
                     "well-spoken", "eloquent", "clean-cut", "uppity", "colored", "negro",
                     "illegal alien", "illegal immigrant", "illegals", "aliens",
                     "foreigner", "foreign-looking", "un-american", "go back to",
-                    "you people", "those people", "culturally backward", "third world"]
+                    "you people", "those people", "culturally backward", "third world"],
+    "stereotypes": ["naturally good at math", "good at math", "bad drivers", "poor drivers",
+                    "super predator", "welfare queen", "anchor baby", "model minority",
+                    "lazy mexicans", "criminal blacks", "terrorist arabs", "sneaky asians",
+                    "all asians", "all blacks", "all whites", "all hispanics", "all latinos",
+                    "blacks are", "asians are", "whites are", "hispanics are", "latinos are"],
+    "coded_language": ["chicago", "detroit", "baltimore", "urban youth", "inner city youth",
+                       "gang member", "gangbanger", "hood rat", "welfare recipient",
+                       "diversity hire", "quota hire", "affirmative action hire"]
 }
 
 AGE_BIAS_WORDS = {
@@ -67,14 +75,29 @@ POLITICAL_BIAS_WORDS = {
                  "virtue signaling", "cancel culture", "indoctrination", "brainwashed", "sheeple",
                  "fake news", "mainstream media", "deep state", "communist", "socialist agenda"],
     "ideological": ["obviously", "clearly", "everyone knows", "common sense", "natural law",
-                    "traditional values", "family values", "real american", "patriotic"]
+                    "traditional values", "family values", "real american", "patriotic"],
+    "extremist_labels": ["libtards", "conservatards", "trumptards", "democrats want", "republicans want",
+                         "liberals are", "conservatives are", "the left wants to destroy",
+                         "right-wing extremist", "left-wing extremist", "communist plot",
+                         "socialist takeover", "fascist", "nazi", "marxist", "domestic terrorist"],
+    "partisan_framing": ["radical left agenda", "conservative patriots", "liberal elite",
+                         "maga patriots", "antifa thugs", "proud boys", "woke mob",
+                         "liberal media bias", "conservative propaganda", "leftist narrative"]
 }
 
 RELIGION_BIAS_WORDS = {
     "problematic": ["infidel", "heathen", "godless", "pagan", "cult", "radical islam", 
                     "fundamentalist", "extremist", "judeo-christian", "christian nation",
                     "backwards religion", "primitive beliefs", "superstitious", "jihadist",
-                    "crusade", "holy war", "religious fanatic"]
+                    "crusade", "holy war", "religious fanatic"],
+    "stereotypes": ["all muslims", "all christians", "all jews", "all hindus", "all buddhists",
+                    "all atheists", "muslims are", "christians are", "jews are", "hindus are",
+                    "atheists are", "islamist", "terrorist religion", "false prophet",
+                    "muslim extremist", "islamic terrorist", "christian fanatic", "jewish conspiracy"],
+    "discriminatory": ["sharia law", "jihad", "muslim ban", "christianize", "islamization",
+                       "religious indoctrination", "brainwashed by religion", "religion of peace",
+                       "crusader", "zionist conspiracy", "atheist agenda", "godless communists",
+                       "immoral atheists", "heathen practices", "pagan rituals", "devil worship"]
 }
 
 LGBTQ_BIAS_WORDS = {
@@ -89,7 +112,14 @@ SOCIOECONOMIC_BIAS_WORDS = {
     "class_based": ["low class", "welfare queen", "trailer trash", "ghetto", "hood", "inner-city",
                     "underprivileged", "disadvantaged", "less fortunate", "poor people",
                     "uneducated", "blue collar", "working class", "elitist", "privileged",
-                    "trust fund baby", "silver spoon", "entitled", "lazy poor"]
+                    "trust fund baby", "silver spoon", "entitled", "lazy poor"],
+    "stereotypes": ["poor people are lazy", "poor are lazy", "rich deserve", "wealthy deserve",
+                    "poverty is a choice", "just work harder", "pull yourself up",
+                    "bootstraps", "handout", "freeloader", "moocher", "taker",
+                    "welfare dependent", "living off government", "government cheese"],
+    "dehumanizing": ["low-income people", "the poors", "peasant", "pleb", "redneck",
+                     "white trash", "hillbilly", "country bumpkin", "unwashed masses",
+                     "nouveau riche", "old money", "new money", "social climber"]
 }
 
 TRUTH_SEEKING_WORDS = {
@@ -99,7 +129,16 @@ TRUTH_SEEKING_WORDS = {
                         "indisputable fact", "beyond question", "absolute truth", "undeniable fact"],
     "overgeneralization": ["always wrong", "never works", "nobody believes",
                            "100% guaranteed", "completely impossible", "totally false",
-                           "entirely untrue", "perfectly clear that", "obviously true", "obviously false"]
+                           "entirely untrue", "perfectly clear that", "obviously true", "obviously false"],
+    "misinformation_claims": ["vaccines cause autism", "climate change is a hoax", "climate hoax",
+                              "flat earth", "moon landing was faked", "5g causes cancer",
+                              "covid is a hoax", "microchips in vaccines", "covid vaccine kills",
+                              "election was stolen", "deep state conspiracy", "qanon",
+                              "chemtrails", "fluoride mind control", "reptilian", "illuminati controls"],
+    "conspiracy_language": ["wake up sheeple", "they don't want you to know", "the truth they hide",
+                            "mainstream media lies", "fake science", "government coverup",
+                            "big pharma conspiracy", "follow the money", "do your own research",
+                            "question everything", "don't trust the science", "alternative facts"]
 }
 
 IDEOLOGICAL_NEUTRALITY_WORDS = {
@@ -518,3 +557,204 @@ def create_heatmap(text: str, issues: List[Dict[str, Any]]) -> List[Dict[str, An
         current_pos = word_end
     
     return heatmap
+
+
+# ========================================
+# ADVANCED PATTERN MATCHING & AI VALIDATION
+# ========================================
+
+def detect_stereotype_patterns(text_lower: str) -> List[Dict[str, Any]]:
+    """
+    Detect bias patterns like "All [GROUP] are [NEGATIVE]"
+    This catches context-dependent stereotypes that word lists miss
+    """
+    issues = []
+    
+    # Pattern 1: "All [GROUP] are/is [ATTRIBUTE]"
+    group_patterns = [
+        r'\ball (muslims?|christians?|jews?|hindus?|buddhists?|atheists?)',
+        r'\ball (asians?|blacks?|whites?|latinos?|hispanics?|arabs?)',
+        r'\ball (men|women|males?|females?)',
+        r'\ball (gay|lesbian|transgender|lgbtq)',
+        r'\ball (poor|rich|wealthy) (people|person)',
+        r'\ball (young|old|elderly) (people|person)',
+        r'\ball (disabled|handicapped) (people|person)',
+    ]
+    
+    for pattern in group_patterns:
+        matches = re.finditer(pattern, text_lower)
+        for match in matches:
+            # Check if followed by "are" or "is"
+            rest_of_sentence = text_lower[match.end():match.end()+100]
+            if rest_of_sentence.strip().startswith(('are', 'is')):
+                issues.append({
+                    "word": match.group(),
+                    "bias_type": "pattern_stereotype",
+                    "severity": "high",
+                    "explanation": f"Stereotype pattern detected: '{match.group()}' - sweeping generalization about a group",
+                    "position": match.start()
+                })
+    
+    # Pattern 2: "[GROUP] are naturally/inherently/always [ATTRIBUTE]"
+    inherent_patterns = [
+        r'(asians?|blacks?|whites?|latinos?|hispanics?) (are )?naturally',
+        r'(asians?|blacks?|whites?|latinos?|hispanics?) (are )?inherently',
+        r'(asians?|blacks?|whites?|latinos?|hispanics?) (are )?always',
+        r'(men|women|males?|females?) (are )?naturally',
+        r'(poor|rich) (people )?(are )?naturally',
+    ]
+    
+    for pattern in inherent_patterns:
+        matches = re.finditer(pattern, text_lower)
+        for match in matches:
+            issues.append({
+                "word": match.group(),
+                "bias_type": "pattern_stereotype",
+                "severity": "high",
+                "explanation": f"Essentialist stereotype detected: '{match.group()}' - attributes inherent characteristics to a group",
+                "position": match.start()
+            })
+    
+    return issues
+
+
+def validate_with_openai(text: str, enable_ai: bool = False) -> List[Dict[str, Any]]:
+    """
+    Use OpenAI GPT-5 to validate complex biases that manual detection misses
+    Only runs if enable_ai flag is True (cost control)
+    """
+    if not enable_ai:
+        return []
+    
+    try:
+        import os
+        from openai import OpenAI
+        
+        AI_INTEGRATIONS_OPENAI_API_KEY = os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY")
+        AI_INTEGRATIONS_OPENAI_BASE_URL = os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL")
+        
+        if not AI_INTEGRATIONS_OPENAI_API_KEY or not AI_INTEGRATIONS_OPENAI_BASE_URL:
+            return []
+        
+        # the newest OpenAI model is "gpt-5" which was released August 7, 2025.
+        # do not change this unless explicitly requested by the user
+        client = OpenAI(
+            api_key=AI_INTEGRATIONS_OPENAI_API_KEY,
+            base_url=AI_INTEGRATIONS_OPENAI_BASE_URL
+        )
+        
+        prompt = f"""Analyze the following text for bias across these dimensions:
+1. Gender bias
+2. Racial/ethnic bias
+3. Age bias
+4. Disability bias (ableism)
+5. Cultural bias
+6. Political bias
+7. Religious bias
+8. LGBTQ+ bias
+9. Socioeconomic bias
+10. Truth-seeking (misinformation, unsubstantiated claims)
+11. Ideological neutrality
+12. Language & tone (hate speech, profanity)
+
+Text to analyze:
+"{text}"
+
+Return ONLY biased phrases/words found. For each bias found, respond in JSON format:
+{{
+  "biases": [
+    {{
+      "word": "exact phrase",
+      "bias_type": "category",
+      "severity": "low|medium|high",
+      "explanation": "brief explanation"
+    }}
+  ]
+}}
+
+If no bias detected, return {{"biases": []}}"""
+        
+        response = client.chat.completions.create(
+            model="gpt-5-mini",  # Use mini for cost efficiency
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"},
+            max_completion_tokens=1000,
+            temperature=0.3  # Low temperature for consistency
+        )
+        
+        import json
+        result = json.loads(response.choices[0].message.content or "{}")
+        biases = result.get("biases", [])
+        
+        # Add position info (rough estimate)
+        for bias in biases:
+            word = bias.get("word", "")
+            bias["position"] = text.lower().find(word.lower()) if word else 0
+        
+        return biases
+        
+    except Exception as e:
+        # Silently fail - don't break the API if OpenAI has issues
+        print(f"OpenAI validation error: {str(e)}")
+        return []
+
+
+def hybrid_detect_bias(text: str, enable_ai: bool = False) -> Dict[str, Any]:
+    """
+    Hybrid bias detection combining:
+    1. Manual word lists (fast, reliable)
+    2. Pattern matching (catches stereotypes)
+    3. OpenAI validation (optional, for complex cases)
+    
+    Args:
+        text: Text to analyze
+        enable_ai: Whether to use OpenAI for enhanced detection (costs credits)
+    
+    Returns:
+        Complete bias detection results
+    """
+    text_lower = text.lower()
+    
+    # Step 1: Manual word list detection (always runs)
+    all_issues = []
+    all_issues.extend(detect_gender_bias(text_lower))
+    all_issues.extend(detect_race_bias(text_lower))
+    all_issues.extend(detect_age_bias(text_lower))
+    all_issues.extend(detect_disability_bias(text_lower))
+    all_issues.extend(detect_cultural_bias(text_lower))
+    all_issues.extend(detect_political_bias(text_lower))
+    all_issues.extend(detect_religion_bias(text_lower))
+    all_issues.extend(detect_lgbtq_bias(text_lower))
+    all_issues.extend(detect_socioeconomic_bias(text_lower))
+    all_issues.extend(detect_truth_seeking_bias(text_lower))
+    all_issues.extend(detect_ideological_neutrality_bias(text_lower))
+    all_issues.extend(detect_language_tone_bias(text_lower))
+    
+    # Step 2: Pattern matching (always runs - catches stereotypes)
+    all_issues.extend(detect_stereotype_patterns(text_lower))
+    
+    # Step 3: OpenAI validation (optional - only if enable_ai=True)
+    if enable_ai:
+        ai_issues = validate_with_openai(text, enable_ai=True)
+        # Merge AI results, avoiding duplicates
+        existing_words = set(issue.get("word", "").lower() for issue in all_issues)
+        for ai_issue in ai_issues:
+            if ai_issue.get("word", "").lower() not in existing_words:
+                all_issues.append(ai_issue)
+    
+    # Step 4: Detect intersectional bias
+    all_issues.extend(detect_intersectional_bias(all_issues))
+    
+    # Calculate metrics
+    score = calculate_bias_score(all_issues)
+    severity = get_severity_label(score)
+    heatmap = create_heatmap(text, all_issues)
+    
+    return {
+        "score": score,
+        "severity": severity,
+        "issues": all_issues,
+        "issue_count": len(all_issues),
+        "heatmap": heatmap,
+        "detection_method": "hybrid" if enable_ai else "manual_with_patterns"
+    }
