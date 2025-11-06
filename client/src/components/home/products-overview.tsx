@@ -55,13 +55,15 @@ export function ProductsOverview() {
                 </div>
                 <CardDescription className="text-sm text-muted-foreground leading-relaxed">
                   <p className="mb-3">
-                    Detect, analyze, and fix bias across gender, race, age, disability, culture, and more.
-                    BiasRadar™ empowers organizations to ensure their AI systems, content, and communications remain fair, neutral, and compliant with emerging regulations.
+                    Detect, analyze, and fix bias across gender, race, age, disability, culture, and more. BiasRadar™ empowers organizations to ensure their AI systems, content, and communications remain fair, neutral, and compliant with emerging regulations.
                   </p>
-                  <p>
+                  <p className="mb-3">
                     Use the web dashboard to scan text or documents manually, or integrate the BiasRadar API directly into your workflows for automated, real-time bias analysis and remediation.
                   </p>
-                  <p className="mt-3 font-medium">
+                  <p className="mb-3">
+                    Generate professional BiasRadar™ Audit Reports with risk scores, bias categories, and side-by-side original and remediated text — ready for compliance review and documentation.
+                  </p>
+                  <p className="font-medium">
                     Ideal for companies, researchers, government agencies, and anyone committed to responsible AI and ethical transparency.
                   </p>
                 </CardDescription>
