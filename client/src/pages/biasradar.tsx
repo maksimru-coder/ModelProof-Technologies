@@ -503,10 +503,10 @@ export default function BiasRadar() {
             </div>
             <h1 className="text-5xl font-bold mb-6">BiasRadar™</h1>
             <p className="text-2xl mb-8 text-white/90">
-              AI Bias Detection Tool by ModelProof Technologies
+              AI Bias Detection & Audit Tool by ModelProof Technologies
             </p>
             <p className="text-lg mb-10 text-white/80 max-w-3xl mx-auto">
-              Analyze text or documents for bias across gender, race, age, disability, culture, and more. Detect, analyze, and fix biases to ensure your content, AI outputs, and communications remain fair, neutral, and compliant with ethical standards and emerging regulations—empowering organizations to maintain transparency and trust in all operations.
+              Analyze text or entire documents for bias across gender, race, age, disability, culture, and more. BiasRadar™ detects, quantifies, and remediates bias to help organizations ensure their content, AI outputs, and communications remain fair, neutral, and compliant with ethical standards and emerging regulations—empowering teams to maintain transparency, accountability, and trust in every operation.
             </p>
             <Button 
               size="lg"
@@ -870,7 +870,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">Multi-Category Bias Detection</h3>
                 <p className="text-muted-foreground">
-                  Detect bias across 13 dimensions: gender, race, age, disability, culture, political/ideological, religion, sexual orientation, socioeconomic status, intersectional, truth-seeking, ideological neutrality, and language & tone.
+                  Identify and classify bias across 13 dimensions: gender, race, age, disability, culture, political/ideological, religion, sexual orientation, socioeconomic status, intersectional, truth-seeking, ideological neutrality, and language & tone.
                 </p>
               </motion.div>
               <motion.div
@@ -881,7 +881,7 @@ export default function BiasRadar() {
               >
                 <h3 className="text-xl font-semibold mb-3">Real-Time Analysis</h3>
                 <p className="text-muted-foreground">
-                  Instantly receive detailed bias insights, risk scores, and visual heatmaps highlighting problematic language.
+                  Instantly receive bias insights, risk scores, and visual highlights that pinpoint problematic language and quantify severity.
                 </p>
               </motion.div>
               <motion.div
@@ -890,9 +890,9 @@ export default function BiasRadar() {
                 transition={{ delay: 0.6 }}
                 className="p-6 border rounded-lg hover:shadow-md transition-shadow"
               >
-                <h3 className="text-xl font-semibold mb-3">AI-Powered Text Fixing</h3>
+                <h3 className="text-xl font-semibold mb-3">AI-Powered Text Remediation</h3>
                 <p className="text-muted-foreground">
-                  Automatically rewrite content to remove bias while preserving tone, context, and meaning.
+                  Automatically rewrite biased content while preserving context, tone, and intent to ensure fairness and neutrality.
                 </p>
               </motion.div>
               <motion.div
@@ -901,9 +901,9 @@ export default function BiasRadar() {
                 transition={{ delay: 0.7 }}
                 className="p-6 border rounded-lg hover:shadow-md transition-shadow"
               >
-                <h3 className="text-xl font-semibold mb-3">API Integration (Pro)</h3>
+                <h3 className="text-xl font-semibold mb-3">Exportable PDF Audit Reports</h3>
                 <p className="text-muted-foreground">
-                  Embed BiasRadar into internal apps, CMS platforms, or compliance tools with secure API access for automated, scalable bias audits.
+                  Generate professional, timestamped BiasRadar™ Audit Reports complete with risk scores, bias categories, and both the original and remediated text — providing full transparency for compliance, legal review, and organizational fairness reporting.
                 </p>
               </motion.div>
               <motion.div
@@ -912,9 +912,9 @@ export default function BiasRadar() {
                 transition={{ delay: 0.8 }}
                 className="p-6 border rounded-lg hover:shadow-md transition-shadow"
               >
-                <h3 className="text-xl font-semibold mb-3">Document Upload Support</h3>
+                <h3 className="text-xl font-semibold mb-3">API Integration (Pro)</h3>
                 <p className="text-muted-foreground">
-                  Upload and analyze PDFs, Word documents, and text files for full-document scanning — no copy-paste needed.
+                  Embed BiasRadar™ into internal tools, CMS platforms, or compliance workflows using secure API endpoints for scalable, automated bias auditing.
                 </p>
               </motion.div>
               <motion.div
@@ -923,9 +923,20 @@ export default function BiasRadar() {
                 transition={{ delay: 0.9 }}
                 className="p-6 border rounded-lg hover:shadow-md transition-shadow"
               >
+                <h3 className="text-xl font-semibold mb-3">Document Upload Support</h3>
+                <p className="text-muted-foreground">
+                  Upload and analyze PDFs, Word documents, or text files for full-document scanning — no copy-paste required.
+                </p>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.0 }}
+                className="p-6 border rounded-lg hover:shadow-md transition-shadow"
+              >
                 <h3 className="text-xl font-semibold mb-3">Compliance Ready</h3>
                 <p className="text-muted-foreground">
-                  Aligned with U.S. bias audit laws, NIST AI RMF, and federal neutrality mandates — built for regulated industries and government use.
+                  Aligned with U.S. bias audit laws, NIST AI Risk Management Framework (AI RMF), and federal neutrality mandates — purpose-built for regulated industries, enterprise governance, and government use.
                 </p>
               </motion.div>
             </div>
