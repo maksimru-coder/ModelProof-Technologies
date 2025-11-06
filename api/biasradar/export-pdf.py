@@ -92,7 +92,7 @@ class handler(BaseHTTPRequestHandler):
             story.append(Spacer(1, 0.2*inch))
             
             # Metadata
-            story.append(Paragraph(f"<b>UEI:</b> TQ44P9DNYSB3 | ModelProof.ai", subtitle_style))
+            story.append(Paragraph(f"<b>UEI:</b> TQ44P9DNYSB3 | ModelProof Technologies", subtitle_style))
             story.append(Paragraph(f"<b>Timestamp:</b> {timestamp}", subtitle_style))
             story.append(Spacer(1, 0.2*inch))
             
@@ -117,27 +117,40 @@ class handler(BaseHTTPRequestHandler):
                 story.append(Paragraph(f"<b>{len(issues)} BIAS FLAG(S) DETECTED:</b>", section_header_style))
                 story.append(Spacer(1, 0.1*inch))
                 
+                # Create cell style for wrapping text
+                cell_style = ParagraphStyle(
+                    'CellStyle',
+                    parent=styles['Normal'],
+                    fontSize=8,
+                    leading=10
+                )
+                
                 # Create table data for bias flags
                 table_data = [["Category", "Phrase", "Severity", "Explanation"]]
                 for issue in issues[:20]:  # Limit to 20 issues for PDF readability
-                    table_data.append([
-                        issue.get('bias_type', 'Unknown'),
-                        issue.get('word', '')[:30],  # Truncate long phrases
-                        issue.get('severity', 'Low').capitalize(),
-                        issue.get('explanation', '')[:60]  # Truncate long explanations
-                    ])
+                    # Use Paragraph for cells that need text wrapping
+                    category = Paragraph(issue.get('bias_type', 'Unknown'), cell_style)
+                    phrase = Paragraph(issue.get('word', '')[:40], cell_style)  # Truncate long phrases
+                    severity = Paragraph(issue.get('severity', 'Low').capitalize(), cell_style)
+                    explanation = Paragraph(issue.get('explanation', ''), cell_style)  # No truncation, let it wrap
+                    
+                    table_data.append([category, phrase, severity, explanation])
                 
-                # Create table
-                bias_table = Table(table_data, colWidths=[1.2*inch, 1.8*inch, 1*inch, 2.5*inch])
+                # Create table with adjusted column widths
+                bias_table = Table(table_data, colWidths=[1*inch, 1.5*inch, 0.8*inch, 3.2*inch])
                 bias_table.setStyle(TableStyle([
                     ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#0B2447')),
                     ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
                     ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                    ('VALIGN', (0, 0), (-1, -1), 'TOP'),
                     ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
                     ('FONTSIZE', (0, 0), (-1, 0), 9),
-                    ('FONTSIZE', (0, 1), (-1, -1), 8),
                     ('BOTTOMPADDING', (0, 0), (-1, 0), 8),
                     ('TOPPADDING', (0, 0), (-1, 0), 8),
+                    ('LEFTPADDING', (0, 0), (-1, -1), 4),
+                    ('RIGHTPADDING', (0, 0), (-1, -1), 4),
+                    ('TOPPADDING', (0, 1), (-1, -1), 4),
+                    ('BOTTOMPADDING', (0, 1), (-1, -1), 4),
                     ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
                     ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F5F5F5')])
                 ]))
@@ -177,7 +190,8 @@ class handler(BaseHTTPRequestHandler):
                 textColor=colors.HexColor('#666666'),
                 alignment=TA_CENTER
             )
-            story.append(Paragraph("<b>POWERED BY: ModelProof Technologies</b>", footer_style))
+            story.append(Paragraph("Powered by: ModelProof Technologies", footer_style))
+            story.append(Paragraph("www.modelproof.ai", footer_style))
             story.append(Paragraph("UEI: TQ44P9DNYSB3 | SAM.gov Registered", footer_style))
             story.append(Spacer(1, 0.1*inch))
             story.append(Paragraph("═" * 80, body_style))
