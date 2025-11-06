@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Radar, ChevronDown, Upload, Loader2, Copy, CheckCircle2, AlertCircle } from "lucide-react";
+import { Radar, ChevronDown, Upload, Loader2, Copy, CheckCircle2, AlertCircle, Download } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -86,6 +86,7 @@ export default function BiasRadar() {
   const [results, setResults] = useState<ScanResponse | null>(null);
   const [fixedText, setFixedText] = useState<FixResponse | null>(null);
   const [fixLoading, setFixLoading] = useState(false);
+  const [exportLoading, setExportLoading] = useState(false);
   const [showLimitModal, setShowLimitModal] = useState(false);
   const [oversizedText, setOversizedText] = useState({ text: "", charCount: 0, fileName: "" });
   const { toast } = useToast();
@@ -336,6 +337,54 @@ export default function BiasRadar() {
     }
   };
 
+  const handleExportPDF = async () => {
+    if (!results) {
+      toast({
+        title: "Error",
+        description: "No scan results available to export",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setExportLoading(true);
+    try {
+      const response = await axios.post('/api/biasradar/export-pdf', {
+        original_text: text,
+        risk_score: results.score,
+        issues: results.issues,
+        remediated_text: fixedText?.fixed_text || null
+      }, {
+        responseType: 'blob'
+      });
+
+      // Create download link
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `BiasRadar_Report_${new Date().toISOString().split('T')[0]}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      toast({
+        title: "Success",
+        description: "PDF report downloaded successfully!"
+      });
+    } catch (error: any) {
+      console.error('Export PDF error:', error);
+      toast({
+        title: "Error",
+        description: error.response?.data?.detail || 'Failed to export PDF. Please try again.',
+        variant: "destructive"
+      });
+    } finally {
+      setExportLoading(false);
+    }
+  };
+
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case 'high': return 'bg-red-100 text-red-800 border-red-300';
@@ -564,39 +613,61 @@ export default function BiasRadar() {
                 </CardContent>
               </Card>
 
-              <div className="flex gap-4">
-                <Button 
-                  onClick={handleScan}
-                  disabled={loading || !text.trim()}
-                  className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
-                  size="lg"
-                >
-                  {loading ? (
-                    <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      Scanning...
-                    </>
-                  ) : (
-                    <>
-                      <Radar className="mr-2 h-5 w-5" />
-                      Scan Now
-                    </>
-                  )}
-                </Button>
-                {results && (
+              <div className="flex flex-col gap-4">
+                <div className="flex gap-4">
                   <Button 
-                    onClick={handleFix}
-                    disabled={fixLoading || !text.trim()}
-                    className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
+                    onClick={handleScan}
+                    disabled={loading || !text.trim()}
+                    className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
                     size="lg"
                   >
-                    {fixLoading ? (
+                    {loading ? (
                       <>
                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                        Fixing...
+                        Scanning...
                       </>
                     ) : (
-                      'Fix Text'
+                      <>
+                        <Radar className="mr-2 h-5 w-5" />
+                        Scan Now
+                      </>
+                    )}
+                  </Button>
+                  {results && (
+                    <Button 
+                      onClick={handleFix}
+                      disabled={fixLoading || !text.trim()}
+                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white"
+                      size="lg"
+                    >
+                      {fixLoading ? (
+                        <>
+                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                          Fixing...
+                        </>
+                      ) : (
+                        'Fix Text'
+                      )}
+                    </Button>
+                  )}
+                </div>
+                {results && (
+                  <Button 
+                    onClick={handleExportPDF}
+                    disabled={exportLoading}
+                    className="w-full bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white"
+                    size="lg"
+                  >
+                    {exportLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Generating PDF...
+                      </>
+                    ) : (
+                      <>
+                        <Download className="mr-2 h-5 w-5" />
+                        Export to PDF
+                      </>
                     )}
                   </Button>
                 )}
