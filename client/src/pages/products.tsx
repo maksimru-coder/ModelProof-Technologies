@@ -58,17 +58,22 @@ export default function Products() {
               </div>
               <CardTitle className="text-2xl mb-2">BiasRadar™ — AI Bias Detection Engine</CardTitle>
               <CardDescription className="text-lg font-medium text-primary/80 mb-4">
-                Detect and mitigate bias in text, documents, and datasets
+                Now available via API and Web Dashboard
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="mb-6 text-muted-foreground space-y-3">
                 <p>
-                  BiasRadar™ identifies and corrects potential bias across gender, race, age, disability, culture, and more — in real time.
-                  Upload documents, analyze datasets, or integrate the BiasRadar API for automated bias detection and mitigation.
+                  Detect, analyze, and fix bias across gender, race, age, disability, culture, and more. BiasRadar™ empowers organizations to ensure their AI systems, content, and communications remain fair, neutral, and compliant with emerging regulations.
                 </p>
                 <p>
-                  Ensure your AI models, content, and operations remain fair, compliant, and neutral with evolving regulations — helping your organization maintain ethical transparency and trust at every level.
+                  Use the web dashboard to scan text or documents manually, or integrate the BiasRadar API directly into your workflows for automated, real-time bias analysis and remediation.
+                </p>
+                <p>
+                  Generate professional BiasRadar™ Audit Reports with risk scores, bias categories, and side-by-side original and remediated text — ready for compliance review and documentation.
+                </p>
+                <p>
+                  Ideal for companies, researchers, government agencies, and anyone committed to responsible AI and ethical transparency.
                 </p>
               </div>
               <div className="flex justify-center">
