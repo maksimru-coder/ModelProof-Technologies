@@ -3,4 +3,7 @@ name = "repl-nix-workspace"
 version = "0.1.0"
 description = "BiasRadar - Bias Detection Tool"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "better-profanity>=0.7.0",
+    "reportlab>=4.4.4",
+]
