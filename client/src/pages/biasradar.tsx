@@ -137,12 +137,13 @@ export default function BiasRadar() {
     const file = acceptedFiles[0];
     if (!file) return;
 
-    // Security check: validate file size (max 10MB)
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    // Security check: validate file size (max 1MB to prevent abuse)
+    // 1MB is more than enough for 50k characters of text
+    const maxSize = 1 * 1024 * 1024; // 1MB
     if (file.size > maxSize) {
       toast({
         title: "File too large",
-        description: "Please upload a file smaller than 10MB",
+        description: "Please upload a file smaller than 1MB",
         variant: "destructive",
       });
       return;
@@ -546,7 +547,7 @@ export default function BiasRadar() {
                     ) : (
                       <>
                         <p className="text-sm font-medium mb-1">Drag & drop a file here, or click to browse</p>
-                        <p className="text-xs text-muted-foreground">Supports: PDF, DOCX, TXT (max 10MB, legacy .doc not supported)</p>
+                        <p className="text-xs text-muted-foreground">Supports: PDF, DOCX, TXT (legacy .doc not supported)</p>
                       </>
                     )}
                   </div>
