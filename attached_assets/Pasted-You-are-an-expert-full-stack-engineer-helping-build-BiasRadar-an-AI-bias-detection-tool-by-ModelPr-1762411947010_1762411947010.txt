@@ -1,0 +1,90 @@
+You are an expert full-stack engineer helping build BiasRadar™, an AI bias detection tool by ModelProof Technologies (www.modelproof.ai). 
+
+Your task is to implement a **“Export to PDF”** feature that generates a professional BiasRadar™ Audit Report similar to the sample below, without storing user data permanently.
+
+════════════════════════════════════════
+       BIASRADAR™ AUDIT REPORT
+════════════════════════════════════════
+UEI: TQ44P9DNYSB3 | ModelProof.ai
+Timestamp: 2025-11-05 14:35:22 PST
+────────────────────────────────────────
+INPUT TEXT (Original):
+"[User text here]"
+
+RISK SCORE: 100/100 (Critical)
+
+14 BIAS FLAGS:
+• Gender: "transgender single mothers" (High)
+• Age: "older low-income" (Medium)
+• Disability: "exaggerate health conditions" (High)
+• ... (etc.)
+
+REMEDIATED TEXT:
+"[Neutral rewritten version or 'NOT REMEDIATED — Original text unchanged.']"
+
+────────────────────────────────────────
+POWERED BY: ModelProof Technologies
+UEI: TQ44P9DNYSB3 | SAM.gov Registered
+════════════════════════════════════════
+
+────────────────────────────────────────
+🧩 REQUIREMENTS
+────────────────────────────────────────
+1. Generate a BiasRadar™ report in **PDF format** dynamically when a user clicks “Export PDF”.
+2. **Do not store** user-submitted text or generated PDFs on disk or in any database.
+   - Generate PDF in memory.
+   - Send to client via direct download or as a base64 string in JSON response.
+   - Delete after delivery.
+3. Include clean layout with:
+   - Header (logo placeholder or text)
+   - Timestamp (local or UTC)
+   - User input text
+   - Risk score
+   - List of bias flags (category, phrase, severity)
+   - Remediated text (if available)
+   - Footer with “POWERED BY ModelProof Technologies | UEI: TQ44P9DNYSB3”
+4. Support **two modes**:
+   - **Website:** Trigger PDF generation via frontend button and download file directly.
+   - **API:** Accept JSON input `{text, risk_score, flags[], remediated_text}` and return a downloadable PDF.
+5. Use lightweight libraries (no heavy storage or frameworks):
+   - For Python: `reportlab` or `fpdf`
+   - For Node.js: `pdf-lib` or `jsPDF`
+6. Ensure formatting looks professional and consistent with the BiasRadar™ style (lines, spacing, monospaced text blocks).
+7. Make it modular so it can later:
+   - Add a small logo at top (ModelProof.ai)
+   - Include optional QR code or hash signature
+   - Integrate with AWS S3 pre-signed URLs *if storage is later required*
+8. Log only minimal metadata (timestamp, file generated = true) but **not** user text.
+
+────────────────────────────────────────
+🧰 TECHNICAL STEPS
+────────────────────────────────────────
+Step 1: Implement a `generate_bias_report_pdf()` function
+  Input: JSON payload with { text, risk_score, flags, remediated_text }
+  Output: PDF binary or base64
+
+Step 2: In web version, attach to a frontend “Export to PDF” button that:
+  - Calls `/api/export-pdf`
+  - Downloads returned PDF blob
+
+Step 3: In API version, create endpoint `/api/export-pdf`:
+  - Accepts POST JSON input
+  - Calls `generate_bias_report_pdf()`
+  - Returns:
+      Content-Type: application/pdf
+      Content-Disposition: attachment; filename="BiasRadar_Report.pdf"
+      Body: PDF bytes
+
+Step 4: Ensure privacy compliance:
+  - No persistent logging of user text.
+  - Auto-delete temporary buffers after response.
+
+────────────────────────────────────────
+💡 ADDITIONAL NOTES
+────────────────────────────────────────
+- Keep reports <2MB and text-wrapped for readability.
+- Use monospaced font for visual consistency.
+- Format sections using lines and boxes like sample above.
+- Later you can add optional analytics that store only metadata (risk score, categories, timestamp).
+
+Return working code for website first, then API version.
