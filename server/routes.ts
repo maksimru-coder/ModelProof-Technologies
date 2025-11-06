@@ -2,6 +2,8 @@ import type { Express, Request } from "express";
 import { createServer, type Server } from "http";
 import sgMail from "@sendgrid/mail";
 import multer from "multer";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "../shared/openapi/biasradar.json";
 import { registerContactAPI } from "./contact-api";
 
 // Extend Express Request type to include file
@@ -101,6 +103,30 @@ const sendNotificationEmail = async (submission: any, isCareer = false) => {
 export function registerRoutes(app: Express): Server {
   // Use simplified contact API for better serverless compatibility
   registerContactAPI(app);
+
+  // Swagger UI options with custom styling
+  const swaggerOptions = {
+    customCss: `
+      .swagger-ui { background: #0f172a; }
+      .swagger-ui .topbar { display: none; }
+      .swagger-ui .info { margin: 20px 0; }
+      .swagger-ui .info .title { color: #00D4FF; }
+      .swagger-ui .scheme-container { background: #1e293b; }
+      .swagger-ui .opblock { background: #1e293b; border-color: #334155; }
+      .swagger-ui .opblock-summary { background: #1e40af; }
+      .swagger-ui .opblock .opblock-section-header { background: #1e40af; }
+      .swagger-ui .btn.authorize { background: #10b981; border-color: #10b981; }
+      .swagger-ui .response-col_status { color: #10b981; }
+    `,
+    customSiteTitle: "BiasRadar API Documentation"
+  };
+
+  // API Documentation endpoints
+  app.use('/api/docs', swaggerUi.serve);
+  app.get('/api/docs', swaggerUi.setup(swaggerDocument, swaggerOptions));
+  app.get('/api/openapi.json', (req, res) => {
+    res.json(swaggerDocument);
+  });
 
   // Career form endpoint with file upload
   app.post("/api/careers", upload.single('resume'), async (req: MulterRequest, res) => {

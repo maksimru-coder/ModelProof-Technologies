@@ -83,6 +83,62 @@ export default async function handler(req, res) {
                   "example": "The chairman should ensure all employees are treated fairly."
                 }
               }
+            },
+            "ExportPDFRequest": {
+              "type": "object",
+              "required": ["original_text", "risk_score", "issues"],
+              "properties": {
+                "original_text": {
+                  "type": "string",
+                  "description": "Original text that was analyzed",
+                  "example": "The chairman should ensure all employees are treated fairly."
+                },
+                "risk_score": {
+                  "type": "number",
+                  "description": "Risk score from bias scan (0-100)",
+                  "example": 75
+                },
+                "issues": {
+                  "type": "array",
+                  "description": "Array of bias issues detected",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "Type of bias detected",
+                        "example": "gender"
+                      },
+                      "severity": {
+                        "type": "string",
+                        "enum": ["low", "medium", "high"],
+                        "description": "Severity level",
+                        "example": "high"
+                      },
+                      "text": {
+                        "type": "string",
+                        "description": "Problematic text fragment",
+                        "example": "chairman"
+                      },
+                      "explanation": {
+                        "type": "string",
+                        "description": "Explanation of the bias",
+                        "example": "Gender-biased term that assumes leadership roles are male"
+                      },
+                      "suggestion": {
+                        "type": "string",
+                        "description": "Suggested neutral alternative",
+                        "example": "chairperson or chair"
+                      }
+                    }
+                  }
+                },
+                "remediated_text": {
+                  "type": "string",
+                  "description": "Optional: AI-fixed version of the text",
+                  "example": "The chairperson should ensure all employees are treated fairly."
+                }
+              }
             }
           }
         },
@@ -131,6 +187,54 @@ export default async function handler(req, res) {
                 "401": { "description": "Unauthorized" },
                 "429": { "description": "Rate limit exceeded" },
                 "500": { "description": "Internal server error" }
+              }
+            }
+          },
+          "/export-pdf": {
+            "post": {
+              "summary": "Export bias scan results to PDF",
+              "description": "Generate a professional BiasRadar™ Audit Report PDF containing the original text, risk score, detected bias issues, and optional remediated text. The PDF is generated in-memory and returned as a downloadable file. Perfect for compliance documentation, audit trails, and reporting.",
+              "tags": ["Reporting"],
+              "security": [{ "BearerAuth": [] }],
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": { "$ref": "#/components/schemas/ExportPDFRequest" },
+                    "example": {
+                      "original_text": "The chairman should ensure all employees are treated fairly.",
+                      "risk_score": 75,
+                      "issues": [
+                        {
+                          "type": "gender",
+                          "severity": "high",
+                          "text": "chairman",
+                          "explanation": "Gender-biased term that assumes leadership roles are male",
+                          "suggestion": "chairperson or chair"
+                        }
+                      ],
+                      "remediated_text": "The chairperson should ensure all employees are treated fairly."
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "PDF successfully generated",
+                  "content": {
+                    "application/pdf": {
+                      "schema": {
+                        "type": "string",
+                        "format": "binary",
+                        "description": "Professional PDF report containing bias analysis results"
+                      }
+                    }
+                  }
+                },
+                "400": { "description": "Bad request - missing required fields (original_text, risk_score, or issues)" },
+                "401": { "description": "Unauthorized - invalid API key" },
+                "429": { "description": "Rate limit exceeded" },
+                "500": { "description": "Internal server error - PDF generation failed" }
               }
             }
           }

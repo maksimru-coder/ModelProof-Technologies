@@ -1,7 +1,7 @@
 # BiasRadar.ai - Replit Project
 
 ## Overview
-BiasRadar.ai is a comprehensive bias detection web application that analyzes text for hidden biases across five dimensions: gender, race, age, disability, and cultural biases. Built with modern web technologies and powered by AI.
+BiasRadar™ by ModelProof Technologies is an enterprise-grade bias detection platform offering both web dashboard and REST API. Analyzes text for bias across 13 dimensions (gender, race, age, disability, culture, political, religious, LGBTQ+, socioeconomic, truth-seeking, ideological neutrality, intersectional, language & tone). Built with TypeScript/React frontend and Python serverless backend.
 
 ## Project Status
 ✅ **Production Ready** - All core features implemented and tested
@@ -24,9 +24,11 @@ BiasRadar.ai is a comprehensive bias detection web application that analyzes tex
 - **AI Integration**: OpenAI via Replit AI Integrations (no API key required, billed to credits)
 - **NLP**: spaCy with en_core_web_sm model
 - **API Endpoints**:
-  - `GET /`: Health check
-  - `POST /scan`: Analyze text for biases
-  - `POST /fix`: Generate bias-free version using AI
+  - `POST /api/biasradar/scan`: Analyze text for biases across 13 dimensions
+  - `POST /api/biasradar/fix`: Generate bias-free version using AI
+  - `POST /api/biasradar/export-pdf`: Export professional BiasRadar™ Audit Report PDF
+  - `GET /api/docs`: Interactive Swagger API documentation
+  - `GET /api/openapi.json`: OpenAPI specification JSON
 
 ### Frontend (`/frontend`)
 - **Framework**: React with Vite bundler
@@ -51,7 +53,22 @@ Requires `VITE_API_URL` to connect to backend:
 - Set in `frontend/.env` with your Replit domain
 - Falls back to `http://localhost:8000` for local development
 
-## Recent Changes (2025-11-01)
+## Recent Changes
+
+### 2025-11-06: PDF Export & API Documentation
+- ✅ **PDF Export Feature**: Professional BiasRadar™ Audit Report generation
+  - In-memory PDF generation using ReportLab (privacy-compliant, no data storage)
+  - Includes original text, risk score, bias flags table, remediated text, and UEI
+  - Available via both UI button and REST API endpoint
+  - Smart visibility: Export button only appears when scan results exist
+- ✅ **API Documentation**: Interactive Swagger UI at `/api/docs`
+  - Comprehensive OpenAPI 3.0 specification stored in `shared/openapi/biasradar.json`
+  - Uses swagger-ui-express middleware for clean implementation
+  - Custom dark theme matching BiasRadar brand colors
+  - Documented all three endpoints: /scan, /fix, /export-pdf
+  - Raw spec available at `/api/openapi.json`
+
+### 2025-11-01
 
 ### Initial Implementation
 - ✅ Complete backend bias detection engine with 5 bias categories
@@ -80,10 +97,12 @@ Requires `VITE_API_URL` to connect to backend:
 
 ## Future Enhancements
 - User authentication and scan history
-- PDF report generation
 - Batch processing for multiple texts
 - Advanced ML models with BERT embeddings
 - Comparison feature for tracking improvements
+- Automated testing for export endpoint and client workflow
+- Additional PDF metadata (selected bias types, summary)
+- Runtime monitoring for PDF generation performance
 
 ## Deployment Notes
 - Backend runs on port 8000 (workflow: `backend`)
