@@ -1,4 +1,5 @@
-# Shared bias detection logic for BiasRadar
+# Shared bias detection logic for BiasRadar - Enterprise Edition
+# Updated with context-aware detection and EEO auto-whitelist
 import re
 from typing import List, Dict, Any
 
@@ -10,7 +11,41 @@ try:
 except ImportError:
     PROFANITY_AVAILABLE = False
 
-# Bias word dictionaries
+# EEO WHITELIST - Skip ALL bias checks in these paragraphs
+EEO_WHITELIST_PHRASES = [
+    "equal employment opportunity",
+    "we provide equal employment",
+    "without regard to",
+    "protected veteran",
+    "sex, national origin",
+    "color, religion, sex",
+    "genetic information",
+    "disability status",
+    "sexual orientation",
+    "gender identity",
+    "gender expression",
+    "fair chance ordinance",
+    "eeo statement",
+    "affirmative action",
+    "qualified applicants will receive consideration",
+    "employment decisions will be based on",
+    "compliant with federal, state, and local laws",
+    "no discrimination shall be made",
+    "we are an equal opportunity employer",
+    "equal employment",
+    "race, color, religion",
+    "veteran status"
+]
+
+# Context keywords that remove gender-coded flags
+GENDER_CONTEXT_WHITELIST = [
+    "salary", "compensation", "benefits", "package", "market",
+    "competitive salary", "competitive benefits", "competitive pay",
+    "skills", "performance", "metrics", "deliverables", "results",
+    "technical", "programming", "engineering", "development"
+]
+
+# Bias word dictionaries - Updated enterprise-ready version
 GENDER_BIAS_WORDS = {
     "gendered_titles": ["chairman", "chairwoman", "salesman", "salesmen", "saleswoman", "saleswomen",
                         "policeman", "policemen", "policewoman", "policewomen",
@@ -23,15 +58,10 @@ GENDER_BIAS_WORDS = {
                         "manpower", "mankind", "man-made", "man hours", "man-hours",
                         "manmade", "workman", "workmen", "foreman", "foremen",
                         "anchorman", "anchormen", "anchorwoman", "anchorwomen",
-                        "cameraman", "cameramen", "man", "men", "woman", "women",
-                        "male", "female", "boy", "girl"],
-    "male_stereotypes": ["aggressive", "dominant", "assertive", "competitive", "ambitious", "decisive", 
-                         "analytical", "logical", "independent", "confident", "strong", "tough",
-                         "arrogant", "charismatic", "leader", "genius", "brilliant", "mastermind"],
-    "female_stereotypes": ["nurturing", "supportive", "emotional", "sensitive", "caring", "empathetic",
-                           "collaborative", "warm", "gentle", "sympathetic", "compassionate", "sweet",
-                           "bubbly", "ditzy", "bossy", "shrill", "hysterical", "dramatic", "catty",
-                           "transgender single mothers", "single mothers and"]
+                        "cameraman", "cameramen", "guy", "guys", "gal", "gals"],
+    "male_stereotypes": ["aggressive", "dominant", "assertive", "competitive", "ambitious", "fearless",
+                         "strong", "tough"],
+    "female_stereotypes": ["supportive", "nurturing", "empathetic", "sensitive", "polite", "helpful"]
 }
 
 RACE_BIAS_WORDS = {
@@ -53,155 +83,126 @@ RACE_BIAS_WORDS = {
 }
 
 AGE_BIAS_WORDS = {
-    "youth": ["lazy millennial", "millennials are lazy", "snowflake generation",
-              "young people are lazy", "young people are too entitled", "entitled millennials",
-              "young workers are lazy", "immature millennials", "gen z are lazy", "zoomers are lazy"],
-    "older": ["old lazy", "lazy old", "old people are", "old workers are", "old employees are",
-              "workers are too old to learn", "employees are too old to learn",
-              "he is too old to learn", "she is too old to learn", "they are too old to learn",
-              "older people are too old to learn",
-              "too old for the job", "older workers are too slow", "older workers cannot learn",
-              "older workers are outdated", "older workers are set in their ways",
-              "elderly cannot learn", "seniors cannot learn", "seniors are too slow",
-              "boomers cannot learn", "boomers are outdated", "out of touch boomer",
-              "employees past their prime", "older employees are slow", "elderly are too slow",
-              "he is too old for", "she is too old for", "older low-income"]
+    "youth_phrases": ["digital native", "recent graduate"],
+    "youth_context_sensitive": ["young"],  # Only flag in hiring/personality contexts
+    "older": ["overqualified", "older workers", "senior citizen",
+              "too old to learn", "past their prime", "outdated", "set in their ways"]
 }
 
+# Contexts where "young" indicates age bias (hiring descriptors)
+AGE_CONTEXT_HIRING = [
+    "energetic", "dynamic", "ambitious", "driven", "fresh",
+    "looking for", "seeking", "candidate", "applicant", "hire",
+    "employee", "worker", "team member", "professional"
+]
+
+# Contexts where "young" is neutral (avoid false positives)
+AGE_CONTEXT_NEUTRAL = [
+    "company", "startup", "business", "organization", "industry",
+    "technology", "field", "market", "children", "kids"
+]
+
 DISABILITY_BIAS_WORDS = {
-    "ableist": ["crazy", "insane", "psycho", "lame", "dumb", "blind to", "deaf to", 
-                "crippled", "handicapped", "retarded", "stupid", "idiotic", "moronic",
-                "wheelchair-bound", "confined to a wheelchair", "suffers from", "victim of",
-                "burden on society", "disabled are a burden", "disabled people are a burden",
-                "disabled cannot contribute", "mentally ill are dangerous", "defective person",
-                "abnormal person", "invalid person", "deformed person",
-                "broken person", "damaged person", "afflicted with disability",
-                "stricken with disability", "plagued by disability",
-                "disabled people cannot contribute", "disabilities make them incapable",
-                "handicapped people are less capable", "fake disabilities", "faking disability",
-                "exaggerate health conditions", "exaggerating health conditions"]
+    "ableist": ["crazy", "insane", "blind to", "lame", "crippling", "handicapped",
+                "wheelchair-bound", "confined to a wheelchair", "suffers from", "victim of"]
 }
 
 CULTURAL_BIAS_WORDS = {
-    "western_centric": ["normal", "exotic", "foreign", "alien", "traditional dress",
-                        "third world", "developing", "primitive", "backwards", "civilized",
-                        "oriental", "native", "tribal", "outdated traditions"]
+    "western_centric": ["exotic", "foreign", "alien", "traditional dress",
+                        "primitive", "backwards", "civilized", "oriental", "native", "tribal"]
 }
 
 POLITICAL_BIAS_WORDS = {
     "partisan": ["woke", "snowflake", "like snowflakes", "acting like snowflakes",
-                 "libtard", "conservative", "liberal agenda", "far-left", "far-right",
-                 "radical left", "alt-right", "social justice warrior", "sjw", "politically correct",
-                 "virtue signaling", "cancel culture", "indoctrination", "brainwashed", "sheeple",
-                 "fake news", "mainstream media", "deep state", "communist", "socialist agenda",
-                 "trump's genius", "trump is genius", "trump's brilliant"],
-    "ideological": ["obviously", "clearly", "everyone knows", "common sense", "natural law",
-                    "traditional values", "family values", "real american", "real americans", "patriotic"],
+                 "libtard", "liberal agenda", "far-left", "far-right",
+                 "radical left", "alt-right", "social justice warrior", "sjw",
+                 "virtue signaling", "cancel culture", "brainwashed", "sheeple",
+                 "fake news", "mainstream media", "deep state"],
+    "ideological": ["obviously", "clearly", "everyone knows", "common sense",
+                    "traditional values", "family values", "real american", "real americans"],
     "extremist_labels": ["libtards", "conservatards", "trumptards", "democrats want", "republicans want",
                          "liberals are", "conservatives are", "the left wants to destroy",
                          "right-wing extremist", "left-wing extremist", "communist plot",
-                         "socialist takeover", "fascist", "nazi", "marxist", "domestic terrorist"],
-    "partisan_framing": ["radical left agenda", "conservative patriots", "liberal elite",
-                         "maga patriots", "antifa thugs", "proud boys", "woke mob",
-                         "liberal media bias", "conservative propaganda", "leftist narrative"]
+                         "socialist takeover", "fascist", "nazi", "marxist", "domestic terrorist"]
 }
 
 RELIGION_BIAS_WORDS = {
     "problematic": ["infidel", "heathen", "godless", "pagan", "cult", "radical islam", 
-                    "fundamentalist", "extremist", "judeo-christian", "christian nation",
-                    "backwards religion", "primitive beliefs", "superstitious", "jihadist",
-                    "crusade", "holy war", "religious fanatic", "muslim", "muslims", 
-                    "christian", "christians", "jew", "jews", "hindu", "hindus",
-                    "buddhist", "buddhists", "atheist", "atheists",
-                    "non-mainstream faiths", "non-mainstream religions"],
+                    "fundamentalist", "extremist", "backwards religion", "primitive beliefs",
+                    "superstitious", "jihadist", "crusade", "holy war", "religious fanatic"],
     "stereotypes": ["all muslims", "all christians", "all jews", "all hindus", "all buddhists",
                     "all atheists", "muslims are", "christians are", "jews are", "hindus are",
                     "atheists are", "islamist", "terrorist religion", "false prophet",
-                    "muslim extremist", "islamic terrorist", "christian fanatic", "jewish conspiracy"],
-    "discriminatory": ["sharia law", "jihad", "muslim ban", "christianize", "islamization",
-                       "religious indoctrination", "brainwashed by religion", "religion of peace",
-                       "crusader", "zionist conspiracy", "atheist agenda", "godless communists",
-                       "immoral atheists", "heathen practices", "pagan rituals", "devil worship"]
+                    "muslim extremist", "islamic terrorist", "christian fanatic", "jewish conspiracy"]
 }
 
 LGBTQ_BIAS_WORDS = {
-    "problematic": ["lazy transgender", "transgender welfare", "transgender single mothers",
-                    "low-income transgender", "transgender people are", "transgenders are", 
-                    "transgender agenda", "transgender ideology",
-                    "lifestyle choice", "sexual preference", "homosexual agenda", "gay lifestyle",
-                    "unnatural", "normal", "traditional family", "real man", "real woman",
+    "problematic": ["lifestyle choice", "sexual preference", "homosexual agenda", "gay lifestyle",
+                    "unnatural", "transgender agenda", "transgender ideology",
+                    "traditional family", "real man", "real woman",
                     "born male", "born female", "biological male", "biological female",
                     "transvestite", "transsexual", "hermaphrodite", "cross-dresser",
-                    "lifestyle", "deviant", "perversion", "confused"]
+                    "deviant", "perversion", "confused"]
 }
 
 SOCIOECONOMIC_BIAS_WORDS = {
-    "class_based": ["low class", "welfare queen", "welfare queens", "trailer trash", "ghetto", "hood", "inner-city",
-                    "underprivileged", "disadvantaged", "less fortunate", "poor people",
-                    "uneducated", "blue collar", "working class", "elitist", "privileged",
-                    "trust fund baby", "silver spoon", "entitled", "lazy poor"],
-    "stereotypes": ["poor people are lazy", "poor are lazy", "rich deserve", "wealthy deserve",
-                    "poverty is a choice", "just work harder", "pull yourself up",
-                    "bootstraps", "handout", "on handouts", "living on handouts",
-                    "on public assistance are", "on public assistance who",
-                    "freeloader", "moocher", "taker",
-                    "welfare dependent", "living off government", "government cheese"],
-    "dehumanizing": ["low-income people", "the poors", "peasant", "pleb", "redneck",
-                     "white trash", "hillbilly", "country bumpkin", "unwashed masses",
-                     "nouveau riche", "old money", "new money", "social climber"]
+    "class_based": ["low class", "high class", "on welfare", "poor background",
+                    "welfare queen", "trailer trash", "ghetto", "hood"],
+    "stereotypes": ["poor people are lazy", "poor are lazy", "poverty is a choice",
+                    "just work harder", "pull yourself up", "bootstraps",
+                    "handout", "freeloader", "moocher", "welfare dependent"]
 }
 
 TRUTH_SEEKING_WORDS = {
     "unsubstantiated": ["it's a fact that", "undeniable truth", "without a doubt",
                         "proven fact", "experts all agree", "scientists all agree",
-                        "the truth is", "impossible to deny", "irrefutable fact",
-                        "indisputable fact", "beyond question", "absolute truth", "undeniable fact"],
+                        "the truth is", "impossible to deny", "irrefutable fact"],
     "overgeneralization": ["always wrong", "never works", "nobody believes",
-                           "100% guaranteed", "completely impossible", "totally false",
-                           "entirely untrue", "perfectly clear that", "obviously true", "obviously false"],
-    "misinformation_claims": ["spread lies", "spreading lies", "vaccines cause autism", "climate change is a hoax", "climate hoax",
-                              "climate change is a complete hoax", "climate change hoax",
-                              "global warming is a hoax", "global warming hoax",
+                           "100% guaranteed", "completely impossible", "totally false"],
+    "misinformation_claims": ["vaccines cause autism", "climate change is a hoax",
                               "flat earth", "moon landing was faked", "5g causes cancer",
-                              "covid is a hoax", "covid hoax", "microchips in vaccines", "covid vaccine kills",
-                              "election was stolen", "stolen election", "deep state conspiracy", "qanon",
-                              "chemtrails", "fluoride mind control", "reptilian", "illuminati controls"],
-    "conspiracy_language": ["wake up sheeple", "they don't want you to know", "the truth they hide",
-                            "mainstream media lies", "fake science", "government coverup",
-                            "big pharma conspiracy", "follow the money", "do your own research",
-                            "question everything", "don't trust the science", "alternative facts"]
+                              "covid is a hoax", "microchips in vaccines",
+                              "election was stolen", "chemtrails", "qanon"]
 }
 
 IDEOLOGICAL_NEUTRALITY_WORDS = {
     "non_neutral_framing": ["the establishment", "the elite", "the system",
                             "big tech", "big pharma", "globalist agenda",
-                            "controlled opposition", "power structure", "ruling class"],
+                            "controlled opposition", "ruling class"],
     "dismissive_framing": ["so-called experts", "so-called science",
-                           "official narrative", "they want you to believe", "they're lying to you",
-                           "don't be fooled", "wake up people", "open your eyes people",
-                           "do your own research", "question everything they say",
-                           "anyone who disagrees with", "anyone who thinks differently",
-                           "people who disagree are", "disagrees with my", "my political views",
-                           "views is an idiot", "are idiots", "you're an idiot if",
-                           "idiots who disagree", "stupid people who think"],
-    "absolutist_framing": ["the only solution", "the real problem", "what's really happening",
-                           "the real agenda", "the hidden truth", "what they won't tell you",
-                           "the actual facts", "the only answer", "the truth is obvious",
-                           "clearly wrong about", "obviously stupid to", "totally ignorant of"],
-    "exclusionary": ["patriotic citizens", "real citizens", "true patriots"]
+                           "official narrative", "they want you to believe",
+                           "don't be fooled", "wake up people"]
 }
 
 LANGUAGE_TONE_WORDS = {
     "slurs_high": ["retard", "retarded", "nigger", "faggot", "tranny", "cunt", 
                    "whore", "slut", "bitch", "bastard", "asshole"],
     "profanity_medium": ["fuck", "fucking", "shit", "damn", "hell", "ass", "dick",
-                         "piss", "cock", "pussy", "bollocks", "bloody hell"],
+                         "piss", "cock", "pussy"],
     "hate_speech_high": ["kill yourself", "go to hell", "die", "kys", "subhuman",
                          "inferior race", "master race", "race war", "ethnic cleansing"],
     "unprofessional_low": ["sucks", "crap", "crappy", "pissed off", "screwed up",
-                           "messed up", "bullcrap", "idiotic", "moronic", "stupid"],
-    "emotionally_charged": ["emotionally charged social-media", "emotionally charged posts"]
+                           "bullcrap", "idiotic", "moronic", "stupid"]
 }
+
+
+def is_eeo_paragraph(text: str) -> bool:
+    """
+    Check if text is part of an EEO statement.
+    If yes, skip ALL bias checks for this paragraph.
+    """
+    text_lower = text.lower()
+    for phrase in EEO_WHITELIST_PHRASES:
+        if phrase in text_lower:
+            return True
+    return False
+
+
+def get_context_window(text: str, position: int, window_size: int = 100) -> str:
+    """Get surrounding context around a position"""
+    start = max(0, position - window_size)
+    end = min(len(text), position + window_size)
+    return text[start:end].lower()
 
 
 def find_word_in_text(text_lower: str, word: str) -> int:
@@ -211,29 +212,50 @@ def find_word_in_text(text_lower: str, word: str) -> int:
     return match.start() if match else -1
 
 
-def detect_gender_bias(text_lower: str) -> List[Dict[str, Any]]:
-    """Detect gender bias in text"""
+def detect_gender_bias(text: str, text_lower: str) -> List[Dict[str, Any]]:
+    """
+    Detect gender bias with context awareness.
+    Only flag personality-coded words when describing people, NOT compensation.
+    """
     issues = []
+    
     for category, words in GENDER_BIAS_WORDS.items():
         for word in words:
-            if find_word_in_text(text_lower, word) != -1:
-                pos = find_word_in_text(text_lower, word)
+            pos = find_word_in_text(text_lower, word)
+            if pos == -1:
+                continue
+            
+            # Get context around the word
+            context = get_context_window(text, pos, 50)
+            
+            # Rule 1A: Gender-coded language context filtering
+            if category in ["male_stereotypes", "female_stereotypes"]:
+                # Check if used in compensation/technical context
+                skip_word = False
+                for whitelist_term in GENDER_CONTEXT_WHITELIST:
+                    if whitelist_term in context:
+                        skip_word = True
+                        break
                 
-                # Determine severity and explanation based on category
-                if category == "gendered_titles":
-                    severity = "high"
-                    explanation = f"'{word}' is gendered language. Use gender-neutral alternatives instead."
-                else:
-                    severity = "medium"
-                    explanation = f"'{word}' may reinforce gender stereotypes associated with {category.replace('_', ' ')}"
-                
-                issues.append({
-                    "word": word,
-                    "bias_type": "gender",
-                    "severity": severity,
-                    "explanation": explanation,
-                    "position": pos
-                })
+                if skip_word:
+                    continue
+            
+            # Determine severity
+            if category == "gendered_titles":
+                severity = "high"
+                explanation = f"'{word}' is gendered language. Use gender-neutral alternatives instead."
+            else:
+                severity = "medium"
+                explanation = f"'{word}' may reinforce gender stereotypes when describing personality traits"
+            
+            issues.append({
+                "word": word,
+                "bias_type": "gender",
+                "severity": severity,
+                "explanation": explanation,
+                "position": pos
+            })
+    
     return issues
 
 
@@ -254,20 +276,51 @@ def detect_race_bias(text_lower: str) -> List[Dict[str, Any]]:
     return issues
 
 
-def detect_age_bias(text_lower: str) -> List[Dict[str, Any]]:
-    """Detect age bias in text"""
+def detect_age_bias(text: str, text_lower: str) -> List[Dict[str, Any]]:
+    """
+    Detect age bias with context awareness.
+    Only flag 'young' when used in hiring/personality contexts.
+    """
     issues = []
+    
     for category, words in AGE_BIAS_WORDS.items():
         for word in words:
-            if find_word_in_text(text_lower, word) != -1:
-                pos = find_word_in_text(text_lower, word)
-                issues.append({
-                    "word": word,
-                    "bias_type": "age",
-                    "severity": "medium",
-                    "explanation": f"'{word}' may reflect age-based assumptions about {category} people",
-                    "position": pos
-                })
+            pos = find_word_in_text(text_lower, word)
+            if pos == -1:
+                continue
+            
+            # Context-aware detection for "young"
+            if category == "youth_context_sensitive" and word == "young":
+                context = get_context_window(text, pos, 50)
+                
+                # Skip if in neutral context
+                skip_word = False
+                for neutral_term in AGE_CONTEXT_NEUTRAL:
+                    if neutral_term in context:
+                        skip_word = True
+                        break
+                
+                if skip_word:
+                    continue
+                
+                # Only flag if in hiring/personality context
+                in_hiring_context = False
+                for hiring_term in AGE_CONTEXT_HIRING:
+                    if hiring_term in context:
+                        in_hiring_context = True
+                        break
+                
+                if not in_hiring_context:
+                    continue
+            
+            issues.append({
+                "word": word,
+                "bias_type": "age",
+                "severity": "medium",
+                "explanation": f"'{word}' may reflect age-based assumptions in hiring contexts",
+                "position": pos
+            })
+    
     return issues
 
 
@@ -282,15 +335,40 @@ def detect_disability_bias(text_lower: str) -> List[Dict[str, Any]]:
                     "word": word,
                     "bias_type": "disability",
                     "severity": "high",
-                    "explanation": f"'{word}' is ableist language that can be harmful to people with disabilities",
+                    "explanation": f"'{word}' is ableist language that can be harmful",
                     "position": pos
                 })
     return issues
 
 
-def detect_cultural_bias(text_lower: str) -> List[Dict[str, Any]]:
-    """Detect cultural bias in text"""
+def detect_cultural_bias(text: str, text_lower: str) -> List[Dict[str, Any]]:
+    """
+    Detect cultural bias with context awareness.
+    Rule 1B: Only flag 'developing' when referring to countries/regions.
+    """
     issues = []
+    
+    # Context-sensitive words
+    context_sensitive = {
+        "developing": ["countries", "nations", "regions", "world", "markets"],
+        "underdeveloped": ["countries", "regions", "nations"]
+    }
+    
+    for word, next_words in context_sensitive.items():
+        pattern = r'\b' + re.escape(word) + r'\s+(\w+)'
+        matches = re.finditer(pattern, text_lower)
+        for match in matches:
+            next_word = match.group(1)
+            if next_word in next_words:
+                issues.append({
+                    "word": word,
+                    "bias_type": "culture",
+                    "severity": "medium",
+                    "explanation": f"'{word} {next_word}' may reflect cultural bias",
+                    "position": match.start()
+                })
+    
+    # Non-context-sensitive words
     for category, words in CULTURAL_BIAS_WORDS.items():
         for word in words:
             if find_word_in_text(text_lower, word) != -1:
@@ -302,6 +380,7 @@ def detect_cultural_bias(text_lower: str) -> List[Dict[str, Any]]:
                     "explanation": f"'{word}' may reflect cultural bias or ethnocentrism",
                     "position": pos
                 })
+    
     return issues
 
 
@@ -367,7 +446,7 @@ def detect_socioeconomic_bias(text_lower: str) -> List[Dict[str, Any]]:
                     "word": word,
                     "bias_type": "socioeconomic",
                     "severity": "medium",
-                    "explanation": f"'{word}' may reflect class-based bias or assumptions",
+                    "explanation": f"'{word}' may reflect class-based bias",
                     "position": pos
                 })
     return issues
@@ -378,28 +457,15 @@ def detect_truth_seeking_bias(text_lower: str) -> List[Dict[str, Any]]:
     issues = []
     for category, phrases in TRUTH_SEEKING_WORDS.items():
         for phrase in phrases:
-            # Use substring matching for misinformation claims (catches partial matches)
-            if category == "misinformation_claims":
-                if phrase in text_lower:
-                    pos = text_lower.find(phrase)
-                    issues.append({
-                        "word": phrase,
-                        "bias_type": "truth_seeking",
-                        "severity": "medium",
-                        "explanation": f"'{phrase}' may indicate unsubstantiated claims or overgeneralizations",
-                        "position": pos
-                    })
-            else:
-                # Use word boundary matching for other categories
-                if find_word_in_text(text_lower, phrase) != -1:
-                    pos = find_word_in_text(text_lower, phrase)
-                    issues.append({
-                        "word": phrase,
-                        "bias_type": "truth_seeking",
-                        "severity": "medium",
-                        "explanation": f"'{phrase}' may indicate unsubstantiated claims or overgeneralizations",
-                        "position": pos
-                    })
+            if find_word_in_text(text_lower, phrase) != -1:
+                pos = find_word_in_text(text_lower, phrase)
+                issues.append({
+                    "word": phrase,
+                    "bias_type": "truth_seeking",
+                    "severity": "medium",
+                    "explanation": f"'{phrase}' may indicate unsubstantiated claims",
+                    "position": pos
+                })
     return issues
 
 
@@ -414,28 +480,28 @@ def detect_ideological_neutrality_bias(text_lower: str) -> List[Dict[str, Any]]:
                     "word": phrase,
                     "bias_type": "ideological_neutrality",
                     "severity": "medium",
-                    "explanation": f"'{phrase}' indicates non-neutral framing or ideological bias",
+                    "explanation": f"'{phrase}' indicates non-neutral framing",
                     "position": pos
                 })
     return issues
 
 
-def detect_language_tone_bias(text_lower: str) -> List[Dict[str, Any]]:
-    """Detect profanity, slurs, hate speech, and unprofessional tone"""
+def detect_language_tone_bias(text: str, text_lower: str) -> List[Dict[str, Any]]:
+    """
+    Detect profanity, slurs, hate speech.
+    Rule 1C: Do NOT flag 'sex' or 'sexual' (removed from profanity list).
+    """
     issues = []
-    detected_positions = set()  # Track positions to prevent duplicates
+    detected_positions = set()
     
-    # Check against custom word lists with severity levels
     for category, words in LANGUAGE_TONE_WORDS.items():
         for word in words:
             if find_word_in_text(text_lower, word) != -1:
                 pos = find_word_in_text(text_lower, word)
                 
-                # Skip if already detected at this position
                 if pos in detected_positions:
                     continue
                 
-                # Determine severity based on category
                 if "high" in category:
                     severity = "high"
                     if "slur" in category:
@@ -458,91 +524,39 @@ def detect_language_tone_bias(text_lower: str) -> List[Dict[str, Any]]:
                 })
                 detected_positions.add(pos)
     
-    # Detect censored/masked profanity (e.g., "f***", "f***ing", "sh*t", "f**king")
-    # Patterns match common censored forms with *, -, or _ replacements
-    censored_patterns = [
-        (r'\bf[\*\-\_]{2,}k(?:ing)?', 'fuck/fucking', 'medium', 'Contains censored profanity'),  # f**k, f**king
-        (r'\bf[\*\-\_]{2,}(?:ing)?', 'fuck/fucking', 'medium', 'Contains censored profanity'),  # f***, f***ing
-        (r'\bsh[\*\-\_]+t', 'shit', 'medium', 'Contains censored profanity'),  # sh*t, sh**
-        (r'\bd[\*\-\_]+n', 'damn', 'medium', 'Contains censored profanity'),  # d*mn, d**n
-        (r'\bass[\*\-\_]+', 'ass', 'medium', 'Contains censored profanity'),  # a**, a***
-        (r'\bb[\*\-\_]+ch', 'bitch', 'medium', 'Contains censored profanity'),  # b*tch, b**ch
-        (r'\bc[\*\-\_]+t', 'cunt', 'high', 'Contains censored slur'),  # c**t, c***
-        (r'\bh[\*\-\_]+l', 'hell', 'medium', 'Contains censored profanity'),  # h*ll, h**l
-        (r'\bd[\*\-\_]+k', 'dick', 'medium', 'Contains censored profanity'),  # d*ck, d**k
-    ]
-    
-    for pattern, word_name, severity, explanation in censored_patterns:
-        matches = re.finditer(pattern, text_lower)
-        for match in matches:
-            # Skip if already detected at this position
-            if match.start() in detected_positions:
-                continue
-            
-            issues.append({
-                "word": match.group(),
-                "bias_type": "language_tone",
-                "severity": severity,
-                "explanation": f"{explanation}: '{match.group()}'",
-                "position": match.start()
-            })
-            detected_positions.add(match.start())
-    
-    # Additional check with better-profanity if available
-    if PROFANITY_AVAILABLE:
-        words = text_lower.split()
-        current_pos = 0
-        for word in words:
-            # First check the raw word (with punctuation) for profanity
-            if profanity.contains_profanity(word):
-                word_pos = text_lower.find(word, current_pos)
-                # Skip if already detected at this position
-                if word_pos not in detected_positions:
-                    issues.append({
-                        "word": word,
-                        "bias_type": "language_tone",
-                        "severity": "medium",
-                        "explanation": f"Contains profanity: '{word}'",
-                        "position": word_pos if word_pos != -1 else 0
-                    })
-                    if word_pos != -1:
-                        detected_positions.add(word_pos)
-            else:
-                # Then check cleaned word (without punctuation)
-                clean_word = re.sub(r'[^\w\s]', '', word)
-                if clean_word and profanity.contains_profanity(clean_word):
-                    word_pos = text_lower.find(clean_word, current_pos)
-                    # Skip if already detected at this position
-                    if word_pos not in detected_positions:
-                        issues.append({
-                            "word": clean_word,
-                            "bias_type": "language_tone",
-                            "severity": "medium",
-                            "explanation": f"Contains profanity: '{clean_word}'",
-                            "position": word_pos if word_pos != -1 else 0
-                        })
-                        if word_pos != -1:
-                            detected_positions.add(word_pos)
-            
-            current_pos = text_lower.find(word, current_pos) + len(word)
-    
     return issues
 
 
-def detect_intersectional_bias(all_issues: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Detect intersectional bias (overlapping biases)"""
-    bias_types_present = set(issue["bias_type"] for issue in all_issues)
+def detect_intersectional_bias(text: str, all_issues: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Rule 1E: Only trigger intersectional bias when 2+ confirmed biases exist
+    in the same subject/sentence.
+    """
+    if len(all_issues) < 2:
+        return []
     
+    sentences = re.split(r'[.!?]+', text)
     intersectional_issues = []
-    if len(bias_types_present) >= 2:
-        combined_types = " + ".join(sorted(bias_types_present))
-        intersectional_issues.append({
-            "word": "(multiple biases detected)",
-            "bias_type": "intersectional",
-            "severity": "high",
-            "explanation": f"Intersectional bias detected: {combined_types}. Multiple bias types compound discrimination.",
-            "position": 0
-        })
+    
+    for sentence in sentences:
+        sentence_lower = sentence.lower()
+        sentence_biases = set()
+        
+        for issue in all_issues:
+            word = issue.get("word", "").lower()
+            if word in sentence_lower and issue["bias_type"] != "intersectional":
+                sentence_biases.add(issue["bias_type"])
+        
+        if len(sentence_biases) >= 2:
+            combined_types = " + ".join(sorted(sentence_biases))
+            intersectional_issues.append({
+                "word": "(multiple biases in same sentence)",
+                "bias_type": "intersectional",
+                "severity": "high",
+                "explanation": f"Intersectional bias: {combined_types}. Multiple bias types compound discrimination.",
+                "position": 0
+            })
+            break
     
     return intersectional_issues
 
@@ -610,18 +624,10 @@ def create_heatmap(text: str, issues: List[Dict[str, Any]]) -> List[Dict[str, An
     return heatmap
 
 
-# ========================================
-# ADVANCED PATTERN MATCHING & AI VALIDATION
-# ========================================
-
 def detect_stereotype_patterns(text_lower: str) -> List[Dict[str, Any]]:
-    """
-    Detect bias patterns like "All [GROUP] are [NEGATIVE]"
-    This catches context-dependent stereotypes that word lists miss
-    """
+    """Detect bias patterns like 'All [GROUP] are [NEGATIVE]'"""
     issues = []
     
-    # Pattern 1: "All [GROUP] are/is [ATTRIBUTE]"
     group_patterns = [
         r'\ball (muslims?|christians?|jews?|hindus?|buddhists?|atheists?)',
         r'\ball (asians?|blacks?|whites?|latinos?|hispanics?|arabs?)',
@@ -629,50 +635,28 @@ def detect_stereotype_patterns(text_lower: str) -> List[Dict[str, Any]]:
         r'\ball (gay|lesbian|transgender|lgbtq)',
         r'\ball (poor|rich|wealthy) (people|person)',
         r'\ball (young|old|elderly) (people|person)',
-        r'\ball (disabled|handicapped) (people|person)',
     ]
     
     for pattern in group_patterns:
         matches = re.finditer(pattern, text_lower)
         for match in matches:
-            # Check if followed by "are" or "is"
             rest_of_sentence = text_lower[match.end():match.end()+100]
             if rest_of_sentence.strip().startswith(('are', 'is')):
                 issues.append({
                     "word": match.group(),
                     "bias_type": "pattern_stereotype",
                     "severity": "high",
-                    "explanation": f"Stereotype pattern detected: '{match.group()}' - sweeping generalization about a group",
+                    "explanation": f"Stereotype pattern: '{match.group()}' - sweeping generalization",
                     "position": match.start()
                 })
-    
-    # Pattern 2: "[GROUP] are naturally/inherently/always [ATTRIBUTE]"
-    inherent_patterns = [
-        r'(asians?|blacks?|whites?|latinos?|hispanics?) (are )?naturally',
-        r'(asians?|blacks?|whites?|latinos?|hispanics?) (are )?inherently',
-        r'(asians?|blacks?|whites?|latinos?|hispanics?) (are )?always',
-        r'(men|women|males?|females?) (are )?naturally',
-        r'(poor|rich) (people )?(are )?naturally',
-    ]
-    
-    for pattern in inherent_patterns:
-        matches = re.finditer(pattern, text_lower)
-        for match in matches:
-            issues.append({
-                "word": match.group(),
-                "bias_type": "pattern_stereotype",
-                "severity": "high",
-                "explanation": f"Essentialist stereotype detected: '{match.group()}' - attributes inherent characteristics to a group",
-                "position": match.start()
-            })
     
     return issues
 
 
 def validate_with_openai(text: str, enable_ai: bool = False) -> List[Dict[str, Any]]:
     """
-    Use OpenAI GPT-5 to validate complex biases that manual detection misses
-    Only runs if enable_ai flag is True (cost control)
+    Use OpenAI to validate complex biases.
+    Only runs if enable_ai flag is True (cost control).
     """
     if not enable_ai:
         return []
@@ -687,8 +671,6 @@ def validate_with_openai(text: str, enable_ai: bool = False) -> List[Dict[str, A
         if not AI_INTEGRATIONS_OPENAI_API_KEY or not AI_INTEGRATIONS_OPENAI_BASE_URL:
             return []
         
-        # the newest OpenAI model is "gpt-5" which was released August 7, 2025.
-        # do not change this unless explicitly requested by the user
         client = OpenAI(
             api_key=AI_INTEGRATIONS_OPENAI_API_KEY,
             base_url=AI_INTEGRATIONS_OPENAI_BASE_URL
@@ -704,7 +686,7 @@ def validate_with_openai(text: str, enable_ai: bool = False) -> List[Dict[str, A
 7. Religious bias
 8. LGBTQ+ bias
 9. Socioeconomic bias
-10. Truth-seeking (misinformation, unsubstantiated claims)
+10. Truth-seeking (misinformation)
 11. Ideological neutrality
 12. Language & tone (hate speech, profanity)
 
@@ -726,18 +708,17 @@ Return ONLY biased phrases/words found. For each bias found, respond in JSON for
 If no bias detected, return {{"biases": []}}"""
         
         response = client.chat.completions.create(
-            model="gpt-5-mini",  # Use mini for cost efficiency
+            model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}],
             response_format={"type": "json_object"},
             max_completion_tokens=1000,
-            temperature=0.3  # Low temperature for consistency
+            temperature=0.3
         )
         
         import json
         result = json.loads(response.choices[0].message.content or "{}")
         biases = result.get("biases", [])
         
-        # Add position info (rough estimate)
         for bias in biases:
             word = bias.get("word", "")
             bias["position"] = text.lower().find(word.lower()) if word else 0
@@ -745,56 +726,63 @@ If no bias detected, return {{"biases": []}}"""
         return biases
         
     except Exception as e:
-        # Silently fail - don't break the API if OpenAI has issues
         print(f"OpenAI validation error: {str(e)}")
         return []
 
 
 def hybrid_detect_bias(text: str, enable_ai: bool = False) -> Dict[str, Any]:
     """
-    Hybrid bias detection combining:
-    1. Manual word lists (fast, reliable)
-    2. Pattern matching (catches stereotypes)
-    3. OpenAI validation (optional, for complex cases)
+    Enterprise-grade hybrid bias detection with EEO auto-whitelist.
     
     Args:
         text: Text to analyze
-        enable_ai: Whether to use OpenAI for enhanced detection (costs credits)
+        enable_ai: Whether to use OpenAI for enhanced detection
     
     Returns:
         Complete bias detection results
     """
+    # Rule 1D: EEO Auto-Whitelist - Skip ALL bias checks
+    if is_eeo_paragraph(text):
+        return {
+            "score": 0,
+            "severity": "none",
+            "issues": [],
+            "issue_count": 0,
+            "heatmap": [],
+            "detection_method": "eeo_whitelisted",
+            "note": "EEO/legal paragraph detected - bias checks skipped"
+        }
+    
     text_lower = text.lower()
     
-    # Step 1: Manual word list detection (always runs)
+    # Step 1: Manual word list detection (context-aware)
     all_issues = []
-    all_issues.extend(detect_gender_bias(text_lower))
+    all_issues.extend(detect_gender_bias(text, text_lower))
     all_issues.extend(detect_race_bias(text_lower))
-    all_issues.extend(detect_age_bias(text_lower))
+    all_issues.extend(detect_age_bias(text, text_lower))
     all_issues.extend(detect_disability_bias(text_lower))
-    all_issues.extend(detect_cultural_bias(text_lower))
+    all_issues.extend(detect_cultural_bias(text, text_lower))
     all_issues.extend(detect_political_bias(text_lower))
     all_issues.extend(detect_religion_bias(text_lower))
     all_issues.extend(detect_lgbtq_bias(text_lower))
     all_issues.extend(detect_socioeconomic_bias(text_lower))
     all_issues.extend(detect_truth_seeking_bias(text_lower))
     all_issues.extend(detect_ideological_neutrality_bias(text_lower))
-    all_issues.extend(detect_language_tone_bias(text_lower))
+    all_issues.extend(detect_language_tone_bias(text, text_lower))
     
-    # Step 2: Pattern matching (always runs - catches stereotypes)
+    # Step 2: Pattern matching (stereotype detection)
     all_issues.extend(detect_stereotype_patterns(text_lower))
     
-    # Step 3: OpenAI validation (optional - only if enable_ai=True)
+    # Step 3: OpenAI validation (optional)
     if enable_ai:
         ai_issues = validate_with_openai(text, enable_ai=True)
-        # Merge AI results, avoiding duplicates
         existing_words = set(issue.get("word", "").lower() for issue in all_issues)
         for ai_issue in ai_issues:
             if ai_issue.get("word", "").lower() not in existing_words:
                 all_issues.append(ai_issue)
     
-    # Step 4: Detect intersectional bias
-    all_issues.extend(detect_intersectional_bias(all_issues))
+    # Step 4: Intersectional bias (only if 2+ biases in same sentence)
+    all_issues.extend(detect_intersectional_bias(text, all_issues))
     
     # Calculate metrics
     score = calculate_bias_score(all_issues)

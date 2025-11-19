@@ -1,0 +1,219 @@
+1A. Rule: Gender-coded Language (Updated)
+
+Old behavior: Flag terms like “competitive”, “driven”, “ambitious”, etc.
+New behavior: Only flag them when they describe expected personality traits, not compensation or technical work.
+
+Logic to use:
+
+If term in ["competitive", "driven", "ambitious", "dominant", "aggressive"]:
+    If term refers to personality traits OR describes a person:
+        Flag as possible gender-coded language.
+    Else if term is used in context of compensation, benefits, salary, performance metrics, or product quality:
+        Do NOT flag.
+
+Context keywords that remove flag:
+
+["salary", "benefits", "compensation", "package", "market", 
+ "skills", "performance", "metrics", "deliverables"]
+
+1B. Rule: Cultural Bias — “developing” (Updated)
+
+Old behavior: Flag “developing” everywhere.
+New behavior: Only flag when referring to countries or regions.
+
+If the word "developing" appears:
+    If next_word in ["countries", "nations", "regions", "world", "markets"]:
+        Flag as cultural bias.
+    Else:
+        Do NOT flag.
+
+1C. Rule: “Sex” and “Sexual” — profanity removal
+
+These appear in legal EEO statements.
+
+New rule:
+
+If "sex" or "sexual" appears inside an EEO or legal/compliance section:
+    Do NOT flag as profanity or tone issue.
+Else if appears in clearly explicit or inappropriate contexts:
+    Flag normally.
+
+1D. Rule: EEO Section Auto-Whitelist
+
+If the text is inside an EEO statement, skip ALL bias checks.
+
+Detect EEO sections by ANY of these phrases:
+
+["equal employment", "EEO", "employment opportunities", 
+ "without regard to", "race, color, religion", 
+ "gender identity", "sexual orientation", 
+ "veteran status", "disability status", 
+ "fair chance ordinance"]
+
+New logic:
+
+If paragraph contains any EEO keywords:
+    Skip all bias detection for that paragraph.
+
+1E. Rule: Intersectional Bias (Updated)
+
+Do NOT trigger intersectional bias unless real overlapping bias categories exist.
+
+New rule:
+
+If (number_of_confirmed_biases >= 2) AND 
+   (biases apply to same subject or sentence):
+       Trigger intersectional flag.
+Else:
+       Do NOT trigger.
+
+This removes fake “intersectional” flags caused by earlier false positives.
+
+2. FULL EEO WHITELIST 
+
+Use these EXACT phrases to auto-exclude entire paragraphs:
+
+eeo_whitelist_phrases = [
+  "equal employment opportunity",
+  "we provide equal employment",
+  "without regard to",
+  "protected veteran",
+  "sex, national origin",
+  "color, religion, sex",
+  "genetic information",
+  "disability status",
+  "sexual orientation",
+  "gender identity",
+  "gender expression",
+  "fair chance ordinance",
+  "eeo statement",
+  "affirmative action",
+  "qualified applicants will receive consideration",
+  "employment decisions will be based on",
+  "compliant with federal, state, and local laws",
+  "no discrimination shall be made",
+  "we are an equal opportunity employer"
+]
+
+Rule:
+If a paragraph contains ANY of these phrases → skip all bias checks.
+
+3. IMPROVED BIAS DICTIONARY (enterprise-ready)
+
+This is a better, safer starting point.
+BiasRadar can expand later, but this keeps quality high today.
+
+⸻
+
+3A. Gender-Coded Words (Revamped)
+
+Flag ONLY when describing personality traits:
+
+gender_coded_words = {
+  "masculine": ["aggressive", "dominant", "fearless", "assertive", "strong", "competitive"],
+  "feminine": ["supportive", "nurturing", "empathetic", "sensitive", "polite", "helpful"]
+}
+
+Context blacklist (DO NOT flag near these words):
+
+gender_context_whitelist = [
+  "salary", "compensation", "benefits", "package", "market",
+  "competitive salary", "competitive benefits"
+]
+
+3B. Culture Bias Terms (Updated)
+
+Only flag when referring to countries or cultures:
+
+culture_bias_terms = {
+  "developing": ["countries", "nations", "regions"],
+  "underdeveloped": ["countries", "regions"]
+}
+
+3C. Disability Bias Terms
+
+disability_bias_terms = [
+  "crazy", "insane", "blind to", "lame", "crippling", "handicapped"
+]
+
+3D. Age Bias Terms
+
+age_bias_terms = [
+  "young and energetic", 
+  "digital native", 
+  "recent graduate", 
+  "overqualified",
+  "older workers",
+  "senior citizen"
+]
+
+3E. Socioeconomic Bias Terms
+
+socioeconomic_bias_terms = [
+  "low class", "high class", "on welfare", "poor background"
+]
+
+3F. Tone / Profanity Terms (Safe Version)
+
+profanity_terms = [
+  "damn", "hell", "shit", "fuck"
+]
+
+Remove “sex” and “sexual” from profanity list.
+
+4. BEFORE/AFTER EXAMPLES 
+
+Use these examples to test the new rules.
+
+⸻
+
+Example 1 — Gender false positive
+
+Before:
+“Competitive salary and benefits.”
+
+Old result:
+❌ Flagged as gender-coded (incorrect)
+
+After new rules:
+✔ No flag
+(“competitive” not describing a person)
+
+⸻
+
+Example 2 — Cultural false positive
+
+Before:
+“We are developing a new model.”
+
+Old result:
+❌ Cultural bias flagged (incorrect)
+
+After new rules:
+✔ No flag
+
+⸻
+
+Example 3 — “Sexual orientation” false positive
+
+Before:
+“We do not discriminate based on race, color, religion, sex, sexual orientation…”
+
+Old result:
+❌ Flagged as profanity (incorrect)
+
+After new rules:
+✔ EEO paragraph → skip all bias checks → no flags
+
+⸻
+
+Example 4 — Real bias (should STILL be caught)
+
+Before:
+“We’re looking for a young, energetic guy who can handle aggressive targets.”
+
+Correct detection:
+✔ Age bias (“young”)
+✔ Gender bias (“guy”, “aggressive” describing personality)
+✔ Tone issue (“aggressive”)
+✔ Intersectional bias (gender + age)
