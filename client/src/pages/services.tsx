@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { ComparisonMatrix } from "@/components/services/comparison-matrix";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { ArrowRight, Search, Shield, Network, Clock, Bot, Settings } from "lucide-react";
+import { ArrowRight, Search, Shield, Network, Clock, Bot, Settings, Workflow } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -378,6 +378,41 @@ export default function Services() {
             </ul>
             <div className="flex justify-center">
               <Link href="/services/custom-ai-solutions">
+                <Button 
+                  className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
+                  onClick={() => window.scrollTo(0, 0)}
+                >
+                  Learn More
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card id="ai-workflow-automation">
+          <CardHeader>
+            <ServiceIcon>
+              <Workflow className="h-12 w-12 stroke-[1.5] text-primary"
+                style={{
+                  filter: "drop-shadow(0 0 8px rgba(11, 36, 71, 0.2))"
+                }}
+              />
+            </ServiceIcon>
+            <CardTitle className="text-2xl mb-2">AI Workflow Automation</CardTitle>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">
+              Turn repetitive work into reliable, measurable automation
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-6 text-muted-foreground">
+              ModelProof builds practical AI-powered workflows that eliminate repetitive tasks across customer operations, support, compliance, and internal teams—without sacrificing reliability, compliance, or brand safety.
+            </p>
+            <p className="mb-6 text-muted-foreground">
+              We focus on high-impact workflows that are easy to adopt, securely integrated with your existing tools, and backed by enterprise-grade QA and responsible AI guardrails.
+            </p>
+            <div className="flex justify-center">
+              <Link href="/services/ai-workflow-automation">
                 <Button 
                   className="px-8 py-2 transform hover:-translate-y-1 transition-all duration-200 hover:shadow-lg"
                   onClick={() => window.scrollTo(0, 0)}

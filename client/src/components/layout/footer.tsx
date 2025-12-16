@@ -87,6 +87,16 @@ export function Footer() {
                   </span>
                 </Link>
               </li>
+              <li>
+                <Link href="/services/ai-workflow-automation">
+                  <span 
+                    onClick={() => window.scrollTo(0, 0)}
+                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
+                  >
+                    AI Workflow Automation
+                  </span>
+                </Link>
+              </li>
             </ul>
           </div>
 
