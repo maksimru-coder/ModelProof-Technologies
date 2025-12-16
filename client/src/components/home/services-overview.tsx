@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Search, Shield, Network, Clock, Bot, Settings } from "lucide-react";
+import { Search, Shield, Network, Clock, Bot, Settings, Workflow } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const services = [
@@ -52,6 +52,13 @@ const services = [
     description: "From workflow automation to industry-specific AI agents, we design intelligent solutions customized to your unique needs. Scalable, secure, and fully integrated with your tools.",
     icon: Settings,
     path: "/services/custom-ai-solutions"
+  },
+  {
+    title: "AI Workflow Automation",
+    headline: "Fast, practical automation for real business processes",
+    description: "We design and implement AI-powered workflows that remove repetitive work — such as lead qualification, intake summarization, ticket routing, compliance checks, and more — securely integrated with your existing tools.",
+    icon: Workflow,
+    path: "/services/ai-workflow-automation"
   }
 ];
 

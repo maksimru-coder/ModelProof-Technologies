@@ -20,6 +20,7 @@ export function Header() {
     { href: "/services/enterprise-solution", label: "Enterprise Solution" },
     { href: "/services/retainer-services", label: "Retainer Services" },
     { href: "/services/ai-chat-assistant", label: "AI Chat Assistant Services" },
+    { href: "/services/ai-workflow-automation", label: "AI Workflow Automation" },
   ];
 
   const productLinks = [

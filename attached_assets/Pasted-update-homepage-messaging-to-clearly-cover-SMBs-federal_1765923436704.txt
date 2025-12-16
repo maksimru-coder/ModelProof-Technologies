@@ -1,0 +1,173 @@
+update homepage messaging to clearly cover SMBs + federal, and add a new service called AI Workflow Automation WITHOUT showing prices.
+Keep the existing brand voice: trustworthy, measurable results, compliance-first.
+
+Primary requirements
+	1.	Update Homepage hero text (headline + subheadline) exactly as written below.
+	2.	In the Services section, add a new service card called AI Workflow Automation (new).
+	3.	Create a new page for this service (or route/section if that’s how the site is built), and make “Learn More” on the homepage service card link to it.
+	4.	Do not remove existing services. Do not merge pages right now. Keep:
+	•	AI Chat Assistant Services (lead-gen + chat)
+	•	Custom AI Solutions (broader custom builds)
+	•	NEW AI Workflow Automation (fixed-scope automation workflows)
+	5.	Keep styling consistent with the existing cards/components.
+
+⸻
+
+1) HOMEPAGE HERO (replace existing hero headline/subheadline)
+
+Headline (H1)
+
+AI You Can Trust. Results You Can Measure.
+
+Subheadline (supporting text)
+
+We help teams—from startups to federal agencies—deploy reliable, neutral, and compliant AI through validation, bias detection, and workflow automation.
+
+⸻
+
+2) HOMEPAGE “OUR SERVICES” SECTION (add a new service card)
+
+Add a new service card alongside the existing service cards:
+
+New Service Card Title
+
+AI Workflow Automation
+
+New Service Card Subtitle / Tagline
+
+Fast, practical automation for real business processes
+
+New Service Card Description (2–3 lines)
+
+We design and implement AI-powered workflows that remove repetitive work — such as lead qualification, intake summarization, ticket routing, compliance checks, and more — securely integrated with your existing tools.
+
+CTA button text
+
+Learn More
+
+CTA link
+
+Link to: /ai-workflow-automation (create this page/route)
+
+⸻
+
+3) NEW PAGE: /ai-workflow-automation (create this page)
+
+Create a page with the exact copy below (adjust formatting to match existing pages).
+
+Page Title / Hero
+
+H1
+
+AI Workflow Automation
+
+Subheader
+
+Turn repetitive work into reliable, measurable automation—without sacrificing compliance or brand safety.
+
+Short intro paragraph
+
+ModelProof builds practical AI workflows that save time and reduce errors across customer operations, support, compliance, and internal teams. We focus on workflows that are easy to adopt, integrated with your existing tools, and backed by enterprise-grade QA and responsible AI guardrails.
+
+⸻
+
+Section: “What We Automate”
+
+Use cards or bullets:
+
+Common workflows we automate include:
+
+• Lead qualification & routing
+Website, forms, or emails → AI qualification → CRM updates → follow-up actions
+
+• Client intake & summarization
+Forms, documents, or emails → structured summaries → next-step recommendations
+
+• Support & service ticket triage
+Categorization, prioritization, response drafting, and escalation logic
+
+• Compliance & policy checks
+Policy-aware review, risk flagging, bias detection, and audit-ready outputs
+
+• Internal knowledge assistants
+Secure AI trained on private documents for accurate, role-aware answers
+
+• Operational reporting & insights
+Activity data → AI-generated insights → dashboards and decision support
+
+…and other custom AI workflows tailored to your business processes, risk profile, and compliance requirements.
+
+⸻
+
+Section: “How It Works”
+
+Use a 4-step layout:
+	1.	Discovery
+	•	Identify a high-value, repetitive workflow and success metrics.
+	2.	Design
+	•	Define workflow steps, data sources, guardrails, and integrations.
+	3.	Build & Integrate
+	•	Implement automations connected to your tools (CRM, email, forms, calendar, ticketing).
+	4.	Validate & Support
+	•	QA testing, monitoring, improvements, and ongoing optimization.
+
+⸻
+
+Section: “Why ModelProof”
+
+Bullets (keep it tight):
+	•	Quality-first automation: built with testing, monitoring, and reliability checks
+	•	Compliance-ready guardrails: bias checks, safety controls, and audit-friendly outputs
+	•	Vendor-neutral: we fit into your stack, not the other way around
+	•	Fast delivery: focused scope and rapid iteration
+	•	Built by a experts: 25+ years in software development, testing, automation, and validation
+
+⸻
+
+Section: “Who This Is For”
+
+Short bullets:
+	•	Small businesses that need time savings now
+	•	Teams with repeatable processes and fragmented tools
+	•	Organizations that need trust, compliance, and predictable output
+
+⸻
+
+CTA Section (bottom)
+
+CTA headline
+
+Ready to automate a workflow?
+
+CTA text
+
+Tell us the process you want to automate and the tools you use. We’ll propose a safe, measurable workflow plan and next steps.
+
+CTA button
+
+Contact Us
+Link to your existing Contact page.
+
+⸻
+
+4) DIFFERENTIATION (make sure this is true in the page structure)
+
+Do NOT change these pages, but ensure this new page feels distinct:
+	•	AI Chat Assistant Services = website chat, lead capture, appointment booking, 24/7 assistant
+	•	Custom AI Solutions = broader custom builds (agents, apps, analytics, knowledge automation)
+	•	AI Workflow Automation (new) = specific workflows + integrations + reliability/guardrails
+
+If any navigation needs updating, add “AI Workflow Automation” under Services in the menu.
+
+⸻
+
+5) NO PRICING ON PUBLIC PAGES
+
+Do not display price on homepage or the new page. If we want pricing later, we’ll add it after lead volume starts.
+
+⸻
+
+6) IMPLEMENTATION NOTES
+	•	Keep the layout consistent with current site components.
+	•	Make sure the new route works on refresh (proper routing).
+	•	Ensure “Learn More” button from homepage points to the new page.
