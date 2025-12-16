@@ -8,15 +8,13 @@ import {
 } from "@/components/ui/table";
 import { Check, Minus } from "lucide-react";
 
-type FeatureValue = boolean | string;
-
 interface Feature {
   name: string;
-  essential: FeatureValue;
-  professional: FeatureValue;
-  enterprise: FeatureValue;
-  retainer: FeatureValue;
-  workflow: FeatureValue;
+  essential: boolean;
+  professional: boolean;
+  enterprise: boolean;
+  retainer: boolean;
+  workflow: boolean;
 }
 
 const features: Feature[] = [
@@ -26,7 +24,7 @@ const features: Feature[] = [
     professional: true,
     enterprise: true,
     retainer: true,
-    workflow: "Workflow-specific",
+    workflow: true,
   },
   {
     name: "Quality Baseline Establishment",
@@ -50,7 +48,7 @@ const features: Feature[] = [
     professional: true,
     enterprise: true,
     retainer: true,
-    workflow: "Policy-aware",
+    workflow: true,
   },
   {
     name: "AI Safety & Risk Analysis",
@@ -85,7 +83,7 @@ const features: Feature[] = [
     workflow: true,
   },
   {
-    name: "Tool & API Integrations (CRM, Email, Tickets)",
+    name: "Tool & API Integrations",
     essential: false,
     professional: false,
     enterprise: false,
@@ -110,19 +108,6 @@ const features: Feature[] = [
   },
 ];
 
-function FeatureCell({ value }: { value: FeatureValue }) {
-  if (typeof value === "string") {
-    return (
-      <span className="text-xs text-primary font-medium">{value}</span>
-    );
-  }
-  return value ? (
-    <Check className="h-4 w-4 mx-auto text-primary" />
-  ) : (
-    <Minus className="h-4 w-4 mx-auto text-muted-foreground" />
-  );
-}
-
 export function ComparisonMatrix() {
   return (
     <div className="overflow-x-auto">
@@ -130,10 +115,10 @@ export function ComparisonMatrix() {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[250px]">Feature</TableHead>
-            <TableHead className="text-center">Essential Assessment</TableHead>
-            <TableHead className="text-center">Professional Validation</TableHead>
-            <TableHead className="text-center">Enterprise Solution</TableHead>
-            <TableHead className="text-center">Retainer Services</TableHead>
+            <TableHead className="text-center">Essential</TableHead>
+            <TableHead className="text-center">Professional</TableHead>
+            <TableHead className="text-center">Enterprise</TableHead>
+            <TableHead className="text-center">Retainer</TableHead>
             <TableHead className="text-center">AI Workflow Automation</TableHead>
           </TableRow>
         </TableHeader>
@@ -142,19 +127,39 @@ export function ComparisonMatrix() {
             <TableRow key={feature.name}>
               <TableCell className="font-medium">{feature.name}</TableCell>
               <TableCell className="text-center">
-                <FeatureCell value={feature.essential} />
+                {feature.essential ? (
+                  <Check className="h-4 w-4 mx-auto text-primary" />
+                ) : (
+                  <Minus className="h-4 w-4 mx-auto text-muted-foreground" />
+                )}
               </TableCell>
               <TableCell className="text-center">
-                <FeatureCell value={feature.professional} />
+                {feature.professional ? (
+                  <Check className="h-4 w-4 mx-auto text-primary" />
+                ) : (
+                  <Minus className="h-4 w-4 mx-auto text-muted-foreground" />
+                )}
               </TableCell>
               <TableCell className="text-center">
-                <FeatureCell value={feature.enterprise} />
+                {feature.enterprise ? (
+                  <Check className="h-4 w-4 mx-auto text-primary" />
+                ) : (
+                  <Minus className="h-4 w-4 mx-auto text-muted-foreground" />
+                )}
               </TableCell>
               <TableCell className="text-center">
-                <FeatureCell value={feature.retainer} />
+                {feature.retainer ? (
+                  <Check className="h-4 w-4 mx-auto text-primary" />
+                ) : (
+                  <Minus className="h-4 w-4 mx-auto text-muted-foreground" />
+                )}
               </TableCell>
               <TableCell className="text-center">
-                <FeatureCell value={feature.workflow} />
+                {feature.workflow ? (
+                  <Check className="h-4 w-4 mx-auto text-primary" />
+                ) : (
+                  <Minus className="h-4 w-4 mx-auto text-muted-foreground" />
+                )}
               </TableCell>
             </TableRow>
           ))}
