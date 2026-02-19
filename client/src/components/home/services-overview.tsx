@@ -12,6 +12,27 @@ import { Button } from "@/components/ui/button";
 
 const services = [
   {
+    title: "AI Chat Assistant Services",
+    headline: "24/7 Lead Generation & Support — Powered by Smart AI Agents",
+    description: "Custom-trained AI assistants and intelligent agents that engage visitors, qualify leads, and book appointments — fully integrated with tools like Calendly, CRMs, and analytics platforms.",
+    icon: Bot,
+    path: "/services/ai-chat-assistant"
+  },
+  {
+    title: "AI Workflow Automation",
+    headline: "Fast, practical automation for real business processes",
+    description: "We design and implement AI-powered workflows that remove repetitive work — such as lead qualification, intake summarization, ticket routing, compliance checks, and more — securely integrated with your existing tools.",
+    icon: Workflow,
+    path: "/services/ai-workflow-automation"
+  },
+  {
+    title: "Custom AI Solutions",
+    headline: "Tailored AI Built for Your Business",
+    description: "From workflow automation to industry-specific AI agents, we design intelligent solutions customized to your unique needs. Scalable, secure, and fully integrated with your tools.",
+    icon: Settings,
+    path: "/services/custom-ai-solutions"
+  },
+  {
     title: "Essential Assessment",
     headline: "Foundation for AI Excellence",
     description: "Comprehensive analysis of your AI system's architecture, quality, and compliance readiness to establish a clear path forward.",
@@ -38,27 +59,6 @@ const services = [
     description: "Continuous quality assurance and optimization to ensure your AI systems maintain peak performance and compliance.",
     icon: Clock,
     path: "/services/retainer-services"
-  },
-  {
-    title: "AI Chat Assistant Services",
-    headline: "24/7 Lead Generation & Support — Powered by Smart AI Agents",
-    description: "Custom-trained AI assistants and intelligent agents that engage visitors, qualify leads, and book appointments — fully integrated with tools like Calendly, CRMs, and analytics platforms.",
-    icon: Bot,
-    path: "/services/ai-chat-assistant"
-  },
-  {
-    title: "Custom AI Solutions",
-    headline: "Tailored AI Built for Your Business",
-    description: "From workflow automation to industry-specific AI agents, we design intelligent solutions customized to your unique needs. Scalable, secure, and fully integrated with your tools.",
-    icon: Settings,
-    path: "/services/custom-ai-solutions"
-  },
-  {
-    title: "AI Workflow Automation",
-    headline: "Fast, practical automation for real business processes",
-    description: "We design and implement AI-powered workflows that remove repetitive work — such as lead qualification, intake summarization, ticket routing, compliance checks, and more — securely integrated with your existing tools.",
-    icon: Workflow,
-    path: "/services/ai-workflow-automation"
   }
 ];
 

@@ -59,7 +59,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            We help teams—from startups to federal agencies—deploy reliable, neutral, and compliant AI through validation, bias detection, and workflow automation.
+            We help teams—from startups to federal agencies—build AI that's reliable, fair, and compliant. From validation and bias detection to workflow automation and intelligent agents.
           </motion.p>
           <motion.div
             className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6"
