@@ -67,16 +67,6 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
-            <Link href="/products">
-              <Button
-                size="lg"
-                onClick={() => window.scrollTo(0, 0)}
-                className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg border-2 border-white/20 hover:border-white/40"
-                data-testid="button-view-products"
-              >
-                Products
-              </Button>
-            </Link>
             <Link href="/services">
               <Button
                 size="lg"
@@ -85,6 +75,16 @@ export function Hero() {
                 data-testid="button-view-services"
               >
                 Services
+              </Button>
+            </Link>
+            <Link href="/products">
+              <Button
+                size="lg"
+                onClick={() => window.scrollTo(0, 0)}
+                className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg border-2 border-white/20 hover:border-white/40"
+                data-testid="button-view-products"
+              >
+                Products
               </Button>
             </Link>
             <Link href="/methodology">
