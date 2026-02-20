@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Search, Shield, Network, Clock, Bot, Settings, Workflow } from "lucide-react";
+import { Bot, Settings, Workflow } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const services = [
@@ -31,34 +31,6 @@ const services = [
     description: "From workflow automation to industry-specific AI agents, we design intelligent solutions customized to your unique needs. Scalable, secure, and fully integrated with your tools.",
     icon: Settings,
     path: "/services/custom-ai-solutions"
-  },
-  {
-    title: "Essential Assessment",
-    headline: "Foundation for AI Excellence",
-    description: "Comprehensive analysis of your AI system's architecture, quality, and compliance readiness to establish a clear path forward.",
-    icon: Search,
-    path: "/services/essential-assessment"
-  },
-  {
-    title: "Professional Validation",
-    headline: "Ensure AI Reliability",
-    description: "In-depth validation of your AI system's performance, accuracy, and compliance through our proven testing framework.",
-    icon: Shield,
-    path: "/services/professional-validation"
-  },
-  {
-    title: "Enterprise Solution",
-    headline: "End-to-End AI Quality",
-    description: "Complete AI validation suite for complex implementations, featuring custom frameworks and continuous monitoring.",
-    icon: Network,
-    path: "/services/enterprise-solution"
-  },
-  {
-    title: "Retainer Services",
-    headline: "Ongoing Excellence",
-    description: "Continuous quality assurance and optimization to ensure your AI systems maintain peak performance and compliance.",
-    icon: Clock,
-    path: "/services/retainer-services"
   }
 ];
 
