@@ -1,7 +1,15 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, Workflow, CheckCircle, Users, Building, Briefcase } from "lucide-react";
+import { ArrowRight, Workflow, CheckCircle, Users, Building, Briefcase, MessageSquare, Calendar, Star, PhoneOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (options: { url: string }) => void;
+    };
+  }
+}
 
 export default function AIWorkflowAutomation() {
   const workflows = [
@@ -34,17 +42,17 @@ export default function AIWorkflowAutomation() {
   const howItWorks = [
     {
       step: "1",
-      title: "Discovery",
+      title: "Discovery (1–2 days)",
       description: "Identify a high-value, repetitive workflow and success metrics."
     },
     {
       step: "2",
-      title: "Design",
+      title: "Design (2–3 days)",
       description: "Define workflow steps, data sources, guardrails, and integrations."
     },
     {
       step: "3",
-      title: "Build & Integrate",
+      title: "Build & Integrate (3–7 days)",
       description: "Implement automations connected to your tools (CRM, email, forms, calendar, ticketing)."
     },
     {
@@ -99,6 +107,65 @@ export default function AIWorkflowAutomation() {
               </p>
               <p className="text-lg text-muted-foreground">
                 ModelProof builds practical AI workflows that save time and reduce errors across customer operations, support, compliance, and internal teams. We focus on workflows that are easy to adopt, integrated with your existing tools, and backed by enterprise-grade QA and responsible AI guardrails.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-gradient-to-br from-emerald-50 to-cyan-50 dark:from-emerald-950/20 dark:to-cyan-950/20">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="mb-16"
+            >
+              <h2 className="text-3xl font-bold text-center mb-4">For Local Service Businesses</h2>
+              <p className="text-lg text-muted-foreground text-center mb-10">
+                If you're an HVAC company, plumber, roofer, dentist, or contractor losing leads because you can't follow up fast enough — we build the system that fixes that.
+              </p>
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="flex items-start gap-4 p-6 bg-card rounded-lg border">
+                  <div className="flex-shrink-0">
+                    <MessageSquare className="h-6 w-6 text-emerald-500 mt-1" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Instant SMS Follow-Up</h3>
+                    <p className="text-muted-foreground text-sm">New lead comes in? They get a personalized text within 60 seconds — automatically.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-6 bg-card rounded-lg border">
+                  <div className="flex-shrink-0">
+                    <Calendar className="h-6 w-6 text-emerald-500 mt-1" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">AI Chat That Books Appointments 24/7</h3>
+                    <p className="text-muted-foreground text-sm">A smart assistant on your website that answers questions and schedules jobs — even at 2 AM.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-6 bg-card rounded-lg border">
+                  <div className="flex-shrink-0">
+                    <Star className="h-6 w-6 text-emerald-500 mt-1" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Automated Review Requests</h3>
+                    <p className="text-muted-foreground text-sm">After every completed job, your customer gets a friendly review request — building your reputation on autopilot.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 p-6 bg-card rounded-lg border">
+                  <div className="flex-shrink-0">
+                    <PhoneOff className="h-6 w-6 text-emerald-500 mt-1" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Missed Call Text Back</h3>
+                    <p className="text-muted-foreground text-sm">Can't pick up the phone? An instant text goes out so no lead goes cold.</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-center text-muted-foreground mt-8 font-medium">
+                Typically live within 7 days, no technical team required.
               </p>
             </motion.div>
           </div>
@@ -248,16 +315,18 @@ export default function AIWorkflowAutomation() {
               <p className="text-lg text-muted-foreground mb-8">
                 Tell us the process you want to automate and the tools you use. We'll propose a safe, measurable workflow plan and next steps.
               </p>
-              <Link href="/contact">
-                <Button
-                  size="lg"
-                  onClick={() => window.scrollTo(0, 0)}
-                  className="bg-primary hover:bg-primary/90 text-white shadow-md hover:shadow-lg transform transition-all duration-300 hover:-translate-y-0.5"
-                >
-                  Contact Us
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
+              <Button
+                size="lg"
+                onClick={() => {
+                  if (window.Calendly) {
+                    window.Calendly.initPopupWidget({ url: 'https://calendly.com/maksim-modelproof/30min' });
+                  }
+                }}
+                className="px-8 py-4 font-bold text-lg bg-gradient-to-r from-emerald-400 to-cyan-400 text-primary hover:from-emerald-300 hover:to-cyan-300 rounded-lg transform transition-all hover:-translate-y-1 hover:shadow-2xl shadow-lg shadow-emerald-400/30 border-2 border-white/30 hover:border-white/50 cursor-pointer"
+              >
+                <Calendar className="mr-2 h-5 w-5" />
+                Book a Free 15-Min Call
+              </Button>
             </motion.div>
           </div>
         </div>
