@@ -1,6 +1,15 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { Calendar } from "lucide-react";
+
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (options: { url: string }) => void;
+    };
+  }
+}
 
 const NetworkGrid = () => {
   return (
@@ -67,6 +76,19 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
+            <Button
+              size="lg"
+              onClick={() => {
+                if (window.Calendly) {
+                  window.Calendly.initPopupWidget({ url: 'https://calendly.com/maksim-rudakov/30min' });
+                }
+              }}
+              className="px-8 py-4 font-bold text-lg bg-gradient-to-r from-emerald-400 to-cyan-400 text-primary hover:from-emerald-300 hover:to-cyan-300 rounded-lg transform transition-all hover:-translate-y-1 hover:shadow-2xl shadow-lg shadow-emerald-400/30 border-2 border-white/30 hover:border-white/50 animate-pulse hover:animate-none"
+              data-testid="button-book-call"
+            >
+              <Calendar className="mr-2 h-5 w-5" />
+              Book a Free 15-Min Call
+            </Button>
             <Link href="/services">
               <Button
                 size="lg"
@@ -85,16 +107,6 @@ export function Hero() {
                 data-testid="button-view-products"
               >
                 Products
-              </Button>
-            </Link>
-            <Link href="/methodology">
-              <Button
-                size="lg"
-                onClick={() => window.scrollTo(0, 0)}
-                className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg border-2 border-white/20 hover:border-white/40"
-                data-testid="button-learn-methodology"
-              >
-                Methodology
               </Button>
             </Link>
           </motion.div>
