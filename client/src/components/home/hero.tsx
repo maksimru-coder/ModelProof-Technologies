@@ -83,7 +83,7 @@ export function Hero() {
                   window.Calendly.initPopupWidget({ url: 'https://calendly.com/maksim-rudakov/30min' });
                 }
               }}
-              className="px-8 py-4 font-bold text-lg bg-gradient-to-r from-emerald-400 to-cyan-400 text-primary hover:from-emerald-300 hover:to-cyan-300 rounded-lg transform transition-all hover:-translate-y-1 hover:shadow-2xl shadow-lg shadow-emerald-400/30 border-2 border-white/30 hover:border-white/50 animate-pulse hover:animate-none"
+              className="px-8 py-4 font-bold text-lg bg-gradient-to-r from-emerald-400 to-cyan-400 text-primary hover:from-emerald-300 hover:to-cyan-300 rounded-lg transform transition-all hover:-translate-y-1 hover:shadow-2xl shadow-lg shadow-emerald-400/30 border-2 border-white/30 hover:border-white/50"
               data-testid="button-book-call"
             >
               <Calendar className="mr-2 h-5 w-5" />
