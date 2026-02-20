@@ -103,7 +103,7 @@ export default function AIWorkflowAutomation() {
                 AI Workflow Automation
               </h1>
               <p className="text-xl text-muted-foreground mb-4">
-                Turn repetitive work into reliable, measurable automation—without sacrificing compliance or brand safety.
+                Turn repetitive work into reliable, measurable automation — fast to deploy and built to last.
               </p>
               <p className="text-lg text-muted-foreground">
                 ModelProof builds practical AI workflows that save time and reduce errors across customer operations, support, compliance, and internal teams. We focus on workflows that are easy to adopt, integrated with your existing tools, and backed by enterprise-grade QA and responsible AI guardrails.
