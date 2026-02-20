@@ -68,7 +68,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            We build AI automation systems and intelligent agents that help businesses capture more leads, cut manual work, and grow faster — typically live within 7 days, no technical team required.
+            We build AI automation systems and intelligent agents that help businesses capture more leads, eliminate manual work, and grow faster — typically live within 7 days, no technical team required.
           </motion.p>
           <motion.div
             className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6"
