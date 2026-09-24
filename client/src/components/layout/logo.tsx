@@ -1,5 +1,3 @@
-import { Link } from "wouter";
-
 export function Logo() {
   return (
     <div className="flex items-center space-x-2">
@@ -11,7 +9,7 @@ export function Logo() {
           ModelProof
         </span>
         <span className="font-montserrat text-xs font-medium leading-tight" style={{ color: '#00D4FF' }}>
-          – AI Automation & Intelligent Agents
+          AI visibility for local business
         </span>
       </div>
     </div>
