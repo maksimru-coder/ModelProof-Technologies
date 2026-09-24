@@ -5,20 +5,20 @@ const steps = [
   {
     step: "1",
     title: "Free mini-scan",
-    text: "We run five real customer-style prompts about your business through ChatGPT, Claude, and Gemini, and record exactly what each model says. You get the raw answers plus our honest read: where you're mentioned, where you're missing, and what's wrong.",
-    note: "Free. The scan is the pitch.",
+    text: "Five customer-style questions about your business, run through ChatGPT, Claude, and Gemini. You get the raw answers and a short read: named, missing, or described wrong.",
+    note: "Free. Results in 24-48 hours. No call required.",
   },
   {
     step: "2",
     title: "AI Visibility Audit \u2014 $750",
-    text: "The full diagnosis. Dozens of prompts across the three models, covering your reviews, website, Google Business Profile, and competitors. A written report with every finding backed by evidence, ranked by what will move the needle, and a concrete fix list.",
-    note: "One-time.",
+    text: "The full diagnosis. Dozens of prompts, your reviews, website, Google Business Profile, and competitors. A written report with evidence and a ranked list of what to fix first.",
+    note: "One-time. You keep the report.",
   },
   {
     step: "3",
     title: "Visibility retainer \u2014 $600/month",
-    text: "AI answers change constantly \u2014 models update, competitors get mentioned, your reviews shift. We re-test monthly, track whether you're gaining or losing ground, and keep fixing. You get a plain-English report every month.",
-    note: "Cancel when it stops being useful.",
+    text: "Models update. Competitors get mentioned. Reviews shift. We re-test the same questions every month, send a plain-English report, and keep the public record accurate.",
+    note: "Month to month. Stop when it stops being useful.",
   },
 ];
 
@@ -39,7 +39,7 @@ export function HowItWorks() {
           ))}
         </div>
         <p className="mt-12 text-sm text-muted-foreground text-center max-w-3xl mx-auto">
-          An honest note: nobody can guarantee an AI will recommend you \u2014 not us, not anyone. What we sell is better odds: accurate information everywhere the models look, stronger review signals, and measurement so you know it's working instead of hoping.
+          We will not promise that ChatGPT will name you. Nobody can. We sell a measured picture of what the models say today, and the work that gives you better odds tomorrow.
         </p>
         <div className="mt-10 flex justify-center">
           <Link href="/contact">

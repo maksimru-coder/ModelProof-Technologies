@@ -1,16 +1,19 @@
+import { Link } from "wouter";
+import { Button } from "@/components/ui/button";
+
 export function WhyUs() {
   const points = [
     {
-      title: "We measure, not guess",
-      text: "Every claim we make about your AI visibility comes with a screenshot or a transcript. If we can't show it, we don't say it.",
+      title: "Evidence first",
+      text: "If we cannot show the answer — screenshot or transcript — we do not claim it.",
     },
     {
-      title: "We show our work",
-      text: "You see the raw AI answers, not just our summary. The evidence is yours to keep.",
+      title: "Built for local service businesses",
+      text: "Dentists, HVAC, legal, medical, med spa, and similar firms where one recommendation is a booked job.",
     },
     {
-      title: "We don't sell guarantees",
-      text: "Anyone who promises we'll make ChatGPT recommend you is selling something they can't deliver. We sell correct information, stronger signals than your competitors, and honest monthly measurement.",
+      title: "Testers, not a media agency",
+      text: "Twenty years in software quality assurance. We run the same question twice and keep both answers.",
     },
   ];
 
@@ -19,7 +22,7 @@ export function WhyUs() {
       <div className="container max-w-4xl">
         <h2 className="text-3xl font-bold text-center mb-4">Why ModelProof</h2>
         <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-          We're testers by trade. ModelProof started in software quality assurance — twenty years of breaking software for a living and proving what's actually true versus what someone claims. We brought that discipline to AI.
+          East Bay based. Remote work anywhere in the U.S. The first deliverable is always the same: what the models actually say about you.
         </p>
         <div className="grid gap-8 md:grid-cols-3">
           {points.map((point, index) => (
@@ -30,9 +33,12 @@ export function WhyUs() {
             </div>
           ))}
         </div>
-        <p className="mt-12 text-center font-medium">
-          ModelProof Technologies — we make your business visible and chosen in the AI era.
-        </p>
+        <div className="mt-14 text-center">
+          <p className="font-medium mb-6">See what ChatGPT, Claude, and Gemini say about your business.</p>
+          <Link href="/contact">
+            <Button size="lg" onClick={() => window.scrollTo(0, 0)}>Get the free mini-scan</Button>
+          </Link>
+        </div>
       </div>
     </section>
   );
