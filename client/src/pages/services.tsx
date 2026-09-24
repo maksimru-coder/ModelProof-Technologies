@@ -15,18 +15,18 @@ export default function Services() {
   return (
     <div className="container py-16">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl mx-auto text-center mb-16">
-        <h1 className="text-4xl font-bold mb-4">Services</h1>
-        <p className="text-lg text-muted-foreground">Start with a free scan. Add the audit, the retainer, or the work that feeds the models.</p>
+        <h1 className="text-4xl font-bold mb-4">What we sell</h1>
+        <p className="text-lg text-muted-foreground">Start with a free scan. Pay for the audit only if the results are worth acting on. Keep the retainer only if the monthly report is useful.</p>
       </motion.div>
       <div className="grid gap-8 mb-16">
         <Card id="mini-scan">
           <CardHeader>
             <ServiceIcon><Search className="h-12 w-12 stroke-[1.5] text-primary" /></ServiceIcon>
             <CardTitle className="text-2xl mb-2">Free mini-scan</CardTitle>
-            <CardDescription className="text-lg font-medium text-primary/80 mb-4">Five prompts. Three models. The raw answers.</CardDescription>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">The first conversation is the evidence.</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="mb-6 text-muted-foreground">We run five real customer-style prompts about your business through ChatGPT, Claude, and Gemini and send you what they said — plus a short, honest read.</p>
+            <p className="mb-6 text-muted-foreground">Five real customer questions. ChatGPT, Claude, and Gemini. You receive the raw answers and a short note on whether you were named, skipped, or described incorrectly.</p>
             <div className="flex justify-center">
               <Link href="/contact"><Button className="px-8 py-2" onClick={() => window.scrollTo(0, 0)}>Request a mini-scan<ArrowRight className="ml-2 h-4 w-4" /></Button></Link>
             </div>
@@ -36,37 +36,40 @@ export default function Services() {
           <CardHeader>
             <ServiceIcon><FileSearch className="h-12 w-12 stroke-[1.5] text-primary" /></ServiceIcon>
             <CardTitle className="text-2xl mb-2">AI Visibility Audit — $750</CardTitle>
-            <CardDescription className="text-lg font-medium text-primary/80 mb-4">One-time diagnosis</CardDescription>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">One-time. You keep the report.</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground">Dozens of prompts across three models, covering reviews, website, Google Business Profile, and competitors. Written report with evidence and a ranked fix list.</p>
+            <p className="mb-6 text-muted-foreground">Dozens of prompts across three models. Reviews, website, Google Business Profile, and the competitors who already show up in the answers. Ranked fixes — not a slide deck of advice.</p>
+            <div className="flex justify-center">
+              <Link href="/contact"><Button variant="outline" className="px-8 py-2" onClick={() => window.scrollTo(0, 0)}>Ask about an audit</Button></Link>
+            </div>
           </CardContent>
         </Card>
         <Card id="retainer">
           <CardHeader>
             <ServiceIcon><RefreshCw className="h-12 w-12 stroke-[1.5] text-primary" /></ServiceIcon>
             <CardTitle className="text-2xl mb-2">Visibility retainer — $600/month</CardTitle>
-            <CardDescription className="text-lg font-medium text-primary/80 mb-4">Re-test, track, keep fixing</CardDescription>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">Same questions, every month.</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground">Monthly re-testing and a plain-English report showing whether you are gaining or losing ground.</p>
+            <p className="mb-6 text-muted-foreground">Re-test, track movement, keep the public record accurate. Cancel when the report stops changing what you do.</p>
           </CardContent>
         </Card>
         <Card id="reviews">
           <CardHeader>
             <ServiceIcon><Star className="h-12 w-12 stroke-[1.5] text-primary" /></ServiceIcon>
             <CardTitle className="text-2xl mb-2">Review management — $300/month</CardTitle>
-            <CardDescription className="text-lg font-medium text-primary/80 mb-4">A strong signal the models read</CardDescription>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">Offered because models quote reviews.</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground">Monitor reviews, flag replies, and help build a steady stream of fresh ones.</p>
+            <p className="text-muted-foreground">Monitor, reply, and keep fresh reviews coming. Not a standalone reputation agency — a signal the scan keeps measuring.</p>
           </CardContent>
         </Card>
         <Card id="websites">
           <CardHeader>
             <ServiceIcon><Globe className="h-12 w-12 stroke-[1.5] text-primary" /></ServiceIcon>
             <CardTitle className="text-2xl mb-2">Websites</CardTitle>
-            <CardDescription className="text-lg font-medium text-primary/80 mb-4">The models look here first</CardDescription>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">If the page is thin, the model invents the rest.</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -81,9 +84,10 @@ export default function Services() {
           <CardHeader>
             <ServiceIcon><Phone className="h-12 w-12 stroke-[1.5] text-primary" /></ServiceIcon>
             <CardTitle className="text-2xl mb-2">AI Front Desk</CardTitle>
-            <CardDescription className="text-lg font-medium text-primary/80 mb-4">Answers calls and messages like your business</CardDescription>
+            <CardDescription className="text-lg font-medium text-primary/80 mb-4">After someone finds you, someone still has to answer.</CardDescription>
           </CardHeader>
           <CardContent>
+            <p className="mb-4 text-muted-foreground">Calls and messages, booked on your calendar, trained on your business and tested before a customer hears it.</p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>Founding rate — $1,500 setup + $250/month, locked 12 months</li>
               <li>Standard rate — $2,500 setup + $400/month</li>

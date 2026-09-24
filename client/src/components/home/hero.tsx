@@ -28,25 +28,26 @@ export function Hero() {
       <NetworkGrid />
       <div className="container relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mx-auto max-w-4xl text-center">
+          <p className="mb-6 text-sm font-medium tracking-wide text-cyan-300 uppercase">AI visibility for local businesses</p>
           <motion.h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 text-white" initial={{ scale: 0.95 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
             Find out if ChatGPT recommends you — or your competitor.
           </motion.h1>
           <motion.p className="mt-8 text-xl md:text-2xl leading-relaxed text-white/80" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}>
-            Your next customer isn't Googling you. They're asking ChatGPT, Claude, or Gemini who to trust — and going with whatever the AI says. We test exactly what those models tell people about you, show you the evidence, and fix what we find.
+            People ask ChatGPT, Claude, and Gemini who to trust. We run those questions against your business, send you the answers, and tell you what is actually wrong.
           </motion.p>
           <motion.div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5 }}>
             <Link href="/contact">
               <Button size="lg" onClick={() => window.scrollTo(0, 0)} className="px-8 py-4 font-bold text-lg bg-gradient-to-r from-emerald-400 to-cyan-400 text-primary hover:from-emerald-300 hover:to-cyan-300 rounded-lg transform transition-all hover:-translate-y-1 hover:shadow-2xl shadow-lg shadow-emerald-400/30 border-2 border-white/30 hover:border-white/50" data-testid="button-free-scan">
-                Get your free AI visibility mini-scan
+                Get your free mini-scan
               </Button>
             </Link>
             <Link href="/methodology">
               <Button size="lg" onClick={() => window.scrollTo(0, 0)} className="px-6 py-3 font-semibold bg-white text-primary hover:bg-white/90 rounded-lg transform transition-all hover:-translate-y-0.5 hover:shadow-lg border-2 border-white/20 hover:border-white/40" data-testid="button-how-it-works">
-                See how it works
+                See how a scan works
               </Button>
             </Link>
           </motion.div>
-          <p className="mt-6 text-sm text-white/70">Free. No commitment. You send a few details — we return results within 24–48 hours.</p>
+          <p className="mt-6 text-sm text-white/70">Free. 24–48 hours. No sales call required to get the results.</p>
         </motion.div>
       </div>
     </div>
