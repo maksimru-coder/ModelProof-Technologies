@@ -32,13 +32,13 @@ export default function About() {
     <div className="container py-16">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl mx-auto text-center mb-16">
         <h1 className="text-4xl font-bold mb-4">About ModelProof</h1>
-        <p className="text-lg text-muted-foreground">We make your business visible and chosen in the AI era.</p>
+        <p className="text-lg text-muted-foreground">We make your business visible and chosen in the AI era — anywhere in the United States.</p>
       </motion.div>
       <div className="grid gap-8 md:grid-cols-2 mb-16">
         <Card className="hover:shadow-lg transition-all duration-200">
           <CardHeader><CardTitle>Who we are</CardTitle></CardHeader>
           <CardContent>
-            <p className="text-muted-foreground">ModelProof Technologies tests what large language models tell the public about local businesses — then helps those businesses correct the record. We are based in the East Bay (Danville / San Ramon, California).</p>
+            <p className="text-muted-foreground">ModelProof Technologies tests what large language models tell the public about a business — then helps that business correct the record. We work with clients nationwide. The company is based in California.</p>
           </CardContent>
         </Card>
         <Card className="hover:shadow-lg transition-all duration-200">

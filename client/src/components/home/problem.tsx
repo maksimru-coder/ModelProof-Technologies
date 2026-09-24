@@ -24,10 +24,10 @@ export function Problem() {
       <div className="container max-w-4xl">
         <h2 className="text-3xl font-bold text-center mb-4">Customers still need a name. They now ask an AI.</h2>
         <p className="text-lg text-muted-foreground text-center mb-6">
-          Dentists, HVAC shops, law firms, med spas, clinics. Same pattern: a short question, one confident paragraph, a booking.
+          Dentists, HVAC companies, law firms, med spas, clinics — in any U.S. market. Same pattern: a short question, one confident paragraph, a booking.
         </p>
         <p className="text-muted-foreground text-center mb-12 max-w-3xl mx-auto">
-          "Best dentist near me." "Who should I call for AC in this town?" "Which firm handles this?" If you are not in that paragraph — or you are described badly — you never hear about the lead.
+          "Best dentist near me." "Who should I call for AC?" "Which firm handles this?" If you are not in that paragraph — or you are described badly — you never hear about the lead.
         </p>
         <div className="grid gap-8 md:grid-cols-3">
           {points.map((point) => (
@@ -39,7 +39,7 @@ export function Problem() {
           ))}
         </div>
         <p className="mt-12 text-center text-muted-foreground max-w-3xl mx-auto">
-          That is <span className="font-medium text-foreground">AI visibility</span>: whether ChatGPT, Claude, and Gemini know you, describe you accurately, and recommend you. Most local businesses have never checked. That check is the first thing we do.
+          That is <span className="font-medium text-foreground">AI visibility</span>: whether ChatGPT, Claude, and Gemini know you, describe you accurately, and recommend you. Most businesses have never checked. That check is the first thing we do.
         </p>
       </div>
     </section>

@@ -8,8 +8,8 @@ export function WhyUs() {
       text: "If we cannot show the answer — screenshot or transcript — we do not claim it.",
     },
     {
-      title: "Built for local service businesses",
-      text: "Dentists, HVAC, legal, medical, med spa, and similar firms where one recommendation is a booked job.",
+      title: "Nationwide service businesses",
+      text: "Dentists, HVAC, legal, medical, med spa, and similar firms in any U.S. market where one recommendation is a booked job.",
     },
     {
       title: "Testers, not a media agency",
@@ -22,7 +22,7 @@ export function WhyUs() {
       <div className="container max-w-4xl">
         <h2 className="text-3xl font-bold text-center mb-4">Why ModelProof</h2>
         <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-          East Bay based. Remote work anywhere in the U.S. The first deliverable is always the same: what the models actually say about you.
+          We work with businesses across the United States. The first deliverable is always the same: what the models actually say about you.
         </p>
         <div className="grid gap-8 md:grid-cols-3">
           {points.map((point, index) => (

@@ -9,7 +9,7 @@ export function Logo() {
           ModelProof
         </span>
         <span className="font-montserrat text-xs font-medium leading-tight" style={{ color: '#00D4FF' }}>
-          AI visibility for local business
+          AI visibility, nationwide
         </span>
       </div>
     </div>

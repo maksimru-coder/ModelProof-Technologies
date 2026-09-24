@@ -28,7 +28,7 @@ export function Hero() {
       <NetworkGrid />
       <div className="container relative z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mx-auto max-w-4xl text-center">
-          <p className="mb-6 text-sm font-medium tracking-wide text-cyan-300 uppercase">AI visibility for local businesses</p>
+          <p className="mb-6 text-sm font-medium tracking-wide text-cyan-300 uppercase">AI visibility for businesses nationwide</p>
           <motion.h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 text-white" initial={{ scale: 0.95 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
             Find out if ChatGPT recommends you — or your competitor.
           </motion.h1>
@@ -47,7 +47,7 @@ export function Hero() {
               </Button>
             </Link>
           </motion.div>
-          <p className="mt-6 text-sm text-white/70">Free. 24–48 hours. No sales call required to get the results.</p>
+          <p className="mt-6 text-sm text-white/70">Free. 24–48 hours. Anywhere in the U.S. No sales call required to get the results.</p>
         </motion.div>
       </div>
     </div>
