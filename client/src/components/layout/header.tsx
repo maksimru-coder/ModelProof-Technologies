@@ -15,6 +15,7 @@ export function Header() {
   const [location] = useLocation();
 
   const serviceLinks = [
+    { href: "/services/ai-visibility", label: "AI Visibility Services" },
     { href: "/services/ai-chat-assistant", label: "AI Chat Assistant Services" },
     { href: "/services/ai-workflow-automation", label: "AI Workflow Automation" },
     { href: "/services/custom-ai-solutions", label: "Custom AI Solutions" },

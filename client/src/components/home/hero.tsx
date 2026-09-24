@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { Calendar } from "lucide-react";
+import { Calendar, Sparkles } from "lucide-react";
 
 declare global {
   interface Window {
@@ -60,7 +60,7 @@ export function Hero() {
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
           >
-            AI You Can Trust. Results You Can Measure
+            What does AI say about your business?
           </motion.h1>
           <motion.p
             className="mt-8 text-xl md:text-2xl leading-relaxed text-white/80"
@@ -68,7 +68,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            We build AI automation systems and intelligent agents that help businesses capture more leads, eliminate manual work, and grow faster — typically live within 7 days, no technical team required.
+            What does AI say about your business? Your customers are asking ChatGPT, Claude, and Gemini who to trust — instead of Googling. We test exactly what the AI models say about you, show you the evidence, and fix what we find.
           </motion.p>
           <motion.div
             className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6"
@@ -76,6 +76,18 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
+            <a
+              href="mailto:maksim@modelproof.ai?subject=Free%20AI%20visibility%20mini-scan"
+              data-testid="button-mini-scan"
+            >
+              <Button
+                size="lg"
+                className="px-8 py-4 font-bold text-lg bg-gradient-to-r from-emerald-400 to-cyan-400 text-primary hover:from-emerald-300 hover:to-cyan-300 rounded-lg transform transition-all hover:-translate-y-1 hover:shadow-2xl shadow-lg shadow-emerald-400/30 border-2 border-white/30 hover:border-white/50"
+              >
+                <Sparkles className="mr-2 h-5 w-5" />
+                Get Your Free AI Visibility Mini-Scan
+              </Button>
+            </a>
             <Button
               size="lg"
               onClick={() => {
@@ -83,7 +95,7 @@ export function Hero() {
                   window.Calendly.initPopupWidget({ url: 'https://calendly.com/maksim-modelproof/30min' });
                 }
               }}
-              className="px-8 py-4 font-bold text-lg bg-gradient-to-r from-emerald-400 to-cyan-400 text-primary hover:from-emerald-300 hover:to-cyan-300 rounded-lg transform transition-all hover:-translate-y-1 hover:shadow-2xl shadow-lg shadow-emerald-400/30 border-2 border-white/30 hover:border-white/50"
+              className="px-8 py-4 font-bold text-lg bg-white/10 text-white hover:bg-white/20 rounded-lg transform transition-all hover:-translate-y-1 hover:shadow-2xl border-2 border-white/30 hover:border-white/50"
               data-testid="button-book-call"
             >
               <Calendar className="mr-2 h-5 w-5" />

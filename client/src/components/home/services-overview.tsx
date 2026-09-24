@@ -7,10 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Bot, Settings, Workflow } from "lucide-react";
+import { Bot, Eye, Settings, Workflow } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const services = [
+  {
+    title: "AI Visibility Services",
+    headline: "What does AI say about your business? We test it.",
+    description: "We run real customer-style prompts through ChatGPT, Claude, and Gemini, show you exactly what the AI models say about you with screenshot evidence, and fix what we find. Free mini-scan to start — no pitch attached.",
+    icon: Eye,
+    path: "/services/ai-visibility"
+  },
   {
     title: "AI Chat Assistant Services",
     headline: "24/7 Lead Generation & Support — Powered by Smart AI Agents",
