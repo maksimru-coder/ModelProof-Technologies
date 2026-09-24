@@ -54,13 +54,10 @@ export function Header() {
                     <li key={service.href}>
                       <NavigationMenuLink
                         asChild
-                        className={`block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground`}
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <Link href={service.href}>
-                          <div
-                            className="text-sm font-medium leading-none"
-                            onClick={() => window.scrollTo(0, 0)}
-                          >
+                          <div className="text-sm font-medium leading-none">
                             {service.label}
                           </div>
                         </Link>
