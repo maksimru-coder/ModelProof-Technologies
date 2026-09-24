@@ -10,13 +10,13 @@ const steps = [
   },
   {
     step: "2",
-    title: "AI Visibility Audit \u2014 $750",
+    title: "AI Visibility Audit — $750",
     text: "The full diagnosis. Dozens of prompts, your reviews, website, Google Business Profile, and competitors. A written report with evidence and a ranked list of what to fix first.",
     note: "One-time. You keep the report.",
   },
   {
     step: "3",
-    title: "Visibility retainer \u2014 $600/month",
+    title: "Visibility retainer — $600/month",
     text: "Models update. Competitors get mentioned. Reviews shift. We re-test the same questions every month, send a plain-English report, and keep the public record accurate.",
     note: "Month to month. Stop when it stops being useful.",
   },

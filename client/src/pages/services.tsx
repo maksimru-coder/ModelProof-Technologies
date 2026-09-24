@@ -10,7 +10,16 @@ const ServiceIcon = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default function Services() {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash) {
+      requestAnimationFrame(() => {
+        document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      return;
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="container py-16">
