@@ -53,7 +53,7 @@ export default function Services() {
           </CardHeader>
           <CardContent>
             <p className="mb-6 text-muted-foreground">
-              Your customers are asking ChatGPT, Claude, and Gemini who to trust — instead of Googling. We run real customer-style prompts through all three models, show you screenshot evidence of exactly what they say about your business, and fix what we find.
+              Your customers are asking ChatGPT, Claude, and Gemini who to trust — instead of Googling. We run real customer-style prompts through all three models, show you the full transcripts of exactly what they say about your business, and fix what we find.
             </p>
             <ul className="space-y-4 mb-8">
               <li className="flex items-start space-x-3 group">
@@ -65,13 +65,13 @@ export default function Services() {
               <li className="flex items-start space-x-3 group">
                 <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
                 <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
-                  <span className="font-medium text-foreground">AI Visibility Audit ($750):</span> Dozens of prompts, competitor comparison, prioritized fix list
+                  <span className="font-medium text-foreground">AI Visibility Audit ($750):</span> Dozens of prompts, visibility gap analysis, prioritized fix list
                 </span>
               </li>
               <li className="flex items-start space-x-3 group">
                 <div className="h-2 w-2 rounded-full bg-primary mt-2 flex-shrink-0 transition-all duration-200 group-hover:scale-125" />
                 <span className="text-muted-foreground group-hover:text-foreground transition-colors duration-200">
-                  <span className="font-medium text-foreground">Visibility Retainer ($600/mo):</span> Monthly re-testing, competitor tracking, ongoing corrective work
+                  <span className="font-medium text-foreground">Visibility Retainer ($600/mo):</span> Monthly re-testing, trend tracking, ongoing corrective work
                 </span>
               </li>
             </ul>

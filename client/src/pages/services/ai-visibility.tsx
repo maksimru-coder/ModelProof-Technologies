@@ -19,7 +19,7 @@ const tiers = [
     description: "The door opener. We run five real customer-style prompts about your business through ChatGPT, Claude, and Gemini, and record exactly what each model says.",
     points: [
       "5 real prompts across 3 AI models",
-      "Raw answers as screenshots",
+      "Full answer transcripts from every test",
       "Our honest read: where you're mentioned, where you're missing",
       "No pitch attached — the scan is the pitch"
     ]
@@ -27,11 +27,11 @@ const tiers = [
   {
     name: "AI Visibility Audit",
     price: "$750 one-time",
-    description: "The full diagnosis. Dozens of prompts covering your reviews, website, Google Business Profile, and competitors.",
+    description: "The full diagnosis. Dozens of prompts covering your reviews, website, and Google Business Profile.",
     points: [
       "Dozens of prompts across ChatGPT, Claude, and Gemini",
-      "Every finding backed by screenshot evidence",
-      "Competitor comparison: who gets recommended and why",
+      "Every finding backed by full answer transcripts",
+      "See exactly which patient-style searches surface your practice — and which don't",
       "Prioritized fix list ranked by impact"
     ]
   },
@@ -41,7 +41,7 @@ const tiers = [
     description: "AI answers change constantly. We re-test monthly, track whether you're gaining or losing ground, and keep fixing.",
     points: [
       "Monthly re-testing across all three models",
-      "Competitor movement tracking",
+      "Trend tracking: whether you're gaining or losing ground month over month",
       "Ongoing corrective work",
       "Plain-English report every month"
     ]
@@ -116,7 +116,7 @@ export default function AIVisibility() {
                 </div>
                 <h4 className="font-semibold mb-2">2. You see the evidence</h4>
                 <p className="text-sm text-muted-foreground">
-                  Screenshots and transcripts of every answer. If we can't show it, we don't say it.
+                  Full transcripts of every answer. If we can't show it, we don't say it.
                 </p>
               </div>
               <div className="text-center">
@@ -154,7 +154,7 @@ export default function AIVisibility() {
           <div className="text-center mb-12">
             <h3 className="text-2xl font-semibold mb-4">Start with the free mini-scan</h3>
             <p className="text-muted-foreground mb-6">
-              Five minutes of your time — we do the rest. Screenshots within 48 hours.
+              Five minutes of your time — we do the rest. Full transcripts and our honest read within 48 hours.
             </p>
             <div className="flex justify-center">
               <a href="mailto:maksim@modelproof.ai?subject=Free%20AI%20visibility%20mini-scan">

@@ -14,7 +14,7 @@ const services = [
   {
     title: "AI Visibility Services",
     headline: "What does AI say about your business? We test it.",
-    description: "We run real customer-style prompts through ChatGPT, Claude, and Gemini, show you exactly what the AI models say about you with screenshot evidence, and fix what we find. Free mini-scan to start — no pitch attached.",
+    description: "We run real customer-style prompts through ChatGPT, Claude, and Gemini, show you exactly what the AI models say about you — full transcripts, no cherry-picking — and fix what we find. Free mini-scan to start — no pitch attached.",
     icon: Eye,
     path: "/services/ai-visibility"
   },
