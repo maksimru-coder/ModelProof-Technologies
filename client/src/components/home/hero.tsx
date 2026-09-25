@@ -68,7 +68,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            What does AI say about your business? Your customers are asking ChatGPT, Claude, and Gemini who to trust — instead of Googling. We test exactly what the AI models say about you, show you the evidence, and fix what we find.
+            Your customers are asking ChatGPT, Claude, and Gemini who to trust — instead of Googling. We test exactly what the AI models say about you, show you the evidence, and fix what we find.
           </motion.p>
           <motion.div
             className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6"

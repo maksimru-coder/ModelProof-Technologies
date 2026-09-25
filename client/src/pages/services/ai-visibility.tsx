@@ -6,9 +6,9 @@ import {
   RefreshCw,
   ShieldCheck,
   MessageSquareQuote,
-  TrendingUp
+  TrendingUp,
+  Sparkles
 } from "lucide-react";
-import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -156,22 +156,16 @@ export default function AIVisibility() {
             <p className="text-muted-foreground mb-6">
               Five minutes of your time — we do the rest. Screenshots within 48 hours.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex justify-center">
               <a href="mailto:maksim@modelproof.ai?subject=Free%20AI%20visibility%20mini-scan">
-                <Button size="lg" className="px-8">
+                <Button
+                  size="lg"
+                  className="px-10 py-5 text-lg font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 text-white hover:from-emerald-400 hover:to-cyan-400 rounded-xl transform transition-all hover:-translate-y-1 hover:shadow-2xl shadow-lg shadow-emerald-500/30"
+                >
+                  <Sparkles className="mr-2 h-5 w-5" />
                   Get Your Free Mini-Scan
                 </Button>
               </a>
-              <Link href="/contact">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="px-8"
-                  onClick={() => window.scrollTo(0, 0)}
-                >
-                  Contact Us
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
