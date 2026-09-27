@@ -19,7 +19,7 @@ export default function Contact() {
       >
         <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
         <p className="text-lg text-muted-foreground">
-          Get in touch to discuss how we can help optimize your AI systems and automate your business growth
+          Request your free AI visibility mini-scan or ask about our services — we reply within one business day.
         </p>
       </motion.div>
 
@@ -50,10 +50,10 @@ export default function Contact() {
                 <div>
                   <p className="font-medium">Email</p>
                   <a 
-                    href="mailto:contact@modelproof.ai"
+                    href="mailto:maksim@modelproof.ai"
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    contact@modelproof.ai
+                    maksim@modelproof.ai
                   </a>
                 </div>
               </div>

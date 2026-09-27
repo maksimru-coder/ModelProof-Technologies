@@ -31,7 +31,7 @@ const tiers = [
     points: [
       "Dozens of prompts across ChatGPT, Claude, and Gemini",
       "Every finding backed by full answer transcripts",
-      "See exactly which patient-style searches surface your practice — and which don't",
+      "See exactly which customer-style searches surface your business — and which don't",
       "Prioritized fix list ranked by impact"
     ]
   },
@@ -67,7 +67,7 @@ export default function AIVisibility() {
 
         <div className="prose prose-slate max-w-none">
           <p className="text-muted-foreground text-lg mb-8">
-            Your customers have changed how they decide. Instead of reading ten review pages, they ask an AI assistant: "Who's the best dentist near me?" The AI answers in one confident paragraph — and they book from it.
+            Your customers have changed how they decide. Instead of reading ten review pages, they ask an AI assistant: "Who's the best coffee shop near me?" The AI answers in one confident paragraph — and they go there.
           </p>
           <p className="text-muted-foreground text-lg mb-12">
             That creates a problem you can't see: you might be invisible, with the AI recommending competitors and never mentioning you. Or misrepresented, described with outdated hours and old reviews. There's no search console for AI answers — you just quietly lose business you never knew you were in the running for. We measure it, show you the evidence, and fix it.
@@ -107,7 +107,7 @@ export default function AIVisibility() {
                 </div>
                 <h4 className="font-semibold mb-2">1. We ask like a customer</h4>
                 <p className="text-sm text-muted-foreground">
-                  Real discovery prompts — "best dentist in your city", emergency scenarios, service questions — run against all three models.
+                  Real discovery prompts — "best in your city" searches, service questions, pricing questions — run against all three models.
                 </p>
               </div>
               <div className="text-center">
@@ -157,7 +157,7 @@ export default function AIVisibility() {
               Five minutes of your time — we do the rest. Full transcripts and our honest read within 48 hours.
             </p>
             <div className="flex justify-center">
-              <a href="mailto:maksim@modelproof.ai?subject=Free%20AI%20visibility%20mini-scan">
+              <a href="/contact">
                 <Button
                   size="lg"
                   className="px-10 py-5 text-lg font-bold bg-gradient-to-r from-emerald-500 to-cyan-500 text-white hover:from-emerald-400 hover:to-cyan-400 rounded-xl transform transition-all hover:-translate-y-1 hover:shadow-2xl shadow-lg shadow-emerald-500/30"
