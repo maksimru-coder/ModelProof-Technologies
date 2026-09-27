@@ -10,72 +10,62 @@ export function Footer() {
             <h3 className="text-xl font-semibold mb-6 text-foreground">Services</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/services/ai-chat-assistant">
+                <Link href="/services/ai-visibility">
                   <span 
                     onClick={() => window.scrollTo(0, 0)}
                     className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
                   >
-                    AI Chat Assistant Services
+                    AI Visibility Services
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="/services/ai-workflow-automation">
+                <Link href="/services">
                   <span 
                     onClick={() => window.scrollTo(0, 0)}
                     className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
                   >
-                    AI Workflow Automation
+                    AI Front Desk
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="/services/custom-ai-solutions">
+                <Link href="/services">
                   <span 
                     onClick={() => window.scrollTo(0, 0)}
                     className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
                   >
-                    Custom AI Solutions
+                    Review Management
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="/services/essential-assessment">
+                <Link href="/services">
                   <span 
                     onClick={() => window.scrollTo(0, 0)}
                     className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
                   >
-                    Essential Assessment
+                    Websites
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="/services/professional-validation">
+                <Link href="/services">
                   <span 
                     onClick={() => window.scrollTo(0, 0)}
                     className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
                   >
-                    Professional Validation
+                    Social Media Management
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="/services/enterprise-solution">
+                <Link href="/services">
                   <span 
                     onClick={() => window.scrollTo(0, 0)}
                     className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
                   >
-                    Enterprise Solution
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/services/retainer-services">
-                  <span 
-                    onClick={() => window.scrollTo(0, 0)}
-                    className="text-gray-500 hover:text-[#19376D] transition-colors cursor-pointer"
-                  >
-                    Retainer Services
+                    Google Business Profile Overhaul
                   </span>
                 </Link>
               </li>

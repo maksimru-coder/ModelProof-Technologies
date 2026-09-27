@@ -16,13 +16,11 @@ export function Header() {
 
   const serviceLinks = [
     { href: "/services/ai-visibility", label: "AI Visibility Services" },
-    { href: "/services/ai-chat-assistant", label: "AI Chat Assistant Services" },
-    { href: "/services/ai-workflow-automation", label: "AI Workflow Automation" },
-    { href: "/services/custom-ai-solutions", label: "Custom AI Solutions" },
-    { href: "/services/essential-assessment", label: "Essential Assessment" },
-    { href: "/services/professional-validation", label: "Professional Validation" },
-    { href: "/services/enterprise-solution", label: "Enterprise Solution" },
-    { href: "/services/retainer-services", label: "Retainer Services" },
+    { href: "/services", label: "AI Front Desk" },
+    { href: "/services", label: "Review Management" },
+    { href: "/services", label: "Websites" },
+    { href: "/services", label: "Social Media Management" },
+    { href: "/services", label: "Google Business Profile Overhaul" },
   ];
 
   const productLinks = [
