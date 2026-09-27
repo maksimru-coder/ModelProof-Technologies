@@ -50,10 +50,10 @@ export default function Contact() {
                 <div>
                   <p className="font-medium">Email</p>
                   <a 
-                    href="mailto:maksim@modelproof.ai"
+                    href="mailto:contact@modelproof.ai"
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    maksim@modelproof.ai
+                    contact@modelproof.ai
                   </a>
                 </div>
               </div>

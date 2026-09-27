@@ -38,7 +38,7 @@ const sendEmail = async (submission) => {
 
     const { data, error } = await resend.emails.send({
       from: 'ModelProof Contact <contact@modelproof.ai>',
-      to: ['maksim@modelproof.ai'],
+      to: ['contact@modelproof.ai'],
       replyTo: submission.email,
       subject: `New Contact Form Submission from ${submission.name}`,
       html: `

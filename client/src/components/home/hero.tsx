@@ -77,7 +77,7 @@ export function Hero() {
             transition={{ delay: 0.5, duration: 0.5 }}
           >
             <a
-              href="mailto:maksim@modelproof.ai?subject=Free%20AI%20visibility%20mini-scan"
+              href="mailto:contact@modelproof.ai?subject=Free%20AI%20visibility%20mini-scan"
               data-testid="button-mini-scan"
             >
               <Button

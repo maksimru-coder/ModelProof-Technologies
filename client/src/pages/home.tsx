@@ -388,7 +388,7 @@ export default function Home() {
       <section className="pb-20">
         <div className="container flex items-center justify-center gap-3 text-sm text-muted-foreground">
           <MessageSquare className="h-4 w-4 text-primary" />
-          Prefer email? Reach us at maksim@modelproof.ai — we reply within one business day.
+          Prefer email? Reach us at contact@modelproof.ai — we reply within one business day.
         </div>
       </section>
     </div>
