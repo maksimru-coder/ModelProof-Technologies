@@ -11,7 +11,7 @@ export function Logo() {
           ModelProof
         </span>
         <span className="font-montserrat text-xs font-medium leading-tight" style={{ color: '#00D4FF' }}>
-          – AI Automation & Intelligent Agents
+          AI Visibility for Local Businesses
         </span>
       </div>
     </div>
