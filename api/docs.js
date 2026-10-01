@@ -27,219 +27,541 @@ export default async function handler(req, res) {
   <script>
     window.onload = function() {
       const spec = {
-        "openapi": "3.0.0",
-        "info": {
-          "title": "BiasRadar API",
-          "version": "1.0.0",
-          "description": "Professional bias detection and text fixing API by ModelProof Technologies. Detect bias across 13 dimensions and automatically fix biased content using AI.\\n\\n**Character Limits:**\\n- Free/Demo Plans: 10,000 characters per request\\n- Paid Plans: 50,000 characters per request\\n\\n**Rate Limits:**\\n- Free/Demo Plans: 20 requests per day\\n- Paid Plans: Unlimited requests",
-          "contact": {
-            "name": "ModelProof Technologies",
-            "url": "https://modelproof.ai",
-            "email": "support@modelproof.ai"
+  \"openapi\": \"3.0.0\",
+  \"info\": {
+    \"title\": \"BiasRadar API\",
+    \"version\": \"1.0.0\",
+    \"description\": \"Professional bias detection and text fixing API by ModelProof Technologies. Detect bias across 13 dimensions and automatically fix biased content using AI.\\n\\n**Character Limits:**\\n- Free/Demo Plans: 10,000 characters per request\\n- Paid Plans: 50,000 characters per request\\n\\n**Rate Limits:**\\n- Free/Demo Plans: 20 requests per day\\n- Paid Plans: Unlimited requests\",
+    \"contact\": {
+      \"name\": \"ModelProof Technologies\",
+      \"url\": \"https://modelproof.ai\",
+      \"email\": \"support@modelproof.ai\"
+    }
+  },
+  \"servers\": [
+    {
+      \"url\": \"https://modelproof.ai/api\",
+      \"description\": \"Production server\"
+    }
+  ],
+  \"components\": {
+    \"securitySchemes\": {
+      \"BearerAuth\": {
+        \"type\": \"http\",
+        \"scheme\": \"bearer\",
+        \"bearerFormat\": \"API_KEY\",
+        \"description\": \"Enter your BiasRadar API key (format: bdr_xxxxx...)\"
+      }
+    },
+    \"schemas\": {
+      \"ScanRequest\": {
+        \"type\": \"object\",
+        \"required\": [
+          \"text\"
+        ],
+        \"properties\": {
+          \"text\": {
+            \"type\": \"string\",
+            \"description\": \"Text to analyze for bias (max 10,000 chars for free/demo plans, 50,000 chars for paid plans)\",
+            \"example\": \"The chairman should ensure all employees are treated fairly.\"
+          },
+          \"bias_types\": {
+            \"type\": \"array\",
+            \"description\": \"Optional array of specific bias types to check.\",
+            \"items\": {
+              \"type\": \"string\",
+              \"enum\": [
+                \"gender\",
+                \"race\",
+                \"age\",
+                \"disability\",
+                \"culture\",
+                \"political\",
+                \"religious\",
+                \"lgbtq\",
+                \"socioeconomic\",
+                \"truth_seeking\",
+                \"ideological_neutrality\",
+                \"intersectional\",
+                \"language_tone\"
+              ]
+            }
           }
-        },
-        "servers": [
+        }
+      },
+      \"FixRequest\": {
+        \"type\": \"object\",
+        \"required\": [
+          \"text\"
+        ],
+        \"properties\": {
+          \"text\": {
+            \"type\": \"string\",
+            \"description\": \"Biased text to fix using AI (max 10,000 chars for free/demo plans, 50,000 chars for paid plans)\",
+            \"example\": \"The chairman should ensure all employees are treated fairly.\"
+          }
+        }
+      },
+      \"ExportPDFRequest\": {
+        \"type\": \"object\",
+        \"required\": [
+          \"original_text\",
+          \"risk_score\",
+          \"issues\"
+        ],
+        \"properties\": {
+          \"original_text\": {
+            \"type\": \"string\",
+            \"description\": \"Original text that was analyzed\",
+            \"example\": \"The chairman should ensure all employees are treated fairly.\"
+          },
+          \"risk_score\": {
+            \"type\": \"number\",
+            \"description\": \"Risk score from bias scan (0-100)\",
+            \"example\": 75
+          },
+          \"issues\": {
+            \"type\": \"array\",
+            \"description\": \"Array of bias issues as returned by /scan\",
+            \"items\": {
+              \"$ref\": \"#/components/schemas/BiasIssue\"
+            }
+          },
+          \"remediated_text\": {
+            \"type\": \"string\",
+            \"description\": \"Optional: AI-fixed version of the text\",
+            \"example\": \"The chairperson should ensure all employees are treated fairly.\"
+          }
+        }
+      },
+      \"BiasIssue\": {
+        \"type\": \"object\",
+        \"description\": \"A single bias finding. This is the exact shape returned by /scan and accepted by /export-pdf.\",
+        \"properties\": {
+          \"word\": {
+            \"type\": \"string\",
+            \"description\": \"Problematic word or phrase detected\",
+            \"example\": \"chairman\"
+          },
+          \"bias_type\": {
+            \"type\": \"string\",
+            \"description\": \"Bias dimension (one of the 13 supported types)\",
+            \"example\": \"gender\"
+          },
+          \"severity\": {
+            \"type\": \"string\",
+            \"enum\": [
+              \"low\",
+              \"medium\",
+              \"high\"
+            ],
+            \"description\": \"Severity level\",
+            \"example\": \"high\"
+          },
+          \"explanation\": {
+            \"type\": \"string\",
+            \"description\": \"Why this was flagged\",
+            \"example\": \"'chairman' is gendered language. Use gender-neutral alternatives instead.\"
+          },
+          \"position\": {
+            \"type\": \"integer\",
+            \"description\": \"Character position of the issue in the analyzed text\",
+            \"example\": 4
+          }
+        }
+      },
+      \"HeatmapWord\": {
+        \"type\": \"object\",
+        \"properties\": {
+          \"word\": {
+            \"type\": \"string\",
+            \"example\": \"chairman\"
+          },
+          \"biased\": {
+            \"type\": \"boolean\",
+            \"description\": \"Whether this word was flagged\",
+            \"example\": true
+          },
+          \"severity\": {
+            \"type\": \"string\",
+            \"enum\": [
+              \"none\",
+              \"low\",
+              \"medium\",
+              \"high\"
+            ],
+            \"example\": \"high\"
+          },
+          \"bias_types\": {
+            \"type\": \"array\",
+            \"description\": \"Bias dimensions flagged for this word\",
+            \"items\": {
+              \"type\": \"string\"
+            },
+            \"example\": [
+              \"gender\"
+            ]
+          }
+        }
+      },
+      \"ScanResponse\": {
+        \"type\": \"object\",
+        \"required\": [
+          \"success\",
+          \"score\",
+          \"severity\",
+          \"issues\",
+          \"heatmap\",
+          \"summary\",
+          \"detection_method\"
+        ],
+        \"properties\": {
+          \"success\": {
+            \"type\": \"boolean\",
+            \"example\": true
+          },
+          \"score\": {
+            \"type\": \"number\",
+            \"description\": \"Overall bias risk score (0-100)\",
+            \"example\": 35
+          },
+          \"severity\": {
+            \"type\": \"string\",
+            \"enum\": [
+              \"none\",
+              \"low\",
+              \"medium\",
+              \"high\"
+            ],
+            \"description\": \"Highest severity across all issues ('none' when clean)\",
+            \"example\": \"medium\"
+          },
+          \"issues\": {
+            \"type\": \"array\",
+            \"items\": {
+              \"$ref\": \"#/components/schemas/BiasIssue\"
+            }
+          },
+          \"heatmap\": {
+            \"type\": \"array\",
+            \"description\": \"Word-by-word bias map of the analyzed text\",
+            \"items\": {
+              \"$ref\": \"#/components/schemas/HeatmapWord\"
+            }
+          },
+          \"summary\": {
+            \"type\": \"string\",
+            \"description\": \"Human-readable summary of findings\",
+            \"example\": \"Found 2 potential bias issue(s): 2 gender\"
+          },
+          \"detection_method\": {
+            \"type\": \"string\",
+            \"description\": \"Detection engine used\",
+            \"example\": \"Standard (Pattern-Enhanced)\"
+          }
+        }
+      },
+      \"FixResponse\": {
+        \"type\": \"object\",
+        \"required\": [
+          \"success\",
+          \"original_text\",
+          \"fixed_text\",
+          \"improvements\"
+        ],
+        \"properties\": {
+          \"success\": {
+            \"type\": \"boolean\",
+            \"example\": true
+          },
+          \"original_text\": {
+            \"type\": \"string\",
+            \"description\": \"Text as submitted\"
+          },
+          \"fixed_text\": {
+            \"type\": \"string\",
+            \"description\": \"AI-rewritten bias-free text\",
+            \"example\": \"The chairperson should ensure all employees are treated fairly.\"
+          },
+          \"improvements\": {
+            \"type\": \"array\",
+            \"description\": \"List of specific improvements made\",
+            \"items\": {
+              \"type\": \"string\"
+            },
+            \"example\": [
+              \"Replaced gendered term 'chairman' with 'chairperson'\"
+            ]
+          }
+        }
+      },
+      \"Error\": {
+        \"type\": \"object\",
+        \"required\": [
+          \"error\"
+        ],
+        \"properties\": {
+          \"error\": {
+            \"type\": \"string\",
+            \"description\": \"Error message\",
+            \"example\": \"Text is required\"
+          }
+        }
+      }
+    }
+  },
+  \"security\": [
+    {
+      \"BearerAuth\": []
+    }
+  ],
+  \"paths\": {
+    \"/scan\": {
+      \"post\": {
+        \"summary\": \"Scan text for bias\",
+        \"description\": \"Analyze text for bias across 13 dimensions including gender, race, age, disability, culture, political, religious, LGBTQ+, socioeconomic, truth-seeking, ideological neutrality, intersectional, and language & tone.\",
+        \"tags\": [
+          \"Bias Detection\"
+        ],
+        \"security\": [
           {
-            "url": "https://modelproof.ai/api",
-            "description": "Production server"
+            \"BearerAuth\": []
           }
         ],
-        "components": {
-          "securitySchemes": {
-            "BearerAuth": {
-              "type": "http",
-              "scheme": "bearer",
-              "bearerFormat": "API_KEY",
-              "description": "Enter your BiasRadar API key (format: bdr_xxxxx...)"
-            }
-          },
-          "schemas": {
-            "ScanRequest": {
-              "type": "object",
-              "required": ["text"],
-              "properties": {
-                "text": {
-                  "type": "string",
-                  "description": "Text to analyze for bias (max 10,000 chars for free/demo plans, 50,000 chars for paid plans)",
-                  "example": "The chairman should ensure all employees are treated fairly."
-                },
-                "bias_types": {
-                  "type": "array",
-                  "description": "Optional array of specific bias types to check.",
-                  "items": {
-                    "type": "string",
-                    "enum": ["gender", "race", "age", "disability", "culture", "political", "religious", "lgbtq", "socioeconomic", "truth_seeking", "ideological_neutrality", "intersectional", "language_tone"]
-                  }
-                }
-              }
-            },
-            "FixRequest": {
-              "type": "object",
-              "required": ["text"],
-              "properties": {
-                "text": {
-                  "type": "string",
-                  "description": "Biased text to fix using AI (max 10,000 chars for free/demo plans, 50,000 chars for paid plans)",
-                  "example": "The chairman should ensure all employees are treated fairly."
-                }
-              }
-            },
-            "ExportPDFRequest": {
-              "type": "object",
-              "required": ["original_text", "risk_score", "issues"],
-              "properties": {
-                "original_text": {
-                  "type": "string",
-                  "description": "Original text that was analyzed",
-                  "example": "The chairman should ensure all employees are treated fairly."
-                },
-                "risk_score": {
-                  "type": "number",
-                  "description": "Risk score from bias scan (0-100)",
-                  "example": 75
-                },
-                "issues": {
-                  "type": "array",
-                  "description": "Array of bias issues detected",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "description": "Type of bias detected",
-                        "example": "gender"
-                      },
-                      "severity": {
-                        "type": "string",
-                        "enum": ["low", "medium", "high"],
-                        "description": "Severity level",
-                        "example": "high"
-                      },
-                      "text": {
-                        "type": "string",
-                        "description": "Problematic text fragment",
-                        "example": "chairman"
-                      },
-                      "explanation": {
-                        "type": "string",
-                        "description": "Explanation of the bias",
-                        "example": "Gender-biased term that assumes leadership roles are male"
-                      },
-                      "suggestion": {
-                        "type": "string",
-                        "description": "Suggested neutral alternative",
-                        "example": "chairperson or chair"
-                      }
-                    }
-                  }
-                },
-                "remediated_text": {
-                  "type": "string",
-                  "description": "Optional: AI-fixed version of the text",
-                  "example": "The chairperson should ensure all employees are treated fairly."
-                }
+        \"requestBody\": {
+          \"required\": true,
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/ScanRequest\"
               }
             }
           }
         },
-        "security": [{ "BearerAuth": [] }],
-        "paths": {
-          "/scan": {
-            "post": {
-              "summary": "Scan text for bias",
-              "description": "Analyze text for bias across 13 dimensions including gender, race, age, disability, culture, political, religious, LGBTQ+, socioeconomic, truth-seeking, ideological neutrality, intersectional, and language & tone.",
-              "tags": ["Bias Detection"],
-              "security": [{ "BearerAuth": [] }],
-              "requestBody": {
-                "required": true,
-                "content": {
-                  "application/json": {
-                    "schema": { "$ref": "#/components/schemas/ScanRequest" }
-                  }
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Successful scan\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/ScanResponse\"
                 }
-              },
-              "responses": {
-                "200": { "description": "Successful scan" },
-                "400": { "description": "Bad request - invalid input or text exceeds character limit" },
-                "401": { "description": "Unauthorized - invalid API key" },
-                "429": { "description": "Rate limit exceeded (free/demo tier: 20 requests/day, paid tier: unlimited)" },
-                "500": { "description": "Internal server error" }
               }
             }
           },
-          "/fix": {
-            "post": {
-              "summary": "Fix biased text using AI",
-              "description": "Automatically remove bias from text using AI-powered debiasing.",
-              "tags": ["Bias Fixing"],
-              "security": [{ "BearerAuth": [] }],
-              "requestBody": {
-                "required": true,
-                "content": {
-                  "application/json": {
-                    "schema": { "$ref": "#/components/schemas/FixRequest" }
-                  }
+          \"400\": {
+            \"description\": \"Bad request - invalid input or text exceeds character limit\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
                 }
-              },
-              "responses": {
-                "200": { "description": "Successful fix" },
-                "400": { "description": "Bad request" },
-                "401": { "description": "Unauthorized" },
-                "429": { "description": "Rate limit exceeded" },
-                "500": { "description": "Internal server error" }
               }
             }
           },
-          "/export-pdf": {
-            "post": {
-              "summary": "Export bias scan results to PDF",
-              "description": "Generate a professional BiasRadar™ Audit Report PDF containing the original text, risk score, detected bias issues, and optional remediated text. The PDF is generated in-memory and returned as a downloadable file. Perfect for compliance documentation, audit trails, and reporting.",
-              "tags": ["Reporting"],
-              "security": [{ "BearerAuth": [] }],
-              "requestBody": {
-                "required": true,
-                "content": {
-                  "application/json": {
-                    "schema": { "$ref": "#/components/schemas/ExportPDFRequest" },
-                    "example": {
-                      "original_text": "The chairman should ensure all employees are treated fairly.",
-                      "risk_score": 75,
-                      "issues": [
-                        {
-                          "type": "gender",
-                          "severity": "high",
-                          "text": "chairman",
-                          "explanation": "Gender-biased term that assumes leadership roles are male",
-                          "suggestion": "chairperson or chair"
-                        }
-                      ],
-                      "remediated_text": "The chairperson should ensure all employees are treated fairly."
-                    }
-                  }
+          \"401\": {
+            \"description\": \"Unauthorized - invalid API key\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
                 }
-              },
-              "responses": {
-                "200": {
-                  "description": "PDF successfully generated",
-                  "content": {
-                    "application/pdf": {
-                      "schema": {
-                        "type": "string",
-                        "format": "binary",
-                        "description": "Professional PDF report containing bias analysis results"
-                      }
-                    }
-                  }
-                },
-                "400": { "description": "Bad request - missing required fields (original_text, risk_score, or issues)" },
-                "401": { "description": "Unauthorized - invalid API key" },
-                "429": { "description": "Rate limit exceeded" },
-                "500": { "description": "Internal server error - PDF generation failed" }
+              }
+            }
+          },
+          \"429\": {
+            \"description\": \"Rate limit exceeded (free/demo tier: 20 requests/day, paid tier: unlimited)\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"Internal server error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
+                }
               }
             }
           }
         }
-      };
+      }
+    },
+    \"/fix\": {
+      \"post\": {
+        \"summary\": \"Fix biased text using AI\",
+        \"description\": \"Automatically remove bias from text using AI-powered debiasing.\",
+        \"tags\": [
+          \"Bias Fixing\"
+        ],
+        \"security\": [
+          {
+            \"BearerAuth\": []
+          }
+        ],
+        \"requestBody\": {
+          \"required\": true,
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/FixRequest\"
+              }
+            }
+          }
+        },
+        \"responses\": {
+          \"200\": {
+            \"description\": \"Successful fix\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/FixResponse\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"Bad request\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
+                }
+              }
+            }
+          },
+          \"401\": {
+            \"description\": \"Unauthorized\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
+                }
+              }
+            }
+          },
+          \"429\": {
+            \"description\": \"Rate limit exceeded\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"Internal server error\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    \"/export-pdf\": {
+      \"post\": {
+        \"summary\": \"Export bias scan results to PDF\",
+        \"description\": \"Generate a professional BiasRadar\\u2122 Audit Report PDF containing the original text, risk score, detected bias issues, and optional remediated text. The PDF is generated in-memory and returned as a downloadable file. Perfect for compliance documentation, audit trails, and reporting.\",
+        \"tags\": [
+          \"Reporting\"
+        ],
+        \"security\": [
+          {
+            \"BearerAuth\": []
+          }
+        ],
+        \"requestBody\": {
+          \"required\": true,
+          \"content\": {
+            \"application/json\": {
+              \"schema\": {
+                \"$ref\": \"#/components/schemas/ExportPDFRequest\"
+              },
+              \"example\": {
+                \"original_text\": \"The chairman should ensure all employees are treated fairly.\",
+                \"risk_score\": 75,
+                \"issues\": [
+                  {
+                    \"word\": \"chairman\",
+                    \"bias_type\": \"gender\",
+                    \"severity\": \"high\",
+                    \"explanation\": \"Gender-biased term that assumes leadership roles are male\",
+                    \"position\": 4
+                  }
+                ],
+                \"remediated_text\": \"The chairperson should ensure all employees are treated fairly.\"
+              }
+            }
+          }
+        },
+        \"responses\": {
+          \"200\": {
+            \"description\": \"PDF successfully generated\",
+            \"content\": {
+              \"application/pdf\": {
+                \"schema\": {
+                  \"type\": \"string\",
+                  \"format\": \"binary\",
+                  \"description\": \"Professional PDF report containing bias analysis results\"
+                }
+              }
+            }
+          },
+          \"400\": {
+            \"description\": \"Bad request - missing required fields (original_text, risk_score, or issues)\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
+                }
+              }
+            }
+          },
+          \"401\": {
+            \"description\": \"Unauthorized - invalid API key\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
+                }
+              }
+            }
+          },
+          \"429\": {
+            \"description\": \"Rate limit exceeded\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
+                }
+              }
+            }
+          },
+          \"500\": {
+            \"description\": \"Internal server error - PDF generation failed\",
+            \"content\": {
+              \"application/json\": {
+                \"schema\": {
+                  \"$ref\": \"#/components/schemas/Error\"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
 
       SwaggerUIBundle({
         spec: spec,

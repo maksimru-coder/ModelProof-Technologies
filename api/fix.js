@@ -16,11 +16,7 @@ export default async function handler(req, res) {
     
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({ 
-        error: 'Missing or invalid Authorization header',
-        debug: {
-          headers_received: Object.keys(req.headers),
-          auth_header_value: authHeader ? authHeader.substring(0, 20) + '...' : 'undefined'
-        }
+        error: 'Missing or invalid Authorization header. Expected format: Bearer <api_key>'
       });
     }
 
@@ -37,11 +33,7 @@ export default async function handler(req, res) {
       if (!org) {
         await prisma.$disconnect();
         return res.status(401).json({ 
-          error: 'Invalid API key',
-          debug: {
-            api_key_length: apiKey.length,
-            api_key_prefix: apiKey.substring(0, 10)
-          }
+          error: 'Invalid API key'
         });
       }
 
@@ -156,19 +148,12 @@ export default async function handler(req, res) {
     
     if (error.response) {
       return res.status(500).json({ 
-        error: 'Bias detection service error',
-        details: `Request failed with status code ${error.response.status}`,
-        debug: {
-          status: error.response.status,
-          url: error.config?.url,
-          data: error.response.data
-        }
+        error: 'Bias detection service error'
       });
     }
     
     return res.status(500).json({ 
-      error: 'Internal server error',
-      details: error.message
+      error: 'Internal server error'
     });
   }
 }
